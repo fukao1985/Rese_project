@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('area_id')->constrained('areas', 'area_id');
-            $table->foreignId('genre_id')->constrained('genres', 'genre_id');
-            $table->string('name');
+            $table->foreignId('area_id')->constrained();
+            $table->foreignId('genre_id')->constrained();
+            $table->string('name', 191);
             $table->text('comment');
-            $table->string('url');
+            $table->text('url');
             $table->timestamps();
         });
     }

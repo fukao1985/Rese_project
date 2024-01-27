@@ -42,4 +42,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // reservationsテーブルとのリレーション
+    public function reservations() {
+        return $this->hasMany(Reservation::class);
+    }
+
+    // favoritesテーブルとのリレーション
+    public function favorites() {
+        return $this->hasMany(Favorite::class);
+    }
+
 }
