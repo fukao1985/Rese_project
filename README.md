@@ -1,67 +1,227 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Rese
+### “Rese（リーズ）”は飲食店予約サービスです。<br>
+会員登録することで、お気に入りのお店を登録したり予約を行うことができます。<br>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+***
 
-## About Laravel
+## 作成した目的
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+飲食店の方から、「外部の飲食店予約サービスは手数料を取られるので自社で予約サービスを持ちたい。」<br>というご依頼を頂き、Reseを作成致しました。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+***
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## アプリケーションURL
+http://54.168.148.66/login<br>
 
-## Learning Laravel
+***
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 機能一覧
+* 会員登録機能(メール認証あり)
+* ログイン機能
+* ログアウト機能
+* ユーザー情報機能(マイページ)
+* ユーザー飲食店お気に入り一覧取得(マイページ)
+* ユーザー飲食店予約情報取得(マイページ)
+* 飲食店一覧取得
+* 飲食店詳細取得
+* 飲食店お気に入り追加
+* 飲食店お気に入り削除
+* 飲食店予約情報追加
+* 飲食店予約情報削除
+* エリア/ジャンル/店名で検索する
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**メール送信確認ついて**
+Laravel sailに含まれるMailPit機能を使用してご確認いただけます。<br>
+【http://localhost:8025】にアクセスしていただくとMailPit画面が表示されます。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+***
 
-## Laravel Sponsors
+## 使用技術
+* Laravel 10.42.0
+* Laravel Sail(Docker, Nginx, MYSQL, Mailpit)
+* Laravel Breeze
+* PHP 8.3.2-1
+* Tailwind CSS
+* 
+* 
+* 
+* 
+* AWS(EC2, RDS)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+***
 
-### Premium Partners
+## 環境構築
+※ Dockerをインストールしていない方は下記よりdockerをインストールしてください。<br>
+https://www.docker.com/ja-jp/products/docker-desktop/
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+【新規プロジェクトの作成「rese-project」】
+cdコマンドで作成したい場所に移動して下記コマンドを実行してください。
 
-## Contributing
+```jsx
+$ **curl -s https://laravel.build/rese-project | bash**
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+最後にPasswordn入力を求められるので、入力すれば作成完了です。
 
-## Code of Conduct
+Laravel sailを起動
+cdコマンドでプロジェクトまで移動します。
+cd rese-laravel
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+下記コマンドでsailを起動させます。
+**./vendor/bin/sail up -d**
 
-## Security Vulnerabilities
+確認のためlocalhostへアクセスするとLaravelのWelcomeページが見れます。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+エイリアスを作成
+ホームディレクトリに.zshrcファイルを作成し下記を入力
+(入力する際はiを、入力終了時はesc→:wqをクリックで保存)
+**alias sail="vendor/bin/sail"**
 
-## License
+※ 今後のコマンドは**"vendor/bin/sail"ではなく"sail"で記述していきます。**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# Rese_project
+Laravel sailを止める(cdでプロジェクトに移動)
+**sail stop**
+
+【phpMyAdminの準備】
+(sail stopした状態で行います)
+docker-compose.ymlファイルを編集します。
+mysqlの下(timeout: 5s)53行目〜redis:の間に下記を追記します。
+
+```jsx
+**phpmyadmin:
+image: phpmyadmin/phpmyadmin
+links:
+- mysql:mysql
+ports:
+- 8080:80
+environment:
+MYSQL_USERNAME: '${DB_USERNAME}'
+MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+PMA_HOST: mysql
+networks:
+- sail**
+```
+
+.envファイルでデータベースの設定を確認する
+
+【localhost:8080】にアクセスしてログインする。
+※ ユーザー名・パスワードは先程envファイルで確認したものを入力してください。
+プロジェクト名のデータベースが作成されていれば成功です！
+
+【認証機能Breezeをインストール】
+(Laravel sailを起動した状態で行います)
+
+プロジェクトの場所で、Breezeパッケージをいれるコマンドを実行します。
+
+```jsx
+$ **sail composer require laravel/breeze --dev**
+```
+
+下記コマンドでBreezeをインストールします。
+
+```jsx
+$ **sail artisan breeze:install**
+```
+
+3つの質問が表示されるので希望に沿って選んで実行してください。
+(今回私が選んだ内容は下記の通りです)
+・Which Breeze stack would you like to install? → **Blade with Alpine**
+・Would you like dark mode support? → **No**
+・Which testing framework do you prefer? → **PHPUnit**
+Breeze scaffolding installed successfully.と表示されれば成功です！
+
+Tailwind CSSを反映させます。(作業とは別のターミナルを開きます)
+
+```jsx
+$ **sail npm run dev**
+```
+
+マイグレートする。
+
+```jsx
+$ sail artisan migrate
+```
+
+rese_projectのデータベース内にusersテーブルが作成され会員登録が可能な状態となりました。
+
+【日本語化の設定をする】
+
+ロケールとタイムゾーンの設定(デフォルトの設定)
+プロジェクト内の**config/app.php**を変更していきます。
+・timezoneの変更(73行目あたり)→**'timezone' => 'Asia/Tokyo',**
+・localeの変更(86行目あたり)→**'locale' => 'ja',**
+・faker_localeの変更(112行目あたり)→**'faker_locale' => 'ja_JP',**
+
+langディレクトリの作成
+下記コマンドを実行します。
+
+```jsx
+$ **sail artisan lang:publish**
+```
+
+lang/enが作成されます。次はlang/ja(日本語版)フォルダを作成します。
+(今回、Laravel Breeze日本語化パッケージをインストールさせて頂きました)
+
+GitHub : https://github.com/askdkc/breezejp
+
+***
+
+## テーブル設計
+### usersテーブル
+|Column|Type|Options|
+|:---:|:---:|:---:|
+|name|varchar(191)|null: false|
+|email|varchar(191)|null: false|
+|password|varchar(191)|null: false|
+|email_verified_at|timestamp|———|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+### shopsテーブル
+|Column|Type|Options|
+|:---:|:---:|:---:|
+|area_id|bigint|null: false|
+|genre_id|bigint|null: false|
+|name|varchar(191)|null: false|
+|comment|text|———|
+|url|text|———|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+### areasテーブル
+|Column|Type|Options|
+|:---:|:---:|:---:|
+|area|varchar(191)|null: false|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+### genresテーブル
+|Column|Type|Options|
+|:---:|:---:|:---:|
+|genre|varchar(191)|null: false|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+### reservationsテーブル
+|Column|Type|Options|
+|:---:|:---:|:---:|
+|user_id|bigint|null: false|
+|shop_id|bigint|null: false|
+|date|date|null: false|
+|time|time|———|
+|number|integer|———|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+### favoritesテーブル
+|Column|Type|Options|
+|:---:|:---:|:---:|
+|user_id|bigint|null: false|
+|shop_id|bigint|null: false|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+***
+
+## ER図
+![alt](Rese.ER図.png)
