@@ -57,7 +57,7 @@ https://www.docker.com/ja-jp/products/docker-desktop/
 
 
 ### 【新規プロジェクトの作成「rese-project」】<br>
-cdコマンドで作成したい場所に移動して下記コマンドを実行してください。
+cdコマンドでプロジェクトを作成したいルートに移動し、下記コマンドを実行してください。
 ```jsx
 $ curl -s https://laravel.build/rese-project | bash
 ```
@@ -65,17 +65,17 @@ $ curl -s https://laravel.build/rese-project | bash
 
 
 ### 【Laravel sailを起動】<br>
-プロジェクトのルートに移動し、下記コマンドでsailを起動させます。
+プロジェクトのルートに移動し、下記コマンドでLaravel sailを起動させます。
 ```jsx
 $ ./vendor/bin/sail up -d
 ```
-確認のためlocalhostへアクセスするとLaravelのWelcomeページが見れます。
+確認のためlocalhostへアクセスするとLaravelのWelcomeページを見ることができます。
 
 ### 【エイリアスを作成】<br>
 ホームディレクトリに.zshrcファイルを作成し下記を入力します。<br>
-(入力する際はiを、入力終了時はesc→:wqをクリックで保存)<br>
+(入力する際はiを押すと入力モードに切り替わります。入力が終わったらesc→:wqで入力終了と保存を行なってください。)<br>
 **alias sail="vendor/bin/sail"**<br>
-※ 今後のコマンドは**"vendor/bin/sail"ではなく"sail"で記述していきます。**
+※ 今後のコマンドは"vendor/bin/sail"ではなく"sail"で記述していきます。
 
 ### 【Laravel sailを止める】<br>
 ```jsx
@@ -101,7 +101,7 @@ networks:
 ```
 * .envファイルでデータベースの設定を確認し、下記にアクセスしてログインします。<br>
 【localhost:8080】<br>
-※ ユーザー名・パスワードは先程envファイルで確認したものを入力してください。<br>
+※ ユーザー名・パスワードは先程.envファイルで確認したものを入力してください。<br>
 プロジェクト名のデータベースが作成されていれば成功です！
 
 ### 【認証機能Breezeをインストール】<br>
@@ -121,11 +121,11 @@ $ sail artisan breeze:install
 Breeze scaffolding installed successfully.と表示されれば成功です！
 
 * Tailwind CSSを反映させます。<br>
-(作業しているターミナルとは別のターミナルを開いてください。)<br>
+(作業用のターミナルとは別にターミナルを開き、下記コマンドを実行してください。)<br>
 ```jsx
 $ sail npm run dev
 ```
-マイグレートします。<br>
+作業用のターミナルに戻り、マイグレートします。<br>
 ```jsx
 $ sail artisan migrate
 ```
@@ -134,16 +134,16 @@ $ sail artisan migrate
 ### 【日本語化の設定をする】
 * まずはロケールとタイムゾーンの設定を行います。<br>
 プロジェクト内のconfig/app.phpを変更していきます。<br>
-・timezoneの変更(73行目あたり)→**'timezone' => 'Asia/Tokyo',**<br>
-・localeの変更(86行目あたり)→**'locale' => 'ja',**<br>
-・faker_localeの変更(112行目あたり)→**'faker_locale' => 'ja_JP',**<br>
+・timezoneの変更(73行目あたり) → **'timezone' => 'Asia/Tokyo',**<br>
+・localeの変更(86行目あたり) → **'locale' => 'ja',**<br>
+・faker_localeの変更(112行目あたり) → **'faker_locale' => 'ja_JP',**<br>
 
 * 次にlangディレクトリを作成するため、下記コマンドを実行します。<br>
 ```jsx
 $ sail artisan lang:publish
 ```
-これでlang/enが作成されました。<br>
-* lang/ja(日本語版)フォルダを作成します。<br>
+lang/enが作成されました。<br>
+* あわせてlang/ja(日本語版)フォルダを作成します。<br>
 (今回、Laravel Breeze日本語化パッケージをインストールさせて頂きました)<br>
 GitHub : https://github.com/askdkc/breezejp<br>
 下記コマンドを実行するとlang/ja(日本語版)フォルダが作成されます。<br>

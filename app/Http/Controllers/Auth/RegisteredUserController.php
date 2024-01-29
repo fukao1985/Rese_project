@@ -48,4 +48,10 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    // thanksページの表示
+    public function index() {
+        return view('private_page.thanks');
+    }
+
 }
