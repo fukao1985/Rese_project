@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let menuOpen = false;
+    document.addEventListener('DOMContentLoaded', function() {
+        let menuOpen = false;
 
     document.getElementById('button').addEventListener('click', function () {
         menuOpen = !menuOpen;

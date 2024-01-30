@@ -11,7 +11,7 @@
 ***
 
 ## アプリケーションURL
-http://54.168.148.66/login<br>
+<br>
 
 ***
 
@@ -212,4 +212,4 @@ $ sail artisan breezejp
 ***
 
 ## ER図
-![alt](Rese.ER図.png)
+![alt](rese.png)
