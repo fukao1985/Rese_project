@@ -33,13 +33,13 @@
             <div class="w-11/12 flex justify-center">
                 <div class="bg-white h-60 w-1/3 rounded shadow-md shadow-gray-400 p-8 flex flex-col items-center">
                     <p class="text-xl mt-10 mb-4">会員登録ありがとうございます</p>
-                    <button type="button" class="bg-blue-600 text-white mt-4 px-4 py-2 rounded">ログインする</button>
+                    <button type="button" class="bg-blue-600 text-white mt-4 px-4 py-2 rounded">
+                        <a href="{{ route('login') }}">ログインする</a>
+                    </button>
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
+        </main>
     </div>
-
-</html>
-
 </x-app-layout>
 

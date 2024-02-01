@@ -49,6 +49,11 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
+    // // ゲストユーザー用トップページ表示
+    // public function index() {
+    //     return view('public_page.shoplist');
+    // }
+
     // thanksページの表示
     public function index() {
         return view('private_page.thanks');

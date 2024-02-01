@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\LoginUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,18 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// ゲストユーザーのトップページ
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('public_page.shoplist');
+})->name('public.shoplist');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// 認証機能
-Route::middleware(['auth:sanctum', 'verified'])->get('dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// ログインユーザーのトップページ
+Route::middleware(['auth:sanctum', 'verified'])->get('/shop/index', function () {
+    return view('private_page.shoplist');
+})->name('private.shoplist');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,5 +38,10 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+
+
 // thanksページの表示
 Route::get('/thanks', [RegisteredUserController::class, 'index'])->name('thanks');
+
+// mypageの表示
+Route::get('/mypage', [LoginUserController::class, 'showMypage'])->name('mypage');
