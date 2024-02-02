@@ -22,7 +22,7 @@
                     </button>
                     <div id="menu" class="bg-white fixed top-0 left-0 z-10 w-full h-full text-blue-600 font-bold flex items-center justify-center translate-x-full transition-all ease-linear">
                         <ul class="">
-                            <li class="p-2 text-2xl font-bold"><a href="{{ route('public.shoplist') }}">Home</a></li>
+                            <li class="p-2 text-2xl font-bold"><a href="{{ route('public.shop_list') }}">Home</a></li>
                             <li class="p-2 text-2xl font-bold"><a href="{{ route('register') }}">Registration</a></li>
                             <li class="p-2 text-2xl font-bold"><a href="{{ route('login') }}">Login</a></li>
                         </ul>
@@ -35,7 +35,7 @@
             {{-- mainに入る部分 --}}
             <main id="main_container" class="flex justify-center">
                 <div class="w-11/12 flex justify-center">
-                    <div class="bg-white h-72 w-1/3 rounded shadow-md shadow-gray-400 flex flex-col">
+                    <div class="bg-white h-80 w-1/3 rounded shadow-md shadow-gray-400 flex flex-col">
                         <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
                             <p class="text-l text-white pl-2">Register</p>
                         </div>
@@ -92,7 +92,7 @@
 
                         <!-- Button -->
                         <div class="w-2/3 m-auto text-right">
-                            <button type="submit" class="bg-blue-600 w-1/3 text-white mt-4 py-1.5 rounded">登録</button>
+                            <button type="submit" class="bg-blue-600 w-1/3 text-white mt-9 py-1.5 rounded">登録</button>
                         </div>
                     </div>
                 </form>

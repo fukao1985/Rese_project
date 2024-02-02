@@ -29,7 +29,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return view('private_page.shoplist');
+        if ($errors = session('errors')) {
+            return back()->withErrors($errors)->withInput();
+        }
+
+        return redirect()->route('private.shop_list');
     }
 
     /**
