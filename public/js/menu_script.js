@@ -6,7 +6,8 @@
         updateMenuState();
     });
 
-    document.getElementById('xmark').addEventListener('click', function() {
+        document.getElementById('xmark').addEventListener('click', function (event) {
+            event.stopPropagation();
         menuOpen = !menuOpen;
         updateMenuState();
     });

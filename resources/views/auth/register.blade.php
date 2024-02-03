@@ -52,15 +52,19 @@
                                 </svg>
                             </i>
                             <label for="name" :value="__('Name')" class="text-gray-500 pr-1">Username</label>
-                            <input id="name" type="name" name="name" :value="old('name')" required autocomplete="name" class="focus:outline-none text-gray-500 w-7/12 p-1 border-none" />
+                            <input id="name" type="name" name="name" :value="old('name')" autocomplete="name" class="focus:outline-none text-gray-500 w-7/12 p-1 border-none" />
                         </div>
                         <div class="flex justify-center">
-                            <div class="border-b border-gray-500 mb-5 ml-2 w-8/12"></div>
+                            <div class="border-b border-gray-500 mb-1 ml-2 w-8/12"></div>
                         </div>
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        @error('name')
+                            <div class="text-red-600 text-sm h-4 flex justify-center">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                         <!-- Email Address -->
-                        <div class="flex justify-center items-center">
+                        <div class="flex justify-center items-center mt-5">
                             <i class="text-gray-500 pr-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 object-botton">
                                     <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
@@ -68,31 +72,39 @@
                                 </svg>
                             </i>
                             <label for="email" :value="__('Email')" class="text-gray-500 pr-1">Email</label>
-                            <input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" class="focus:outline-none text-gray-500 w-7/12 p-1 border-none" />
+                            <input id="email" type="email" name="email" :value="old('email')" autocomplete="username" class="focus:outline-none text-gray-500 w-7/12 p-1 border-none" />
                         </div>
                         <div class="flex justify-center">
-                            <div class="border-b border-gray-500 mb-5 ml-2 w-8/12"></div>
+                            <div class="border-b border-gray-500 mb-1 ml-2 w-8/12"></div>
                         </div>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        @error('email')
+                            <div class="text-red-600 text-sm h-4 flex justify-center">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                         <!-- Password -->
-                        <div class="flex justify-center items-center ml-4">
+                        <div class="flex justify-center items-center ml-4 mt-5">
                             <i class="text-gray-500 pr-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                     <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" />
                                 </svg>
                             </i>
                             <label for="password" :value="__('Password')" class="text-gray-500 pr-1">Password</label>
-                            <input id="password" type="password" name="password" required autocomplete="current-password" class="focus:outline-none text-gray-500 w-7/12 p-1 border-none" />
+                            <input id="password" type="password" name="password" autocomplete="new-password" class="focus:outline-none text-gray-500 w-7/12 p-1 border-none" />
                         </div>
                         <div class="flex justify-center">
                             <div class="border-b border-gray-500 mb-1 ml-2 w-8/12"></div>
                         </div>
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        @error('password')
+                            <div class="text-red-600 text-sm h-4 flex justify-center">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                         <!-- Button -->
                         <div class="w-2/3 m-auto text-right">
-                            <button type="submit" class="bg-blue-600 w-1/3 text-white mt-9 py-1.5 rounded">登録</button>
+                            <button type="submit" class="bg-blue-600 w-1/3 text-white mt-6 mb-4 py-1.5 rounded">登録</button>
                         </div>
                     </div>
                 </form>

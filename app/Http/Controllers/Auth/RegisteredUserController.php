@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterRequest $request): RedirectResponse
     {
         // $request->validate([
         //     'name' => ['required', 'string', 'max:255'],
@@ -48,6 +48,9 @@ class RegisteredUserController extends Controller
         // もともと記述されていた会員登録後は勝手にログインされる処理。
         // Auth::login($user);
         // return redirect(RouteServiceProvider::HOME);
+        if ($errors = session('errors')) {
+            return back()->withErrors($errors)->withInput();
+        }
 
         return redirect()->route('thanks');
     }

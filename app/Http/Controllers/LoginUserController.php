@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class LoginUserController extends Controller
 {
     public function showMypage() {
-        return view('private_page.mypage');
+        return view('private_page.my_page');
     }
 }
