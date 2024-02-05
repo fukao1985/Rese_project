@@ -9,6 +9,15 @@ class Genre extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'genre',
+    ];
+
     // shopsテーブルとのリレーション
     public function shops() {
         return $this->hasMany(Shop::class);

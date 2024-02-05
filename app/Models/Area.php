@@ -9,6 +9,15 @@ class Area extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'area',
+    ];
+
     // shopsテーブルとのリレーション
     public function shops() {
         return $this->hasMany(Shop::class);

@@ -35,7 +35,7 @@
             {{-- mainに入る部分 --}}
             <main id="main_container" class="flex justify-center">
                 <div class="w-11/12 flex justify-center">
-                    <div class="bg-white h-80 w-1/3 rounded shadow-md shadow-gray-400 flex flex-col">
+                    <div class="bg-white h-auto w-1/3 rounded shadow-md shadow-gray-400 flex flex-col">
                         <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
                             <p class="text-l text-white pl-2">Register</p>
                         </div>
