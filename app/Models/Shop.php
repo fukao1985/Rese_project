@@ -9,6 +9,19 @@ class Shop extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'area_id',
+        'genre_id',
+        'comment',
+        'url',
+    ];
+
     // reservationsテーブルとのリレーション
     public function reservations() {
         return $this->hasMany(Reservation::class);

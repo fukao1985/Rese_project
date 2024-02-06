@@ -7,6 +7,7 @@ use App\Http\Requests\ShopCreateRequest;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;
+use Intervention\Image\Facades\Image;
 
 class ShopController extends Controller
 {
@@ -35,7 +36,12 @@ class ShopController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            $file = $request->file('file')->store('images', 'local');
+            $image = $request->file('file');
+            $imageResized = Image::make($image)->resize(300, 200);
+            $imageResizedPath = 'images/resized_' . $image->ntOriginalName();
+            $imageResized->save($imageResizedPath);
+
+            $file = Storage::disk('local')->putFile('images', $imageResizedPat);
         }
 
         return back()->with('message', '店舗情報が作成されました');

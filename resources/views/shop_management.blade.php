@@ -1,5 +1,11 @@
 <x-app-layout>
 
+<!-- Session Status -->
+<x-auth-session-status class="mb-4" :status="session('status')" />
+@if (session('message'))
+    <div class="text-green-500 bg-green-200 p-1 rounded">{{ session('message') }}</div>
+@endif
+
 {{-- headerに入る部分 --}}
 <x-slot name="header">
     <div id="container" class="min-w-screen bg-gray-100">
@@ -33,6 +39,7 @@
             </div>
         </header>
 </x-slot>
+
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
                 <div class="w-11/12 flex justify-center">
@@ -47,8 +54,8 @@
                     <div class="flex flex-col justify-center w-full">
                         <!-- Shopname -->
                         <div class="flex justify-between items-center mr-8 ml-8">
-                            <label for="name" :value="__('Name')" class="text-gray-500 pr-1">Shop name</label>
-                            <input id="name" type="name" name="name" :value="old('name')" class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
+                            <label for="name" :value="__('name')" class="text-gray-500 pr-1">Shop name</label>
+                            <input id="name" type="name" name="name" value="{{ old('name') }}" class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
                         </div>
                         <div class="flex justify-center">
                             <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
@@ -61,14 +68,15 @@
 
                         <!-- Arear セレクトボックス-->
                         <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="area" :value="__('Area')" class="text-gray-500 pr-1">Area</label>
-                            <select name="area" id="area" class="text-gray-500 border-gray-500 rounded">
+                            <label for="area_id" :value="__('area')" class="text-gray-500 pr-1">Area</label>
+                            <select name="area_id" id="area_id" class="text-gray-500 border-gray-500 rounded" required>
+                                <option value="">選択してください</option>
                                 @foreach ($areas as $area)
-                                <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                    <option value="{{ $area->id }}">{{ $area->area }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @error('area')
+                        @error('area_id')
                             <div class="text-red-600 text-sm h-4 flex justify-center">
                                 {{ $message }}
                             </div>
@@ -76,14 +84,15 @@
 
                         <!-- Genre セレクトボックス-->
                         <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="genre" :value="__('Genre')" class="text-gray-500 pr-1">Genre</label>
-                            <select name="genre" id="genre" class="text-gray-500 border-gray-500 rounded">
+                            <label for="genre_id" :value="__('genre')" class="text-gray-500 pr-1">Genre</label>
+                            <select name="genre_id" id="genre_id" class="text-gray-500 border-gray-500 rounded" required>
+                                <option value="">選択してください</option>
                                 @foreach ($genres as $genre)
-                                <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
+                                    <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @error('genre')
+                        @error('genre_id')
                             <div class="text-red-600 text-sm h-4 flex justify-center">
                                 {{ $message }}
                             </div>
@@ -91,9 +100,8 @@
 
                         <!-- Comment -->
                         <div class="flex justify-between items-center ml-8 mr-8 mt-5">
-                            <label for="comment" :value="__('Comment')" class="text-gray-500 pr-1">Comment</label>
-                            {{-- <input id="comment" type="text" name="comment" class="focus:outline-none text-gray-500 w-7/12 h-1/4 p-1" /> --}}
-                            <textarea id="commnet" name="comment" cols="30" rows="10" class="focus:outline-none text-gray-500 border-gray-500 w-10/12 h-32 p-1 rounded"></textarea>
+                            <label for="comment" :value="__('comment')" class="text-gray-500 pr-1">Comment</label>
+                            <textarea id="commnet" name="comment" cols="30" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('comment') }}</textarea>
                         </div>
                         @error('comment')
                             <div class="text-red-600 text-sm h-4 flex justify-center">
@@ -103,8 +111,8 @@
 
                         <!-- Image url -->
                         <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="url" :value="__('url')" class="text-gray-500 pr-1">Image url</label>
-                            <input id="url" type="text" name="url" class="focus:outline-none text-gray-500 w-9/12 p-1 border-none" />
+                            <label for="url" class="text-gray-500 pr-1">Image url</label>
+                            <input id="url" type="text" name="url" class="focus:outline-none text-gray-500 w-9/12 p-1 border-none" value="{{ old('url') }}"/>
                         </div>
                         <div class="flex justify-center">
                             <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-8/12"></div>
@@ -133,6 +141,7 @@
                     </div>
                 </form>
                 <script src="{{ asset('js/menu_script.js') }}" defer></script>
+                {{-- <script src="{{ asset('textarea.js') }}" defer></script> --}}
             </main>
     </div>
 </x-app-layout>

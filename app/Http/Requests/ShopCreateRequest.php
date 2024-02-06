@@ -27,7 +27,7 @@ class ShopCreateRequest extends FormRequest
             'genre_id' => ['required', 'integer', 'exists:areas,id'],
             'comment' => ['required', 'string'],
             'url' => ['required', 'string'],
-            'file' => ['required', 'image', 'mimes:jpeg.png.jpg.gif.svg', 'max:2084'],
+            'file' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2084'],
         ];
     }
 
