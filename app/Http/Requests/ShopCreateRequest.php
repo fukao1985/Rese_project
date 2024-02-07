@@ -24,7 +24,7 @@ class ShopCreateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'area_id' => ['required', 'integer', 'exists:areas,id'],
-            'genre_id' => ['required', 'integer', 'exists:areas,id'],
+            'genre_id' => ['required', 'integer', 'exists:genres,id'],
             'comment' => ['required', 'string'],
             'url' => ['required', 'string'],
             'file' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2084'],

@@ -3,7 +3,10 @@
 <!-- Session Status -->
 <x-auth-session-status class="mb-4" :status="session('status')" />
 @if (session('message'))
-    <div class="text-green-500 bg-green-200 p-1 rounded">{{ session('message') }}</div>
+    <div class="flex justify-center">
+        <div class="text-green-800 bg-green-200 items-center mt-0 mb-1 p-1 w-1/4 text-center rounded">{{ session('message') }}
+        </div>
+    </div>
 @endif
 
 {{-- headerに入る部分 --}}
