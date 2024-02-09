@@ -32,49 +32,51 @@
                     </div>
                     <h1 class="text-3xl text-blue-600 font-black m-2">Rese</h1>
                 </div>
-                <div id="search_box" class="bg-white w-1/2 shadow-md shadow-gray-400 flex rounded items-center">
+                <form id="search_form" action="{{ route('private.shop_list') }}" method="POST" class="bg-white w-1/2 shadow-md shadow-gray-400 flex rounded items-center">
+                @csrf
                     @php
                         $areas = session()->has('areas') ? session('areas') : [];
                         $genres = session()->has('genres') ? session('genres') : [];
                         $shops = session()->has('shops') ? session('shops') : [];
                     @endphp
+
                     <!-- Arear セレクトボックス-->
-                        <div class="mr-4 ml-4">
-                            <select name="area_id" id="area_id" class="text-gray-700 border-none" required>
-                                <option value="">All area</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->area }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="mr-4 ml-4">
+                        <select name="area_id" id="area_id" class="text-gray-700 border-none" required>
+                            <option value="">All area</option>
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->id }}">{{ $area->area }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                        <div class="text-gray-200">|</div>
+                    <div class="text-gray-200">|</div>
 
-                        <!-- Genre セレクトボックス-->
-                        <div class="mr-4 ml-4">
-                            <select name="genre_id" id="genre_id" class="text-gray-700 border-none" required>
-                                <option value="">All genre</option>
-                                @foreach ($genres as $genre)
-                                    <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <!-- Genre セレクトボックス-->
+                    <div class="mr-4 ml-4">
+                        <select name="genre_id" id="genre_id" class="text-gray-700 border-none" required>
+                            <option value="">All genre</option>
+                            @foreach ($genres as $genre)
+                                <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                        <div class="text-gray-200">|</div>
+                    <div class="text-gray-200">|</div>
 
-                        <!-- Search wind -->
-                        <div class="flex justify-left items-center mr-8 ml-8">
-                            <i class="text-gray-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                </svg>
-                            </i>
-                            <input id="name" type="name" name="name" placeholder="Search..." class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
-                        </div>
-                        <div class="flex justify-center">
-                            <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
-                        </div>
-                </div>
+                    <!-- Search wind -->
+                    <div class="flex justify-left items-center mr-8 ml-8">
+                        <i class="text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </i>
+                        <input id="name" type="name" name="name" placeholder="Search..." class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
+                    </div>
+                </form>
             </div>
         </header>
 </x-slot>
@@ -83,25 +85,30 @@
             <div class="w-11/12 flex justify-center">
                 <div class="w-full grid grid-cols-4 gap-4">
                     @foreach ($shops as $shop)
-                    <div id="store_box" class="bg-white p-4 shadow-md">
-                        {{-- <a href="{{ route('shop.detail', ['id' => 1]) }}"> --}}
-                        <a href="{{ route('shop.detail', $shop->id) }}">
-                            <img src="" alt="">
-                            <h2 class="text-lg font-semibold">{{ $shop->name }}</h2>
-                            <p class="text-gray-600 mb-2">{{ $shop->area->area }}</p>
-                            <p class="text-gray-600 mb-2">{{ $shop->genre->genre }}</p>
-                        </a>
+                    <div id="store_box" class="bg-white shadow-md rounded">
+                        <form action="{{ route('shop.detail', $shop->id) }}" method="GET">
+                        @csrf
+                            <img src="{{ asset($shop->url) }}" alt="{{ $shop->name }}" class="rounded-t">
+                            <h2 class="text-lg font-semibold mt-4 px-4">{{ $shop->name }}</h2>
+                            <div class="flex">
+                                <p class="text-gray-600 mb-2 pl-4">#{{ $shop->area->area }}</p>
+                                <p class="text-gray-600 mb-2 pl-2">#{{ $shop->genre->genre }}</p>
+                            </div>
+                            <div class="flex justify-between items-center p-4">
+                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">詳しく見る</button>
+                            <i class="text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                    <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                </svg>
+                            </i>
+                            </div>
+                        </form>
                     </div>
-                        <option value="{{ $shop->id }}">{{ $genre->genre }}</option>
                     @endforeach
-                    
                 </div>
-                {{-- <div class="bg-white h-auto w-1/3 rounded shadow-md shadow-gray-400 p-8 flex flex-col items-center">
-                    <p class="text-xl mt-10 mb-4">ログインユーザーのトップページ</p>
-                    <button type="button" class="bg-blue-600 text-white mb-10 mt-4 px-4 py-2 rounded">ログインする</button>
-                </div> --}}
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
+            <script src="{{ asset('js/search.js') }}" defer></script>
         </main>
     </div>
 </x-app-layout>

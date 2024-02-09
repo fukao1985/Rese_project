@@ -144,7 +144,6 @@
                     </div>
                 </form>
                 <script src="{{ asset('js/menu_script.js') }}" defer></script>
-                {{-- <script src="{{ asset('textarea.js') }}" defer></script> --}}
             </main>
     </div>
 </x-app-layout>
