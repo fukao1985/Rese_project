@@ -20,7 +20,7 @@
                     </button>
                     <div id="menu" class="bg-white fixed top-0 left-0 z-10 w-full h-full text-blue-600 font-bold flex items-center justify-center translate-x-full transition-all ease-linear">
                         <ul>
-                            <li class="p-2 text-2xl font-bold"><a href="{{ route('private.shop_list') }}">Home</a></li>
+                            <li class="p-2 text-2xl font-bold"><a href="{{ route('user.top') }}">Home</a></li>
                             <li class="p-2 text-2xl font-bold">
                                 <form action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -32,20 +32,14 @@
                     </div>
                     <h1 class="text-3xl text-blue-600 font-black m-2">Rese</h1>
                 </div>
-                <form id="search_form" action="{{ route('private.shop_list') }}" method="POST" class="bg-white w-1/2 shadow-md shadow-gray-400 flex rounded items-center">
+                <form id="search_form" action="{{ route('get.shop_list') }}" method="POST" class="bg-white w-1/2 shadow-md shadow-gray-400 flex rounded items-center">
                 @csrf
-                    @php
-                        $areas = session()->has('areas') ? session('areas') : [];
-                        $genres = session()->has('genres') ? session('genres') : [];
-                        $shops = session()->has('shops') ? session('shops') : [];
-                    @endphp
-
                     <!-- Arear セレクトボックス-->
                     <div class="mr-4 ml-4">
-                        <select name="area_id" id="area_id" class="text-gray-700 border-none" required>
+                        <select name="area_id" id="area_id" class="text-gray-700 border-none" >
                             <option value="">All area</option>
                             @foreach ($areas as $area)
-                                <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{ $area->area }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -54,10 +48,10 @@
 
                     <!-- Genre セレクトボックス-->
                     <div class="mr-4 ml-4">
-                        <select name="genre_id" id="genre_id" class="text-gray-700 border-none" required>
+                        <select name="genre_id" id="genre_id" class="text-gray-700 border-none">
                             <option value="">All genre</option>
                             @foreach ($genres as $genre)
-                                <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
+                                <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->genre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -66,12 +60,14 @@
 
                     <!-- Search wind -->
                     <div class="flex justify-left items-center mr-8 ml-8">
+                        <button type="submit" name="action" value="POST">
                         <i class="text-gray-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
                         </i>
-                        <input id="name" type="name" name="name" placeholder="Search..." class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
+                        </button>
+                        <input id="name" type="name" name="name" placeholder="Search..." class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" value="{{ old('name') }}" autocomplete="off"/>
                     </div>
                     <div class="flex justify-center">
                         <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
@@ -80,6 +76,7 @@
             </div>
         </header>
 </x-slot>
+
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
             <div class="w-11/12 flex justify-center">
@@ -108,7 +105,6 @@
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
-            <script src="{{ asset('js/search.js') }}" defer></script>
         </main>
     </div>
 </x-app-layout>

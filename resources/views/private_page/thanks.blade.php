@@ -19,7 +19,7 @@
                 </button>
                 <div id="menu" class="bg-white fixed top-0 left-0 z-10 w-full h-full text-blue-600 font-bold flex items-center justify-center translate-x-full transition-all ease-linear">
                     <ul>
-                        <li class="p-2 text-2xl font-bold"><a href="{{ route('private.shop_list') }}">Home</a></li>
+                        <li class="p-2 text-2xl font-bold"><a href="{{ route('user.top') }}">Home</a></li>
                         <li class="p-2 text-2xl font-bold">
                             <form action="{{ route('logout') }}" method="POST">
                             @csrf
