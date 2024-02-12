@@ -13,7 +13,44 @@ use Illuminate\View\View;
 
 class ShopController extends Controller
 {
-    // ユーザートップ(店舗一覧ページ)の表示
+    // ゲストユーザートップ(店舗一覧ページ)の表示
+    public function guestTop(Request $request)
+    {
+        $areas = Area::all();
+        $genres = Genre::all();
+        $shops = Shop::all();
+
+        return view('public_page.shop_list', compact('areas', 'genres', 'shops'));
+    }
+
+    // ゲストユーザー検索処理
+    public function guestShopList(Request $request)
+    {
+        $areas = Area::all();
+        $genres = Genre::all();
+        $query = Shop::query();
+
+        if ($request->filled('area_id')) {
+            $query->where('area_id', $request->input('area_id'));
+        }
+        if ($request->filled('genre_id')) {
+            $query->where('genre_id', $request->input('genre_id'));
+        }
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        $shops = $query->get();
+
+        return view('public_page.shop_list', compact('areas', 'genres', 'shops'));
+    }
+
+    // ゲストユーザー用店舗詳細ページの表示
+    public function guestShopDetail() {
+        return view('public_page.shop_detail');
+    }
+
+    // ログインユーザートップ(店舗一覧ページ)の表示
     public function userTop(Request $request)
     {
         $areas = Area::all();
@@ -23,7 +60,7 @@ class ShopController extends Controller
         return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
     }
 
-    // 検索処理
+    // ログインユーザー検索処理
     public function getShopList(Request $request)
     {
         $areas = Area::all();
@@ -45,7 +82,7 @@ class ShopController extends Controller
         return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
     }
 
-    // 店舗詳細ページの表示
+    // ログインユーザー用店舗詳細ページの表示
     public function shopDetail() {
         return view('private_page.shop_detail');
     }
