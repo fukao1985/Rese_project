@@ -13,6 +13,45 @@ use Illuminate\View\View;
 
 class ShopController extends Controller
 {
+    // ログインユーザートップ(店舗一覧ページ)の表示
+    public function userTop(Request $request)
+    {
+        $areas = Area::all();
+        $genres = Genre::all();
+        $shops = Shop::all();
+
+        return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
+    }
+
+    // ログインユーザー検索処理
+    public function getShopList(Request $request)
+    {
+        $areas = Area::all();
+        $genres = Genre::all();
+        $query = Shop::query();
+
+        if ($request->filled('area_id')) {
+            $query->where('area_id', $request->input('area_id'));
+        }
+        if ($request->filled('genre_id')) {
+            $query->where('genre_id', $request->input('genre_id'));
+        }
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        $shops = $query->get();
+
+        return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
+    }
+
+    // ログインユーザー用店舗詳細ページの表示
+    public function shopDetail($shop_id) {
+        $selectShop = Shop::where('id', $shop_id)->first();
+
+        return view('private_page.shop_detail', compact('selectShop'));
+    }
+
     // ゲストユーザートップ(店舗一覧ページ)の表示
     public function guestTop(Request $request)
     {
@@ -50,43 +89,7 @@ class ShopController extends Controller
         return view('public_page.shop_detail');
     }
 
-    // ログインユーザートップ(店舗一覧ページ)の表示
-    public function userTop(Request $request)
-    {
-        $areas = Area::all();
-        $genres = Genre::all();
-        $shops = Shop::all();
-
-        return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
-    }
-
-    // ログインユーザー検索処理
-    public function getShopList(Request $request)
-    {
-        $areas = Area::all();
-        $genres = Genre::all();
-        $query = Shop::query();
-
-        if ($request->filled('area_id')) {
-            $query->where('area_id', $request->input('area_id'));
-        }
-        if ($request->filled('genre_id')) {
-            $query->where('genre_id', $request->input('genre_id'));
-        }
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        $shops = $query->get();
-
-        return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
-    }
-
-    // ログインユーザー用店舗詳細ページの表示
-    public function shopDetail() {
-        return view('private_page.shop_detail');
-    }
-
+    
     // 店舗情報編集ページ表示
     public function shopManagement() {
 

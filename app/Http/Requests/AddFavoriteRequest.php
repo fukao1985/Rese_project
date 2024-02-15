@@ -22,7 +22,8 @@ class AddFavoriteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop_id' => ['required', 'integer', 'exists:shops,id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'shop_id' => ['required', 'exists:shops,id'],
         ];
     }
 }

@@ -11,4 +11,13 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost', // Ajaxリクエストを処理するサーバーのベースURL
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, ''), // リクエストURLからプレフィックスを削除
+            },
+        },
+    },
 });

@@ -35,10 +35,49 @@
 </x-slot>
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
-            <div class="w-11/12 flex justify-center">
-                <div class="bg-white h-auto w-1/3 rounded shadow-md shadow-gray-400 p-8 flex flex-col items-center">
-                    <p class="text-xl mt-10 mb-4">ログインユーザー用お店詳細ページです</p>
-                    <button type="button" class="bg-blue-600 text-white mb-10 mt-4 px-4 py-2 rounded">ログインする</button>
+            <div class="w-11/12 flex justify-between">
+                <div class="w-5/12">
+                    <h2 class="font-bold text-xl mb-2">{{ $selectShop->name }}</h2>
+                    <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="pb-10">
+                    <div class="flex">
+                            <p class="text-gray-800 text-sm mb-2">#{{ $selectShop->area->area }}</p>
+                            <p class="text-gray-800 text-sm pl-1 mb-2">#{{ $selectShop->genre->genre }}</p>
+                    </div>
+                    <p class="text-gray-800 text-sm mt-5 mb-2">{{ $selectShop->comment }}</p>
+                </div>
+
+                <div class="w-6/12">
+                    <div class="bg-blue-600 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-center">
+                        <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full">
+                        <p class="text-white text-xl font-bold my-5">予約</p>
+                        <div class="flex flex-col mb-5">
+                            <input type="date" name="date" class="rounded w-7/12 mb-3">
+                            <select type="time" vame="time" class="rounded w-11/12 mb-3"></select>
+                            <select type="number" vame="number" class="rounded w-11/12 mb-3"></select>
+                        </div>
+                        <div id="conform" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-40">
+                            <table class="text-white text-left">
+                                <tr class="mb-2">
+                                    <th>Shop</th>
+                                    <td>仙人</td>
+                                </tr>
+                                <tr class="mb-2">
+                                    <th>Date</th>
+                                    <td>仙人</td>
+                                </tr>
+                                <tr class="mb-2">
+                                    <th>Time</th>
+                                    <td>仙人</td>
+                                </tr>
+                                <tr class="mb-2">
+                                    <th>Number</th>
+                                    <td>仙人</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
+                </form>
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
