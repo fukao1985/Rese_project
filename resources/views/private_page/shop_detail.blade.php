@@ -36,6 +36,7 @@
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
             <div class="w-11/12 flex justify-between">
+                {{-- 店舗詳細 --}}
                 <div class="w-5/12">
                     <h2 class="font-bold text-xl mb-2">{{ $selectShop->name }}</h2>
                     <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="pb-10">
@@ -46,41 +47,70 @@
                     <p class="text-gray-800 text-sm mt-5 mb-2">{{ $selectShop->comment }}</p>
                 </div>
 
+                {{-- 予約フォーム --}}
                 <div class="w-6/12">
-                    <div class="bg-blue-600 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-center">
-                        <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full">
-                        <p class="text-white text-xl font-bold my-5">予約</p>
-                        <div class="flex flex-col mb-5">
-                            <input type="date" name="date" class="rounded w-7/12 mb-3">
-                            <select type="time" vame="time" class="rounded w-11/12 mb-3"></select>
-                            <select type="number" vame="number" class="rounded w-11/12 mb-3"></select>
+                    <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full">
+                    @csrf
+                        <div class="bg-blue-600 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
+                            <p class="text-white text-xl font-bold my-5">予約</p>
+                            <div class="flex flex-col mb-5">
+                                <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
+                                <input id="date" type="date" name="date" class="rounded w-7/12 mb-3">
+                                <select id="time" type="time" name="time" class="rounded w-11/12 mb-3">
+                                    <option value="">時間を選択してください</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="18:30">19:30</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="20:30">20:30</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="20:30">21:30</option>
+                                    <option value="21:00">22:00</option>
+                                </select>
+                                <select id="number" type="number" name="number" class="rounded w-11/12 mb-3">
+                                    <option value="">人数を選択してください</option>
+                                    <option value="1">1人</option>
+                                    <option value="2">2人</option>
+                                    <option value="3">3人</option>
+                                    <option value="4">4人</option>
+                                    <option value="5">5人</option>
+                                    <option value="6">6人</option>
+                                    <option value="7">7人</option>
+                                    <option value="8">8人</option>
+                                    <option value="9">9人</option>
+                                    <option value="10">10人</option>
+                                </select>
+                            </div>
+                            <div id="confirm" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-40">
+                                <table class="text-white text-left">
+                                    <tr class="mb-2">
+                                        <th>Shop</th>
+                                        <td>{{ $selectShop->name }}</td>
+                                    </tr>
+                                    <tr class="mb-2">
+                                        <th>Date</th>
+                                        <td id="displayDate"></td>
+                                    </tr>
+                                    <tr class="mb-2">
+                                        <th>Time</th>
+                                        <td id="displayTime"></td>
+                                    </tr>
+                                    <tr class="mb-2">
+                                        <th>Number</th>
+                                        <td id="displayNumber"></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div id="conform" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-40">
-                            <table class="text-white text-left">
-                                <tr class="mb-2">
-                                    <th>Shop</th>
-                                    <td>仙人</td>
-                                </tr>
-                                <tr class="mb-2">
-                                    <th>Date</th>
-                                    <td>仙人</td>
-                                </tr>
-                                <tr class="mb-2">
-                                    <th>Time</th>
-                                    <td>仙人</td>
-                                </tr>
-                                <tr class="mb-2">
-                                    <th>Number</th>
-                                    <td>仙人</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
-                </form>
+                        <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
+                    </form>
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
+            <script src="{{ asset('js/confirm_script.js') }}" defer></script>
         </main>
     </div>
 </x-app-layout>

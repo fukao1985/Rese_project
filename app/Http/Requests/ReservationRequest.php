@@ -23,7 +23,7 @@ class ReservationRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date', 'after:today'],
-            'time' => ['required', 'date_format:H:i', 'after_or_equal:now'],
+            'time' => ['required', 'date_format:H:i', 'after:17:00', 'before:22:00'],
             'number' => ['required', 'integer'],
         ];
     }
@@ -36,7 +36,8 @@ class ReservationRequest extends FormRequest
             'date.after' => '過去の日付は選択できません',
             'time.required' => '時間を選択してください',
             'time.date_format' => '有効な時間形式で入力してください',
-            'time.after_or_equal' => '過去の時間は選択できません',
+            'time.after' => '17:00以降の時間を選択してください',
+            'time.before' => '22:00までの時間を選択してください',
             'number.required' => '人数を選択してください',
             'number.integer' => '人数は整数で入力してください',
         ];

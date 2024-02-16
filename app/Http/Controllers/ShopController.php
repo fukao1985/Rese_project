@@ -89,7 +89,6 @@ class ShopController extends Controller
         return view('public_page.shop_detail');
     }
 
-    
     // 店舗情報編集ページ表示
     public function shopManagement() {
 
