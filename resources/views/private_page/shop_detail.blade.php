@@ -45,6 +45,8 @@
                             <p class="text-gray-800 text-sm pl-1 mb-2">#{{ $selectShop->genre->genre }}</p>
                     </div>
                     <p class="text-gray-800 text-sm mt-5 mb-2">{{ $selectShop->comment }}</p>
+                    {{-- ここにデータベースから取得した評価&ユーザーコメントを入れる --}}
+                    <div id="rating"></div>
                 </div>
 
                 {{-- 予約フォーム --}}
@@ -85,22 +87,22 @@
                                 </select>
                             </div>
                             <div id="confirm" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-40">
-                                <table class="text-white text-left">
+                                <table class="text-white text-left w-full">
                                     <tr class="mb-2">
-                                        <th>Shop</th>
-                                        <td>{{ $selectShop->name }}</td>
+                                        <th class="w-2/6">Shop</th>
+                                        <td class="w-4/6">{{ $selectShop->name }}</td>
                                     </tr>
                                     <tr class="mb-2">
-                                        <th>Date</th>
-                                        <td id="displayDate"></td>
+                                        <th class="w-2/6">Date</th>
+                                        <td id="displayDate" class="w-4/6"></td>
                                     </tr>
                                     <tr class="mb-2">
-                                        <th>Time</th>
-                                        <td id="displayTime"></td>
+                                        <th class="w-2/6">Time</th>
+                                        <td id="displayTime" class="w-4/6"></td>
                                     </tr>
                                     <tr class="mb-2">
-                                        <th>Number</th>
-                                        <td id="displayNumber"></td>
+                                        <th class="w-2/6">Number</th>
+                                        <td id="displayNumber" class="w-4/6"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -108,6 +110,9 @@
                         <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
                     </form>
                 </div>
+
+                {{-- ここに利用後のお店の場合は評価&ユーザーコメント入力フォーム --}}
+                {{-- <div id="ranting-form"></div> --}}
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
             <script src="{{ asset('js/confirm_script.js') }}" defer></script>

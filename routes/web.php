@@ -77,6 +77,6 @@ Route::middleware('web')->group(function () {
 
 // 予約処理
 Route::middleware(['auth'])->post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');
-
 // 予約完了画面の表示
 Route::middleware(['auth'])->get('/done', [ReservationController::class, 'done'])->name('done');
+Route::middleware(['auth'])->delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
