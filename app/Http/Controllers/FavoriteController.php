@@ -24,6 +24,7 @@ class FavoriteController extends Controller
                 // 既にお気に入り登録されていた場合はお気に入りを削除
                 $existingFavorite->delete();
                 $message = 'お気に入りを解除しました';
+                $isFavorite = false;
             } else {
                 // お気に入り登録されていなかった場合はお気に入りに登録
                 Favorite::create([
@@ -31,6 +32,7 @@ class FavoriteController extends Controller
                     'shop_id' => $shopId,
                 ]);
                 $message = 'お気に入りに登録しました';
+                $isFavorite = true;
             }
 
             // お気に入りの状態を返す

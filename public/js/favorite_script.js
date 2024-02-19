@@ -4,7 +4,44 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("adding active class");
     console.log("removing active class");
 
-    function setFavoriteButtonColors() {
+    function setFavoriteButtonColors(favorites) {
+        console.log("setFavoriteButtonColors");
+        favoriteButtons.forEach(button => {
+            const shopId = button.dataset.shopId;
+            if (favorites.includes(parseInt(shopId))) {
+                button.classList.add('active');
+                console.log(`Button with shopId ${shopId} is active`);
+            } else {
+                button.classList.remove('active');
+                console.log(`Button with shopId ${shopId} is not active`);
+            }
+        });
+    }
+
+    function updateDatabaseAndColors(shopId) {
+        fetch('/shop/favorite/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ shop_id: shopId }),
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            // お気に入り登録後にお気に入りの状態を再取得して色を更新する
+            fetchUserFavoritesAndUpdateColors();
+        })
+        .catch(error => {
+            console.error('Error', error);
+        });
+    }
+
+    function fetchUserFavoritesAndUpdateColors() {
+        console.log("Fetching user favorites...");
+        // ユーザーのお気に入り情報を取得するAjaxリクエストを追加
         fetch('/user/favorites', {
             method: 'GET',
             headers: {
@@ -14,55 +51,29 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Data received:", data); // デバッグ用：データを確認
-            favoriteButtons.forEach(button => {
-                const shopId = button.dataset.shopId;
-                console.log("Current shopId:", shopId); // デバッグ用：現在処理している店舗IDを確認
-                if (data.includes(parseInt(shopId))) {
-                    console.log("Adding active class"); // デバッグ用：activeクラスを追加する旨を確認
-                    button.classList.add('active');
-                } else {
-                    console.log("Removing active class"); // デバッグ用：activeクラスを削除する旨を確認
-                    button.classList.remove('active');
-                }
-            });
+            console.log("Data received:", data);
+            setFavoriteButtonColors(data); // お気に入りの状態を取得した後にハートの色を更新
         })
         .catch(error => {
             console.error('Error', error);
         });
     }
 
-    // ページ読み込み時にお気に入り登録状況を取得してハートの色を設定
-    setFavoriteButtonColors();
+    // ページ読み込み時とお気に入り登録後にお気に入りの状態を取得し、ハートの色を設定
+    fetchUserFavoritesAndUpdateColors();
 
     // お気に入り登録ボタンのクリックイベントのリスナー
     favoriteButtons.forEach(button => {
-        console.log(button.dataset.shopId);
+        console.log(`Shop ID of the clicked button: ${button.dataset.shopId}`);
         button.addEventListener('click', function (event) {
             event.preventDefault();
-
-            // お気に入り登録のためのデータを取得
             const shopId = button.dataset.shopId;
-
-            // ハートの色を変更する前にお気に入り登録を行う
-            fetch('/shop/favorite/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({ shop_id: shopId }),
-                credentials: 'same-origin'
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                // お気に入り登録後に色を更新する
-                setFavoriteButtonColors();
-            })
-            .catch(error => {
-                console.error('Error', error);
-            });
+            updateDatabaseAndColors(shopId);
         },{ capture: true });
+    });
+
+    // ページがリロードされた場合を確認するログ
+    window.addEventListener('beforeunload', function() {
+        console.log('Page is about to be reloaded');
     });
 });

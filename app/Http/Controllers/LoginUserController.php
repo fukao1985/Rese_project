@@ -13,7 +13,8 @@ class LoginUserController extends Controller
         $userId = auth()->user()->id;
         $reservations = Reservation::where('user_id', $userId)->get();
         $favorites = Favorite::where('user_id', $userId)->get();
+        $userFavorites = auth()->user()->favorites()->pluck('shop_id')->toArray();
 
-        return view('private_page.my_page', compact('reservations', 'favorites'));
+        return view('private_page.my_page', compact('reservations', 'favorites', 'userFavorites'));
     }
 }

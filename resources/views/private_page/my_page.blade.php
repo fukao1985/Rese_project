@@ -47,7 +47,7 @@
         </header>
 </x-slot>
 {{-- mainに入る部分 --}}
-        <main id="main_container" class="flex justify-center mx-10">
+        <main id="main_container" class="flex justify-center mx-5">
             <div class="flex flex-col w-11/12 justify-center">
                 <h1 class="font-bold text-xl text-center mb-10">{{ Auth::user()->name  }}さん</h1>
                 <div class="w-full flex justify-between">
@@ -56,7 +56,7 @@
                     <div id="reservation" class="w-2/5">
                         <h2 class="font-semibold mb-5">予約状況</h2>
                         @foreach($reservations as $reservation)
-                        <div class="bg-blue-600 w-11/12 rounded p-6 mb-3 shadow-md">
+                        <div class="bg-blue-600 w-full rounded p-6 mb-3 shadow-md">
                             <div class="flex justify-between mb-5">
                                 <div class="flex">
                                     <i id="clock" class="text-white mr-5">
@@ -101,12 +101,13 @@
                     </div>
 
                     {{-- お気に入り状況 --}}
-                    <div id="farvorites" class=w-3/5>
-                        <h2 class="font-semibold mb-5">お気に入り状況</h2>
+                    <div id="farvorites" class="w-3/5 ml-10">
+                        <h2 class="font-semibold ml-5 mb-5">お気に入り状況</h2>
                         @if($favorites)
-                        @foreach($favorites as $favorite)
+                        <div class="flex justify-center">
                         <div class="w-full grid grid-cols-2">
-                            <div id="store_box" class="bg-white shadow-md rounded mb-3">
+                        @foreach($favorites as $favorite)
+                            <div id="store_box" class="bg-white shadow-md rounded mx-5 mb-3">
                                 <img src="{{ asset($favorite->shop->url) }}" alt="{{ $favorite->shop->name }}" class="rounded-t">
                                 <h2 class="text-lg font-semibold mt-4 px-4">{{ $favorite->shop->name }}</h2>
                                 <div class="flex">
@@ -120,7 +121,7 @@
                                     </form>
                                     <form action="{{ route('favorite.add') }}" method="POST">
                                     @csrf
-                                        <button type="submit" class="favorite-button text-gray-400 active:text-red-500 border-none" data-shop-id="{{ $favorite->shop->id }}">
+                                        <button class="favorite-button {{ in_array($favorite->shop->id, $userFavorites) ? 'text-red-500' : 'text-gray-400' }}" data-shop-id="{{ $favorite->shop->id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                                 <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                                             </svg>
@@ -128,8 +129,9 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
+                        </div>
+                        </div>
                         @endif
                     </div>
                 </div>

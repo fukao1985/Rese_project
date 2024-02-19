@@ -7,6 +7,8 @@ use App\Http\Requests\ShopCreateRequest;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;
+use App\Models\User;
+use App\Models\Favorite;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -19,8 +21,9 @@ class ShopController extends Controller
         $areas = Area::all();
         $genres = Genre::all();
         $shops = Shop::all();
+        $userFavorites = auth()->user()->favorites()->pluck('shop_id')->toArray();
 
-        return view('private_page.shop_list', compact('areas', 'genres', 'shops'));
+        return view('private_page.shop_list', compact('areas', 'genres', 'shops', 'userFavorites'));
     }
 
     // ログインユーザー検索処理
