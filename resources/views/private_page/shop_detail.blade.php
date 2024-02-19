@@ -58,6 +58,11 @@
                             <div class="flex flex-col mb-5">
                                 <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
                                 <input id="date" type="date" name="date" class="rounded w-7/12 mb-3">
+                                @error('date')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                                 <select id="time" type="time" name="time" class="rounded w-11/12 mb-3">
                                     <option value="">時間を選択してください</option>
                                     <option value="17:00">17:00</option>
@@ -72,6 +77,11 @@
                                     <option value="20:30">21:30</option>
                                     <option value="21:00">22:00</option>
                                 </select>
+                                @error('time')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                                 <select id="number" type="number" name="number" class="rounded w-11/12 mb-3">
                                     <option value="">人数を選択してください</option>
                                     <option value="1">1人</option>
@@ -85,6 +95,11 @@
                                     <option value="9">9人</option>
                                     <option value="10">10人</option>
                                 </select>
+                                @error('number')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                             <div id="confirm" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-40">
                                 <table class="text-white text-left w-full">

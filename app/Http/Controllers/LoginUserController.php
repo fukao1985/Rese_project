@@ -14,8 +14,6 @@ class LoginUserController extends Controller
         $reservations = Reservation::where('user_id', $userId)->get();
         $favorites = Favorite::where('user_id', $userId)->get();
 
-
-
         return view('private_page.my_page', compact('reservations', 'favorites'));
     }
 }

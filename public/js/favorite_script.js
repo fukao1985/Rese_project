@@ -1,45 +1,68 @@
-// お気に入り登録ボタンのクリックイベントのリスナーを追加
 document.addEventListener('DOMContentLoaded', function () {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const favoriteButtons = document.querySelectorAll('.favorite-button');
+    console.log(favoriteButtons);
+    console.log("adding active class");
+    console.log("removing active class");
+
+    function setFavoriteButtonColors() {
+        fetch('/user/favorites', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data received:", data); // デバッグ用：データを確認
+            favoriteButtons.forEach(button => {
+                const shopId = button.dataset.shopId;
+                console.log("Current shopId:", shopId); // デバッグ用：現在処理している店舗IDを確認
+                if (data.includes(parseInt(shopId))) {
+                    console.log("Adding active class"); // デバッグ用：activeクラスを追加する旨を確認
+                    button.classList.add('active');
+                } else {
+                    console.log("Removing active class"); // デバッグ用：activeクラスを削除する旨を確認
+                    button.classList.remove('active');
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error', error);
+        });
+    }
+
+    // ページ読み込み時にお気に入り登録状況を取得してハートの色を設定
+    setFavoriteButtonColors();
+
+    // お気に入り登録ボタンのクリックイベントのリスナー
     favoriteButtons.forEach(button => {
+        console.log(button.dataset.shopId);
         button.addEventListener('click', function (event) {
             event.preventDefault();
 
             // お気に入り登録のためのデータを取得
             const shopId = button.dataset.shopId;
 
-            // ここにconsole.log()を追加する
-            console.log('ハートのボタンがクリックされました。ショップID:', shopId);
-
-            // Ajaxリクエストを作成
-            const xhr = new XMLHttpRequest();
-            console.log('リクエストURL:', 'favorite/add');
-            xhr.open('POST', 'favorite/add');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            // CSRFトークンを追加
-            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-            console.log('CSRFトークン:', csrfToken);
-
-            // レスポンスを受け取った際の処理
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    alert(response.message);
-                    // ハートの色を変更
-                    if (button.classList.contains('active')) {
-                        button.classList.remove('active');
-                    } else {
-                        button.classList.add('active')
-                    }
-                } else {
-                    alert('エラーが発生しました');
-                }
-            };
-
-            // リクエストを送信
-            xhr.send(JSON.stringify({ shop_id: shopId }));
-            console.log('リクエストデータ:', { shop_id: shopId });
-        });
+            // ハートの色を変更する前にお気に入り登録を行う
+            fetch('/shop/favorite/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ shop_id: shopId }),
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // お気に入り登録後に色を更新する
+                setFavoriteButtonColors();
+            })
+            .catch(error => {
+                console.error('Error', error);
+            });
+        },{ capture: true });
     });
 });

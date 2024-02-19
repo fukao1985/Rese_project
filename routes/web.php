@@ -65,18 +65,25 @@ Route::post('/', [ShopController::class, 'guestShopList'])->name('guest.shop_lis
 // 店舗詳細ページの表示(ゲストユーザー用)
 Route::get('/guest/detail/{shop_id}', [ShopController::class, 'guestShopDetail'])->name('guest.detail');
 
-// お気に入り登録
-Route::middleware('web')->group(function () {
-    Route::middleware('auth')->post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
+// お気に入り登録・削除処理
+Route::middleware('auth')->group(function () {
+    Route::post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
+    Route::get('/user/favorites', [FavoriteController::class, 'getUserFavorites']);
 });
-// Route::post('/favorite/add', function () {
-//     dd('Reached route successfully');
+
+// Route::middleware('web')->group(function () {
+//     Route::middleware('auth')->post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
 // });
-// Route::post('/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
-// Route::delete('/favorite/remove/{favorite_id}', [FavoriteController::class, 'removeFromFavorites'])->name('favorite.remove');
+// // お気に入り登録状況を表示
+// Route::middleware('auth')->get('/user-favorites', [FavoriteController::class, 'getUserFavorites']);
+// Route::middleware(['auth'])->post('/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
+// Route::post('/shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
+// // お気に入り登録削除処理
+// Route::middleware(['auth'])->delete('/favorite/remove/{favorite_id}', [FavoriteController::class, 'removeFromFavorites'])->name('favorite.remove');
 
 // 予約処理
 Route::middleware(['auth'])->post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');
 // 予約完了画面の表示
 Route::middleware(['auth'])->get('/done', [ReservationController::class, 'done'])->name('done');
+// 予約削除処理
 Route::middleware(['auth'])->delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
