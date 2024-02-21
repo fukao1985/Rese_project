@@ -4,8 +4,8 @@
 <x-slot name="header">
     <div id="container" class="min-w-screen bg-gray-100">
         <header id="header_container" class="flex justify-center">
-            <div class="w-11/12 flex justify-between mb-10 mt-4">
-                <div id="logo" class="flex items-center">
+            <div class="w-11/12 flex flex-col md:flex-row justify-center md:justify-between mb-10 mt-4">
+                <div id="logo" class="flex items-center mb-6 md:mb-3">
                     <button id="button" type="button" class="bg-blue-600 rounded p-1.5 text-white m-2 shadow-md shadow-gray-700 z-20">
                         <i id="bars">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
@@ -27,7 +27,7 @@
                     </div>
                     <h1 class="text-3xl text-blue-600 font-black m-2">Rese</h1>
                 </div>
-                <form id="search_form" action="{{ route('guest.shop_list') }}" method="POST" class="bg-white w-1/2 shadow-md shadow-gray-400 flex rounded items-center">
+                <form id="search_form" action="{{ route('guest.shop_list') }}" method="POST" class="md:w-1/2 bg-white shadow-md rounded md:flex items-center">
                 @csrf
                     <!-- Arear セレクトボックス-->
                     <div class="mr-4 ml-4">
@@ -75,19 +75,19 @@
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
             <div class="w-11/12 flex justify-center">
-                <div class="w-full grid grid-cols-4 gap-4">
+                <div class="w-full grid grid-cols-1 md:grid-cols-4 md:gap-4">
                     @foreach ($shops as $shop)
                     <div id="store_box" class="bg-white shadow-md rounded">
                         <form action="{{ route('guest.detail', $shop->id) }}" method="GET">
                         @csrf
                             <img src="{{ asset($shop->url) }}" alt="{{ $shop->name }}" class="rounded-t">
                             <h2 class="text-lg font-semibold mt-4 px-4">{{ $shop->name }}</h2>
-                            <div class="flex">
+                            <div class="flex text-sm md:font-base">
                                 <p class="text-gray-600 mb-2 pl-4">#{{ $shop->area->area }}</p>
                                 <p class="text-gray-600 mb-2 pl-2">#{{ $shop->genre->genre }}</p>
                             </div>
                             <div class="flex justify-between items-center p-4">
-                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">詳しく見る</button>
+                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm md:font-base">詳しく見る</button>
                             <i class="text-gray-400">
                                 <a href="{{ route('login') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">

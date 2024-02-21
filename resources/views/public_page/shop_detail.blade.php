@@ -30,9 +30,9 @@
 </x-slot>
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
-            <div class="w-11/12 flex justify-center">
+            <div class="w-11/12 md:w-full flex justify-center">
                 {{-- 店舗詳細 --}}
-                <div class="w-5/12">
+                <div class="w-full md:w-5/12">
                     <h2 class="font-bold text-xl mb-2">{{ $selectShop->name }}</h2>
                     <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="pb-10">
                     <div class="flex">
