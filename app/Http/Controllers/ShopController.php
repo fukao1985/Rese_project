@@ -22,8 +22,18 @@ class ShopController extends Controller
         $genres = Genre::all();
         $shops = Shop::all();
         $userFavorites = auth()->user()->favorites()->pluck('shop_id')->toArray();
+        $shopId = $request->input('shop_id');
+        $favorites = Favorite::where('user_id', auth()->id())
+            ->whereIn('shop_id', $shops->pluck('id'))
+            ->get()
+            ->keyBy('shop_id');
 
-        return view('private_page.shop_list', compact('areas', 'genres', 'shops', 'userFavorites'));
+        $isFavorite = [];
+        foreach ($shops as $shop) {
+            $isFavorite[$shop->id] = $favorites->has($shop->id) ? $favorites[$shop->id]->id : null;
+        }
+
+        return view('private_page.shop_list', compact('areas', 'genres', 'shops', 'isFavorite'));
     }
 
     // ログインユーザー検索処理

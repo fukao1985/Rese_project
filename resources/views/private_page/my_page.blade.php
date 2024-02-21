@@ -1,6 +1,10 @@
 <x-app-layout>
 
-<div class="flex justify-center mb-3">
+@if(session()->has('script'))
+    {!! session('script') !!}
+@endif
+
+{{-- <div class="flex justify-center mb-3">
 @if (session()->has('error'))
 <div class="alert alert-danger w-2/6 h-12 flex items-center justify-center text-red-800 bg-red-200 rounded">
     {{ session('error') }}
@@ -11,7 +15,7 @@
         {{ session('success') }}
     </div>
 @endif
-</div>
+</div> --}}
 
 {{-- headerに入る部分 --}}
 <x-slot name="header">
@@ -119,9 +123,11 @@
                                     @csrf
                                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">詳しく見る</button>
                                     </form>
-                                    <form action="{{ route('favorite.add') }}" method="POST">
+                                    <form action="{{ route('favorite.remove', $favorite->id) }}" method="POST">
                                     @csrf
-                                        <button class="favorite-button {{ in_array($favorite->shop->id, $userFavorites) ? 'text-red-500' : 'text-gray-400' }}" data-shop-id="{{ $favorite->shop->id }}">
+                                    @method('delete')
+                                        {{-- <button class="favorite-button {{ in_array($favorite->shop->id, $userFavorites) ? 'text-red-500' : 'text-gray-400' }}" data-shop-id="{{ $favorite->shop->id }}"> --}}
+                                            <button type="submit" class="text-red-500" >
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                                 <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                                             </svg>

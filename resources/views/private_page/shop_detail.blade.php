@@ -1,5 +1,9 @@
 <x-app-layout>
 
+@if(session()->has('script'))
+    {!! session('script') !!}
+@endif
+
 {{-- headerに入る部分 --}}
 <x-slot name="header">
     <div id="container" class="min-w-screen bg-gray-100">

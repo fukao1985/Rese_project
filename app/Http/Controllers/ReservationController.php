@@ -11,7 +11,9 @@ class ReservationController extends Controller
     // 予約処理
     public function createReservation(ReservationRequest $request) {
         if (session()->has('reservation_submitted')) {
-            return redirect()->back()->with('error', '予約はすでに送信されています');
+            $script = "<script>alert('予約はすでに送信されています');</script>";
+
+            return redirect()->back()->with('script', $script);
         }
 
         $userId = auth()->user()->id;
@@ -28,16 +30,13 @@ class ReservationController extends Controller
         return view('private_page.done');
     }
 
-    // 予約削除処理
+    // 予約削除
     public function deleteReservation($id) {
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
 
-        return redirect()->back()->with('success', '予約を削除しました');
-    }
+        $script = "<script>alert('予約を削除しました');</script>";
 
-    // // 予約完了ページの表示
-    // public function done() {
-    //     return view('private_page.done');
-    // }
+        return redirect()->back()->with('script', $script);
+    }
 }

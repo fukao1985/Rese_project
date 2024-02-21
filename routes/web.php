@@ -69,6 +69,7 @@ Route::get('/guest/detail/{shop_id}', [ShopController::class, 'guestShopDetail']
 Route::middleware('auth')->group(function () {
     Route::post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
     Route::get('/user/favorites', [FavoriteController::class, 'getUserFavorites']);
+    Route::delete('/favorite/remove/{favorite_id}', [FavoriteController::class, 'removeFromFavorites'])->name('favorite.remove');
 });
 
 // Route::middleware('web')->group(function () {

@@ -9,6 +9,7 @@ use App\Models\Favorite;
 
 class LoginUserController extends Controller
 {
+    // マイページの表示
     public function showMyPage() {
         $userId = auth()->user()->id;
         $reservations = Reservation::where('user_id', $userId)->get();
@@ -18,3 +19,4 @@ class LoginUserController extends Controller
         return view('private_page.my_page', compact('reservations', 'favorites', 'userFavorites'));
     }
 }
+
