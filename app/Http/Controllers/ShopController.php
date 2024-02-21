@@ -98,8 +98,10 @@ class ShopController extends Controller
     }
 
     // ゲストユーザー用店舗詳細ページの表示
-    public function guestShopDetail() {
-        return view('public_page.shop_detail');
+    public function guestShopDetail($shop_id) {
+        $selectShop = Shop::where('id', $shop_id)->first();
+
+        return view('public_page.shop_detail', compact('selectShop'));
     }
 
     // 店舗情報編集ページ表示

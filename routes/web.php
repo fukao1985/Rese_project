@@ -41,22 +41,43 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// thanksページの表示
-Route::get('/thanks', [RegisteredUserController::class, 'index'])->name('thanks');
 
-// my_pageの表示
-Route::middleware(['auth'])->get('/my_page', [LoginUserController::class, 'showMyPage'])->name('my_page');
+// ログインユーザー用
+Route::middleware('auth')->group(function () {
+    // thanksページの表示
+    Route::get('/thanks', [RegisteredUserController::class, 'index'])->name('thanks');
 
-// 店舗一覧ページ(ログインユーザートップページ)表示
-Route::middleware(['auth'])->get('/shop/index', [ShopController::class, 'userTop'])->name('user.top');
-// 店舗検索処理(ログインユーザートップページ)
-Route::middleware(['auth'])->post('/shop/index', [ShopController::class, 'getShopList'])->name('get.shop_list');
-// 店舗詳細ページの表示(ログインユーザー用)
-Route::middleware(['auth'])->get('/detail/{shop_id}', [ShopController::class, 'shopDetail'])->name('shop.detail');
+    // 店舗一覧ページ(ログインユーザートップページ)表示
+    Route::get('/shop/index', [ShopController::class, 'userTop'])->name('user.top');
+    // 店舗検索処理(ログインユーザートップページ)
+    Route::post('/shop/index', [ShopController::class, 'getShopList'])->name('get.shop_list');
+    // 店舗詳細ページの表示(ログインユーザー用)
+    Route::get('/detail/{shop_id}', [ShopController::class, 'shopDetail'])->name('shop.detail');
+
+    // my_pageの表示
+    Route::get('/my_page', [LoginUserController::class, 'showMyPage'])->name('my_page');
+
+    // shop_listでのお気に入り登録/削除
+    Route::post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
+    // マイページでのお気に入り削除
+    Route::delete('/favorite/remove/{favorite_id}', [FavoriteController::class, 'removeFromFavorites'])->name('favorite.remove');
+
+    // 予約処理
+    Route::post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');
+    // 予約完了ページの表示
+    Route::get('/done', [ReservationController::class, 'done'])->name('done');
+    // 予約削除処理
+    Route::delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
+    // 予約変更処理
+    Route::post('/reservation/update/{reservation_id}', [ReservationController::class, 'updateReservation'])->name('reservation.update');
+});
+
+// 店舗オーナーのみ可能な処理
 // 店舗情報追加ページ(店舗管理者ページトップ)の表示
 Route::get('/shop/management', [ShopController::class, 'shopManagement'])->name('shop_management');
 // 店舗情報追加
 Route::post('/shop/create', [ShopController::class, 'shopCreate'])->name('shop.create');
+
 
 // 店舗一覧ページ(ゲストユーザートップページ)表示
 Route::get('/', [ShopController::class, 'guestTop'])->name('guest.top');
@@ -65,26 +86,19 @@ Route::post('/', [ShopController::class, 'guestShopList'])->name('guest.shop_lis
 // 店舗詳細ページの表示(ゲストユーザー用)
 Route::get('/guest/detail/{shop_id}', [ShopController::class, 'guestShopDetail'])->name('guest.detail');
 
-// お気に入り登録・削除処理
-Route::middleware('auth')->group(function () {
-    Route::post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
-    Route::get('/user/favorites', [FavoriteController::class, 'getUserFavorites']);
-    Route::delete('/favorite/remove/{favorite_id}', [FavoriteController::class, 'removeFromFavorites'])->name('favorite.remove');
-});
 
-// Route::middleware('web')->group(function () {
-//     Route::middleware('auth')->post('shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
-// });
-// // お気に入り登録状況を表示
-// Route::middleware('auth')->get('/user-favorites', [FavoriteController::class, 'getUserFavorites']);
-// Route::middleware(['auth'])->post('/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
-// Route::post('/shop/favorite/add', [FavoriteController::class, 'addToFavorites'])->name('favorite.add');
-// // お気に入り登録削除処理
-// Route::middleware(['auth'])->delete('/favorite/remove/{favorite_id}', [FavoriteController::class, 'removeFromFavorites'])->name('favorite.remove');
+// // 予約処理
+// Route::middleware(['auth'])->post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');
+// // 予約完了画面の表示
+// Route::middleware(['auth'])->get('/done', [ReservationController::class, 'done'])->name('done');
+// // 予約削除処理
+// Route::middleware(['auth'])->delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
+// my_pageの表示
+// Route::middleware(['auth'])->get('/my_page', [LoginUserController::class, 'showMyPage'])->name('my_page');
 
-// 予約処理
-Route::middleware(['auth'])->post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');
-// 予約完了画面の表示
-Route::middleware(['auth'])->get('/done', [ReservationController::class, 'done'])->name('done');
-// 予約削除処理
-Route::middleware(['auth'])->delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
+// 店舗一覧ページ(ログインユーザートップページ)表示
+// Route::middleware(['auth'])->get('/shop/index', [ShopController::class, 'userTop'])->name('user.top');
+// 店舗検索処理(ログインユーザートップページ)
+// Route::middleware(['auth'])->post('/shop/index', [ShopController::class, 'getShopList'])->name('get.shop_list');
+// 店舗詳細ページの表示(ログインユーザー用)
+// Route::middleware(['auth'])->get('/detail/{shop_id}', [ShopController::class, 'shopDetail'])->name('shop.detail');

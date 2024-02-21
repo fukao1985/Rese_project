@@ -30,12 +30,28 @@ class ReservationController extends Controller
         return view('private_page.done');
     }
 
-    // 予約削除
+    // 予約削除処理
     public function deleteReservation($id) {
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
 
         $script = "<script>alert('予約を削除しました');</script>";
+
+        return redirect()->back()->with('script', $script);
+    }
+
+    // 予約変更処理
+    public function updateReservation(ReservationRequest $request, $id) {
+        $reservation = Reservation::findOrFail($id);
+        $userId = auth()->user()->id;
+        $reservation->update([
+            'user_id' => $userId,
+            'shop_id' => $request->shop_id,
+            'date' => $request->date,
+            'time' => $request->time,
+            'number' => $request->number
+        ]);
+        $script = "<script>alert('予約を変更しました');</script>";
 
         return redirect()->back()->with('script', $script);
     }

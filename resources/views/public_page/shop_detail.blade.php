@@ -31,9 +31,17 @@
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
             <div class="w-11/12 flex justify-center">
-                <div class="bg-white h-auto w-1/3 rounded shadow-md shadow-gray-400 p-8 flex flex-col items-center">
-                    <p class="text-xl mt-10 mb-4">ゲストユーザー用お店詳細ページです</p>
-                    <button type="button" class="bg-blue-600 text-white mb-10 mt-4 px-4 py-2 rounded">ログインする</button>
+                {{-- 店舗詳細 --}}
+                <div class="w-5/12">
+                    <h2 class="font-bold text-xl mb-2">{{ $selectShop->name }}</h2>
+                    <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="pb-10">
+                    <div class="flex">
+                            <p class="text-gray-800 text-sm mb-2">#{{ $selectShop->area->area }}</p>
+                            <p class="text-gray-800 text-sm pl-1 mb-2">#{{ $selectShop->genre->genre }}</p>
+                    </div>
+                    <p class="text-gray-800 text-sm mt-5 mb-2">{{ $selectShop->comment }}</p>
+                    {{-- ここにデータベースから取得した評価&ユーザーコメントを入れる --}}
+                    <div id="rating"></div>
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>

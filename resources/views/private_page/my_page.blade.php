@@ -4,19 +4,6 @@
     {!! session('script') !!}
 @endif
 
-{{-- <div class="flex justify-center mb-3">
-@if (session()->has('error'))
-<div class="alert alert-danger w-2/6 h-12 flex items-center justify-center text-red-800 bg-red-200 rounded">
-    {{ session('error') }}
-</div>
-@endif
-@if (session()->has('success'))
-    <div class="alert alert-success w-2/6 h-12 flex items-center justify-center text-green-800 bg-green-200 rounded">
-        {{ session('success') }}
-    </div>
-@endif
-</div> --}}
-
 {{-- headerに入る部分 --}}
 <x-slot name="header">
     <div id="container" class="min-w-screen bg-gray-100">
@@ -50,6 +37,7 @@
             </div>
         </header>
 </x-slot>
+
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center mx-5">
             <div class="flex flex-col w-11/12 justify-center">
@@ -100,6 +88,57 @@
                                     <td class="w-4/6">{{ $reservation->number }}</td>
                                 </tr>
                             </table>
+                            {{-- 予約変更フォーム --}}
+                            <div id="reservation_update-form" class="flex flex-col my-5 mt-8">
+                                <form action="{{ route('reservation.update', $reservation->id) }}" method="POST">
+                                @csrf
+                                    <input type="hidden" name="shop_id" value="{{ $reservation->shop->id }}">
+                                    <input id="date" type="date" name="date" class="rounded w-7/12 mb-3">
+                                    @error('date')
+                                    <div class="text-red-600 text-sm h-4 flex justify-center">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <select id="time" type="time" name="time" class="rounded w-11/12 mb-3">
+                                        <option value="">時間を選択してください</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="17:30">17:30</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="18:30">18:30</option>
+                                        <option value="19:00">19:00</option>
+                                        <option value="18:30">19:30</option>
+                                        <option value="20:00">20:00</option>
+                                        <option value="20:30">20:30</option>
+                                        <option value="21:00">21:00</option>
+                                        <option value="20:30">21:30</option>
+                                        <option value="21:00">22:00</option>
+                                    </select>
+                                    @error('time')
+                                    <div class="text-red-600 text-sm h-4 flex justify-center">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <select id="number" type="number" name="number" class="rounded w-11/12 mb-3">
+                                        <option value="">人数を選択してください</option>
+                                        <option value="1">1人</option>
+                                        <option value="2">2人</option>
+                                        <option value="3">3人</option>
+                                        <option value="4">4人</option>
+                                        <option value="5">5人</option>
+                                        <option value="6">6人</option>
+                                        <option value="7">7人</option>
+                                        <option value="8">8人</option>
+                                        <option value="9">9人</option>
+                                        <option value="10">10人</option>
+                                    </select>
+                                    @error('number')
+                                    <div class="text-red-600 text-sm h-4 flex justify-center">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <button type="submit" class="w-full bg-blue-700 font-semibold text-white p-4 rounded-b">予約を変更する</button>
+                                </form>
+                            </div>
                         </div>
                         @endforeach
                     </div>
