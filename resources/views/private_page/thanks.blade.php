@@ -36,8 +36,8 @@
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
             <div class="w-11/12 flex justify-center">
-                <div class="bg-white h-auto w-1/3 rounded shadow-md shadow-gray-400 p-8 flex flex-col items-center">
-                    <p class="text-xl mt-10 mb-4">会員登録ありがとうございます</p>
+                <div class="bg-white h-auto w-2/3 md:w-5/12 rounded shadow-md shadow-gray-400 p-8 flex flex-col items-center">
+                    <p class="text-sm md:font-base md:text-base mt-10 mb-4">会員登録ありがとうございます</p>
                     <button type="button" class="bg-blue-600 text-white mb-10 mt-4 px-4 py-2 rounded">
                         <a href="{{ route('login') }}">ログインする</a>
                     </button>

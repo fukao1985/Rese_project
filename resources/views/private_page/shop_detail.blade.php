@@ -39,9 +39,9 @@
 </x-slot>
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
-            <div class="w-11/12 flex justify-between">
+            <div class="w-11/12 flex flex-col justify-center md:flex-row md:justify-between">
                 {{-- 店舗詳細 --}}
-                <div class="w-5/12">
+                <div class="w-full md:w-5/12">
                     <h2 class="font-bold text-xl mb-2">{{ $selectShop->name }}</h2>
                     <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="pb-10">
                     <div class="flex">
@@ -54,7 +54,7 @@
                 </div>
 
                 {{-- 予約フォーム --}}
-                <div class="w-6/12">
+                <div class="w-full md:w-6/12">
                     <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full">
                     @csrf
                         <div class="bg-blue-600 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">

@@ -52,10 +52,10 @@ Laravel sail に含まれる MailPit 機能を使用してご確認いただけ�
 -   Laravel Breeze
 -   PHP 8.3.2-1
 -   Tailwind CSS
--   Javascript<br>
+-   Javascript 10.3.0<br>
     ・ハンバーガーメニュー<br>
-    ・トップページでのEnterでの検索<br>
-    ・予約フォームでの入力内容確認欄への反映<br>
+    ・トップページでのEnter検索<br>
+    ・入力内容確認欄(予約フォーム内)への即時反映<br>
     ・alert message　のみ
 -
 -

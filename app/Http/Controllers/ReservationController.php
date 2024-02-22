@@ -55,4 +55,9 @@ class ReservationController extends Controller
 
         return redirect()->back()->with('script', $script);
     }
+
+    // 予約完了ページの表示
+    public function done() {
+        return view('private_page.done');
+    }
 }

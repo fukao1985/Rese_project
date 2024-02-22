@@ -53,4 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Favorite::class);
     }
 
+    // reviewsテーブルとのリレーション
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
 }

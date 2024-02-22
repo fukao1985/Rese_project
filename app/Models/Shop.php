@@ -42,6 +42,11 @@ class Shop extends Model
         return $this->belongsTo(Genre::class);
     }
 
+    // reviewsテーブルとのリレーション
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
     // 検索機能の定義
     // public function scopeAreaSearch($query, $area_id)
     // {

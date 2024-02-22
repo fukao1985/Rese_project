@@ -39,7 +39,7 @@
                         </select>
                     </div>
 
-                    <div class="text-gray-200">|</div>
+                    <div class="text-white md:text-gray-200">|</div>
 
                     <!-- Genre セレクトボックス-->
                     <div class="mr-4 ml-4">
@@ -51,7 +51,7 @@
                         </select>
                     </div>
 
-                    <div class="text-gray-200">|</div>
+                    <div class="text-white md:text-gray-200">|</div>
 
                     <!-- Search wind -->
                     <div class="flex justify-left items-center mr-8 ml-8">
@@ -63,9 +63,6 @@
                         </i>
                         </button>
                         <input id="name" type="name" name="name" placeholder="Search..." class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" value="{{ old('name') }}" autocomplete="off"/>
-                    </div>
-                    <div class="flex justify-center">
-                        <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
                     </div>
                 </form>
             </div>

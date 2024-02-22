@@ -42,10 +42,10 @@
         <main id="main_container" class="flex justify-center mx-5">
             <div class="flex flex-col w-11/12 justify-center">
                 <h1 class="font-bold text-xl text-center mb-10">{{ Auth::user()->name  }}さん</h1>
-                <div class="w-full flex justify-between">
+                <div class="w-full flex flex-col md:flex-row md:justify-between">
 
                     {{-- 予約状況 --}}
-                    <div id="reservation" class="w-2/5">
+                    <div id="reservation" class="w-full md:w-2/5">
                         <h2 class="font-semibold mb-5">予約状況</h2>
                         @foreach($reservations as $reservation)
                         <div class="bg-blue-600 w-full rounded p-6 mb-3 shadow-md">
@@ -144,23 +144,23 @@
                     </div>
 
                     {{-- お気に入り状況 --}}
-                    <div id="farvorites" class="w-3/5 ml-10">
-                        <h2 class="font-semibold ml-5 mb-5">お気に入り状況</h2>
+                    <div id="farvorites" class="w-full md:w-3/5 md:ml-10">
+                        <h2 class="font-semibold mt-10 md:mt-0 md:ml-5 mb-5">お気に入り状況</h2>
                         @if($favorites)
-                        <div class="flex justify-center">
-                        <div class="w-full grid grid-cols-2">
+                        <div class="flex text-center md:justify-center">
+                        <div class="w-full grid grid-cols-1 md:grid-cols-2">
                         @foreach($favorites as $favorite)
                             <div id="store_box" class="bg-white shadow-md rounded mx-5 mb-3">
                                 <img src="{{ asset($favorite->shop->url) }}" alt="{{ $favorite->shop->name }}" class="rounded-t">
                                 <h2 class="text-lg font-semibold mt-4 px-4">{{ $favorite->shop->name }}</h2>
-                                <div class="flex">
+                                <div class="flex text-sm md:font-base">
                                     <p class="text-gray-600 mb-2 pl-4">#{{ $favorite->shop->area->area }}</p>
                                     <p class="text-gray-600 mb-2 pl-2">#{{ $favorite->shop->genre->genre }}</p>
                                 </div>
                                 <div class="flex justify-between items-center p-4">
                                     <form action="{{ route('shop.detail', $favorite->shop->id) }}" method="GET">
                                     @csrf
-                                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">詳しく見る</button>
+                                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm md:font-base">詳しく見る</button>
                                     </form>
                                     <form action="{{ route('favorite.remove', $favorite->id) }}" method="POST">
                                     @csrf

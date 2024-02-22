@@ -28,6 +28,11 @@ Route::middleware(['web'])->get('/',function () {
     }
 });
 
+// ログインユーザーが'/'にアクセスした場合
+Route::middleware(['auth:sanctum', 'verified'])->get('/', function() {
+    return redirect()->route('user.top');
+});
+
 // ログインユーザー
 Route::middleware(['auth:sanctum', 'verified'])->get('/shop/index', function () {
     return view('private_page.shop_list');
