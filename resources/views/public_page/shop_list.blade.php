@@ -74,7 +74,7 @@
             <div class="w-11/12 flex justify-center">
                 <div class="w-full grid grid-cols-1 md:grid-cols-4 md:gap-4">
                     @foreach ($shops as $shop)
-                    <div id="store_box" class="bg-white shadow-md rounded">
+                    <div id="store_box" class="bg-white shadow-md mb-5 rounded">
                         <form action="{{ route('guest.detail', $shop->id) }}" method="GET">
                         @csrf
                             <img src="{{ asset($shop->url) }}" alt="{{ $shop->name }}" class="rounded-t">

@@ -92,6 +92,7 @@
                             <div id="reservation_update-form" class="flex flex-col my-5 mt-8">
                                 <form action="{{ route('reservation.update', $reservation->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                     <input type="hidden" name="shop_id" value="{{ $reservation->shop->id }}">
                                     <input id="date" type="date" name="date" class="rounded w-7/12 mb-3">
                                     @error('date')

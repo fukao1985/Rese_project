@@ -34,7 +34,7 @@ class ReviewRequest extends FormRequest
             'user_name.required' => 'ユーザー名を必ず入力してください',
             'user_name.string' => '有効な文字形式で入力してください',
             'user_name.max' => '191文字以内で入力してください',
-            'ranting.required' => '必ず選択してください',
+            'ranting.required' => '必ず点数を選択してください',
             'ranting.integer' => '有効な整数を選択してください',
             'ranting.min' => '1以上の整数を選択してください',
             'ranting.max' => '5以下の整数を選択してください',

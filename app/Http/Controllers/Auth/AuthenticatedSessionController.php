@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
             return back()->withErrors($errors)->withInput();
         }
 
-        return redirect('user.top');
+        return redirect('/shop/index');
     }
 
     /**

@@ -48,9 +48,33 @@
                             <p class="text-gray-800 text-sm mb-2">#{{ $selectShop->area->area }}</p>
                             <p class="text-gray-800 text-sm pl-1 mb-2">#{{ $selectShop->genre->genre }}</p>
                     </div>
-                    <p class="text-gray-800 text-sm mt-5 mb-2">{{ $selectShop->comment }}</p>
-                    {{-- ここにデータベースから取得した評価&ユーザーコメントを入れる --}}
-                    <div id="rating"></div>
+                    <p class="text-gray-800 text-sm mt-5 mb-3">{{ $selectShop->comment }}</p>
+
+                    {{-- 利用者のレビューがあれば表示 --}}
+                    @if($selectShop->reviews && $selectShop->reviews->count() > 0)
+                    <div id="review" class="bg-gray-200 w-full h-auto p-2 rounded mb-5">
+                        @foreach($reviews as $review)
+                        <p class="text-gray-600 text-sm font-bold">{{ $review->user_name }}</p>
+                        <div id="ranting" class="flex items-center">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $review->ranting)
+                                    <p class="text-yellow-500">★</p>
+                                @else
+                                    <p class="text-gray-400">★</p>
+                                @endif
+                            @endfor
+                            <p class="text-blue-700 text-sm font-bold ml-1">{{ $review->ranting }}</p>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-2">{{ $review->comment }}</p>
+                        <div class="border border-gray-300 w-full my-1"></div>
+                        @endforeach
+                        {{-- ページネーション --}}
+                        <div id="pagination" class="flex w-full overflow-x-auto text-">
+                        {{-- {{ $selectShop->reviews()->paginate(5)->links() }} --}}
+                        {{ $selectShop->reviews()->paginate(5)->links() }}
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 {{-- 予約フォーム --}}
@@ -105,7 +129,7 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div id="confirm" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-40">
+                            <div id="confirm" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-28">
                                 <table class="text-white text-left w-full">
                                     <tr class="mb-2">
                                         <th class="w-2/6">Shop</th>
@@ -128,10 +152,48 @@
                         </div>
                         <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
                     </form>
+                    {{-- ログインユーザーがこのお店を利用したことがある場合はレビュー入力フォーム --}}
+                    @if($hasReservation)
+                    <form action="{{ route('review.create') }}" method="POST" class="w-full">
+                    @csrf
+                        <div class="bg-blue-400 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
+                            <div class="flex flex-col mb-5">
+                                <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
+                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded w-7/12 mb-3 pl-2" placeholder="ユーザーネームを入力してください">
+                                @error('user_name')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                                <select id="ranting" type="ranting" name="ranting" class="rounded w-11/12 mb-3">
+                                    <option value="">評価を選択してください</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                @error('ranting')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                                    <textarea name="comment" id="comment" cols="30" rows="5" class="rounded" placeholder="コメントを入力してください">
+                                        @if(old('comment'))
+                                            {{ old('comment') }}
+                                        @endif
+                                    </textarea>
+                                @error('comment')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 font-semibold text-white mb-10 p-4 rounded-b">レビューを書く</button>
+                    </form>
+                    @endif
                 </div>
-
-                {{-- ここに利用後のお店の場合は評価&ユーザーコメント入力フォーム --}}
-                {{-- <div id="ranting-form"></div> --}}
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
             <script src="{{ asset('js/confirm_script.js') }}" defer></script>

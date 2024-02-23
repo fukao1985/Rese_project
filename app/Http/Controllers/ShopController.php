@@ -9,6 +9,7 @@ use App\Models\Genre;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Favorite;
+use App\Models\Reservation;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -60,9 +61,21 @@ class ShopController extends Controller
 
     // ログインユーザー用店舗詳細ページの表示
     public function shopDetail($shop_id) {
-        $selectShop = Shop::where('id', $shop_id)->first();
+        // $selectShop = Shop::where('id', $shop_id)->first();
+        $selectShop = Shop::findOrFail($shop_id);
 
-        return view('private_page.shop_detail', compact('selectShop'));
+        // selectShopに対するレビューがあればレビューを取得(5件ごとのページネーション)
+        // $reviews = $selectShop->reviews()->paginate(5);
+        $reviews = $selectShop->reviews()->simplePaginate(5);
+
+        // レビュー入力フォーム表示判定(ログインユーザーがselectShopを利用したかどうかを確認)
+        $userId = auth()->user()->id;
+        $hasReservation = Reservation::where('shop_id', $shop_id)
+        ->where('user_id', $userId)
+        ->whereDate('date', '<', now())
+        ->exists();
+
+        return view('private_page.shop_detail', compact('selectShop', 'reviews', 'hasReservation'));
     }
 
     // ゲストユーザートップ(店舗一覧ページ)の表示

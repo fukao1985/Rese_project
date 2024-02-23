@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -74,7 +75,10 @@ Route::middleware('auth')->group(function () {
     // 予約削除処理
     Route::delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
     // 予約変更処理
-    Route::post('/reservation/update/{reservation_id}', [ReservationController::class, 'updateReservation'])->name('reservation.update');
+    Route::put('/reservation/update/{reservation_id}', [ReservationController::class, 'updateReservation'])->name('reservation.update');
+
+    // 利用店のレビュー作成
+    Route::post('/review/create', [ReviewController::class, 'createReview'])->name('review.create');
 });
 
 // 店舗オーナーのみ可能な処理
