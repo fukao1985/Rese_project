@@ -65,8 +65,7 @@ class ShopController extends Controller
         $selectShop = Shop::findOrFail($shop_id);
 
         // selectShopに対するレビューがあればレビューを取得(5件ごとのページネーション)
-        // $reviews = $selectShop->reviews()->paginate(5);
-        $reviews = $selectShop->reviews()->simplePaginate(5);
+        $reviews = $selectShop->reviews()->paginate(5);
 
         // レビュー入力フォーム表示判定(ログインユーザーがselectShopを利用したかどうかを確認)
         $userId = auth()->user()->id;

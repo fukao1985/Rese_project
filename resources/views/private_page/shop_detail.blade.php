@@ -69,7 +69,7 @@
                         <div class="border border-gray-300 w-full my-1"></div>
                         @endforeach
                         {{-- ページネーション --}}
-                        <div id="pagination" class="flex w-full overflow-x-auto text-">
+                        <div id="pagination" class="flex w-full overflow-x-auto text-sm">
                         {{-- {{ $selectShop->reviews()->paginate(5)->links() }} --}}
                         {{ $selectShop->reviews()->paginate(5)->links() }}
                         </div>
