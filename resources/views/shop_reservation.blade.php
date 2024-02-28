@@ -51,105 +51,42 @@
         </header>
 </x-slot>
 
-
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
                 <div class="w-11/12 flex justify-center">
-                    <div class="bg-white h-auto w-2/3 md:w-2/5 rounded shadow-md shadow-gray-400 flex flex-col">
+                    <div class="bg-white h-auto w-full md:w-11/12 rounded shadow-md shadow-gray-400 flex flex-col pb-20">
                         <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
-                            <p class="text-l text-white pl-6">Shop create</p>
+                            <p class="text-l text-white pl-6">予約情報一覧</p>
                         </div>
 
-                <form method="POST" action="{{ route('shop.create') }}" enctype="multipart/form-data">
+                <form method="POST" action="">
                 @csrf
 
                     <div class="flex flex-col justify-center w-full">
-                        <!-- Shopname -->
+                        <!-- Title -->
                         <div class="flex justify-between items-center mr-8 ml-8">
-                            <label for="name" :value="__('name')" class="text-gray-500 pr-1">Shop name</label>
-                            <input id="name" type="name" name="name" value="{{ old('name') }}" class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
+                            <label for="title" :value="__('title')" class="text-gray-500 pr-1">予約情報一覧</label>
+                            <input id="title" type="title" name="title" value="{{ old('title') }}" class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
                         </div>
                         <div class="flex justify-center">
                             <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
                         </div>
-                        @error('name')
+                        @error('title')
                             <div class="text-red-600 text-sm h-4 flex justify-center">
                                 {{ $message }}
                             </div>
                         @enderror
 
-                        <!-- Arear セレクトボックス-->
-                        <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="area_id" :value="__('area')" class="text-gray-500 pr-1">Area</label>
-                            <select name="area_id" id="area_id" class="text-gray-500 border-gray-500 rounded" required>
-                                <option value="">選択してください</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->area }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('area_id')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- Genre セレクトボックス-->
-                        <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="genre_id" :value="__('genre')" class="text-gray-500 pr-1">Genre</label>
-                            <select name="genre_id" id="genre_id" class="text-gray-500 border-gray-500 rounded" required>
-                                <option value="">選択してください</option>
-                                @foreach ($genres as $genre)
-                                    <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('genre_id')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- Comment -->
+                        <!-- message -->
                         <div class="flex justify-between items-center ml-8 mr-8 mt-5">
-                            <label for="comment" :value="__('comment')" class="text-gray-500 pr-1">Comment</label>
-                            <textarea id="commnet" name="comment" cols="30" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('comment') }}</textarea>
+                            <label for="message" :value="__('message')" class="text-gray-500 pr-1">Main Message</label>
+                            <textarea id="message" name="message" cols="80" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('message') }}</textarea>
                         </div>
-                        @error('comment')
+                        @error('message')
                             <div class="text-red-600 text-sm h-4 flex justify-center">
                                 {{ $message }}
                             </div>
                         @enderror
-
-                        <!-- Image url -->
-                        <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="url" class="text-gray-500 pr-1">Image url</label>
-                            <input id="url" type="text" name="url" class="focus:outline-none text-gray-500 w-9/12 p-1 border-none" value="{{ old('url') }}"/>
-                        </div>
-                        <div class="flex justify-center">
-                            <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-8/12"></div>
-                        </div>
-                        @error('url')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- Image File -->
-                        <div class="flex justify-between items-center mr-8 ml-8 mt-5">
-                            <label for="file" :value="__('file')" class="text-gray-500 pr-1">Image file</label>
-                            <input id="file" type="file" name="file" class="focus:outline-none text-gray-500 w-7/12 p-1" />
-                        </div>
-                        @error('file')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- Button -->
-                        <div class="w-2/3 m-auto text-right mr-8 ml-auto">
-                            <button type="submit" class="bg-blue-600 w-1/3 text-white mt-6 mb-4 py-1.5 rounded">登録</button>
-                        </div>
                     </div>
                 </form>
                 <script src="{{ asset('js/menu_script.js') }}" defer></script>

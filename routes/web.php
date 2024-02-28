@@ -8,6 +8,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ShopRepresentativeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,9 +84,19 @@ Route::middleware('auth')->group(function () {
 
 // 店舗オーナーのみ可能な処理
 // 店舗情報追加ページ(店舗管理者ページトップ)の表示
-Route::get('/shop/management', [ShopController::class, 'shopManagement'])->name('shop_management');
+Route::get('/shop/management', [ShopRepresentativeController::class, 'shopManagement'])->name('shop_management');
 // 店舗情報追加
-Route::post('/shop/create', [ShopController::class, 'shopCreate'])->name('shop.create');
+Route::post('/shop/create', [ShopRepresentativeController::class, 'shopCreate'])->name('shop.create');
+// お知らせメール送信フォームページ表示
+Route::get('/send/form', [ShopRepresentativeController::class, 'sendForm'])->name('send.form');
+// // 店舗からのお知らせメール送信 ★店舗オーナーの認証が済み次第作成★
+// Route::post('/send/campaign_notification', [ShopRepresentativeController::class, 'sendCampaignNotification'])->name('send.campaign');
+// 店舗情報更新ページ表示
+Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInformation'])->name('shop.info');
+// 店舗予約一覧ページを表示
+Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReservationIndex'])->name('reservation.index');
+
+
 
 
 // 店舗一覧ページ(ゲストユーザートップページ)表示
