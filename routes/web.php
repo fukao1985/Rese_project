@@ -102,8 +102,8 @@ Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReser
 // システム管理者のみアクセス可能な処理
 // システム管理者ページ表示
 Route::get('/management', [SystemManagerController::class, 'managementTop'])->name('management.top');
-// 店舗代表者にしたいユーザーのアカウントを検索
-Route::get('/user/search', [SystemManagerController::class, 'userSearch'])->name('user.search');
+// // 店舗代表者にしたいユーザーのアカウントを検索
+// Route::get('/user/search', [SystemManagerController::class, 'userSearch'])->name('user.search');
 // 店舗代表者を作成
 Route::post('/representative/create', [SystemManagerController::class, 'representativeCreate'])->name('representative.create');
 

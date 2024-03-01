@@ -4,24 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\User;
 
 class SystemManagerController extends Controller
 {
     // システム管理者ページ表示
     public function managementTop() {
+        $users = User::all();
         $shops = Shop::all();
-        return view('system_management', compact('shops'));
+
+        return view('system_management', compact('users', 'shops'));
     }
 
-    // 店舗代表者にしたいユーザーのアカウントを検索
-    public function userSearch(Request $request) {
-        $keyword = $request->input('keyword');
+    // // 店舗代表者にしたいユーザーのアカウントを検索
+    // public function userSearch(Request $request) {
+    //     $keyword = $request->input('keyword');
 
-        $users = User::where('name', 'like', "%$keyword%")->get();
-        dd($users);
+    //     $users = User::where('name', 'like', "%$keyword%")->get();
+    //     dd($users);
 
-        return view('system_management', compact('users'));
-    }
+    //     return view('system_management', compact('users'));
+    // }
 
     // 店舗代表者を作成
     public function representativeCreate(Request $request) {
