@@ -59,7 +59,7 @@
                             <p class="text-l text-white pl-6">Send campaign</p>
                         </div>
 
-                <form method="POST" action="">
+                <form method="POST" action="" novalidate>
                 @csrf
 
                     <div class="flex flex-col justify-center w-full">

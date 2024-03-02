@@ -60,7 +60,7 @@
                             <p class="text-l text-white pl-6">Shop create</p>
                         </div>
 
-                <form method="POST" action="{{ route('shop.create') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('shop.create') }}" enctype="multipart/form-data" novalidate>
                 @csrf
 
                     <div class="flex flex-col justify-center w-full">

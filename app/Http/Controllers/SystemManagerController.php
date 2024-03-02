@@ -18,16 +18,6 @@ class SystemManagerController extends Controller
         return view('system_management', compact('users', 'shops'));
     }
 
-    // // 店舗代表者にしたいユーザーのアカウントを検索
-    // public function userSearch(Request $request) {
-    //     $keyword = $request->input('keyword');
-
-    //     $users = User::where('name', 'like', "%$keyword%")->get();
-    //     dd($users);
-
-    //     return view('system_management', compact('users'));
-    // }
-
     // 店舗代表者を作成
     public function representativeCreate(RepresentativeRequest $request) {
         $userId = $request->user_id;

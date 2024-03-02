@@ -90,7 +90,7 @@
                             </table>
                             {{-- 予約変更フォーム --}}
                             <div id="reservation_update-form" class="flex flex-col my-5 mt-8">
-                                <form action="{{ route('reservation.update', $reservation->id) }}" method="POST">
+                                <form action="{{ route('reservation.update', $reservation->id) }}" method="POST" novalidate>
                                 @csrf
                                 @method('PUT')
                                     <input type="hidden" name="shop_id" value="{{ $reservation->shop->id }}">

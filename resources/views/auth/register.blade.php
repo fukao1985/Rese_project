@@ -40,7 +40,7 @@
                             <p class="text-l text-white pl-2">Register</p>
                         </div>
 
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('register') }}" novalidate>
                 @csrf
                     <div class="flex flex-col justify-center w-full">
                         <!-- Username -->

@@ -79,7 +79,7 @@
 
                 {{-- 予約フォーム --}}
                 <div class="w-full md:w-6/12">
-                    <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full">
+                    <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full" novalidate>
                     @csrf
                         <div class="bg-blue-600 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
                             <p class="text-white text-xl font-bold my-5">予約</p>

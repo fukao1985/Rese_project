@@ -95,7 +95,7 @@ Route::get('/send/form', [ShopRepresentativeController::class, 'sendForm'])->nam
 // 店舗情報更新ページ表示
 Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInformation'])->name('shop.info');
 // 店舗情報更新処理(認証作成後使用)
-// Route::put('/shop/update', [ShopRepresentativeController::class, 'shopUpdate'])->name('shop.update');
+Route::put('/shop/update', [ShopRepresentativeController::class, 'shopUpdate'])->name('shop.update');
 // 店舗予約一覧ページを表示
 Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReservationIndex'])->name('reservation.index');
 

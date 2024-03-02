@@ -46,7 +46,7 @@
                             <p class="text-l text-white pl-2">Shop Representative Register</p>
                         </div>
                         <div class="flex justify-center flex-col w-full">
-                            <form method="POST" action="{{ route('representative.create') }}" class="w-full flex flex-col justify-center">
+                            <form method="POST" action="{{ route('representative.create') }}" class="w-full flex flex-col justify-center" novalidate>
                             @csrf
                                 <!-- user セレクトボックス-->
                                 <div class="flex justify-center items-center mx-auto mt-5">

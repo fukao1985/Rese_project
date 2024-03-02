@@ -39,7 +39,7 @@
                             <p class="text-l text-white pl-2">Login</p>
                         </div>
 
-                        <form method="POST" action="{{ route('login') }}" >
+                        <form method="POST" action="{{ route('login') }}" novalidate>
                             @csrf
                             <div class="flex flex-col justify-center w-full">
                             <!-- Email Address -->
