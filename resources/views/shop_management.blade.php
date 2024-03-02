@@ -55,7 +55,7 @@
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
                 <div class="w-11/12 flex justify-center">
-                    <div class="bg-white h-auto w-2/3 md:w-2/5 rounded shadow-md shadow-gray-400 flex flex-col">
+                    <div class="bg-white h-auto w-2/3 md:w-2/5 mb-10 rounded shadow-md shadow-gray-400 flex flex-col">
                         <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
                             <p class="text-l text-white pl-6">Shop create</p>
                         </div>

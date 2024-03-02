@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ShopCreateRequest;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;
@@ -27,14 +28,6 @@ class ShopRepresentativeController extends Controller
             'comment' => $request->comment,
             'url' => $request->url,
         ]);
-        // if ($request->hasFile('file')) {
-        //     $image = $request->file('file');
-        //     $imageResized = Image::make($image)->resize(300, 200);
-        //     $imageResizedPath = 'images/resized_' . $image->ntOriginalName();
-        //     $imageResized->save($imageResizedPath);
-
-        //     $file = Storage::disk('local')->putFile('images', $imageResizedPat);
-        // }
 
         if ($request->hasFile('file')) {
             $file = $request->file('file')->store('images', 'local');

@@ -8,7 +8,7 @@
 
 ## 作成した目的
 
-飲食店の方から、「外部の飲食店予約サービスは手数料を取られるので自社で予約サービスを持ちたい。」<br>というご依頼を頂き、Rese を作成致しました。
+飲食店の方から、「外部の飲食店予約サービスは手数料を取られるので自社で予約サービスを持ちたい。」というご依頼を頂き、Rese を作成致しました。
 
 ---
 
@@ -33,13 +33,14 @@
 -   飲食店予約情報追加
 -   飲食店予約情報更新
 -   飲食店予約情報削除
--   レビュー作成(利用後の店舗のみ詳細ページにてレビュー作成可能)
+-   5段階評価&レビュー作成(利用後の店舗のみ詳細ページにてレビュー作成可能)
 -   エリア/ジャンル/店名で検索する
 -   飲食店新規情報作成
+-   飲食店店舗代表者登録
 
 **認証メール送信のタイミング**<br>
-会員登録後に表示される thanks ページにて『ログインする』ボタンをクリックする必要があるため、<br>下記タイミングにて認証メールが送信されます。<br>
-register ページにてフォーム入力 → thanks ページに表示される『ログインする』ボタンをクリック →<br>login フォームを入力 → 認証メールが送信される<br>
+会員登録後に表示される thanks ページにて『ログインする』ボタンをクリックする必要があるため、下記タイミングにて認証メールが送信されます。<br>
+register ページにてフォーム入力 → thanks ページに表示される『ログインする』ボタンをクリック →login フォームを入力 → 認証メールが送信される<br>
 
 **メール送信確認ついて**<br>
 Laravel sail に含まれる MailPit 機能を使用してご確認いただけます。<br>
@@ -205,6 +206,7 @@ $ sail artisan breezejp
 |       email       | varchar(191) | null: false |
 |     password      | varchar(191) | null: false |
 | email_verified_at |  timestamp   |     ———     |
+|       role        | varchar(191) |     ———     |
 |    created_at     |  timestamp   |     ———     |
 |    updated_at     |  timestamp   |     ———     |
 
@@ -254,6 +256,27 @@ $ sail artisan breezejp
 | :--------: | :-------: | :---------: |
 |  user_id   |  bigint   | null: false |
 |  shop_id   |  bigint   | null: false |
+| created_at | timestamp |     ———     |
+| updated_at | timestamp |     ———     |
+
+### reviews テーブル
+
+|   Column   |     Type     |   Options   |
+| :--------: |   :-------:  | :---------: |
+|  user_id   |  bigint      |     ———     |
+|  shop_id   |  bigint      | null: false |
+|  user_name | varchar(191) | null: false |
+|  ranting   |  integer     | null: false |
+|  comment   |  text        | null: false |
+| created_at | timestamp    |     ———     |
+| updated_at | timestamp    |     ———     |
+
+### representatives テーブル
+
+|   Column   |   Type    |   Options   |
+| :--------: | :-------: | :---------: |
+|  user_id   |  bigint   | null: false |
+|  shop_id   |  bigint   |     ———     |
 | created_at | timestamp |     ———     |
 | updated_at | timestamp |     ———     |
 

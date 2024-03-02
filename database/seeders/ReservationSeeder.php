@@ -17,16 +17,16 @@ class ReservationSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 50; $i++) {
-            $shopId = $faker->numberBetween(1, 21);
-            if ($shopId >= 3) {
-                // shop_id:3が欠番のため3以上の場合は4〜21の乱数を生成
-                $shopId = $faker->numberBetween(4, 21);
-            }
+            // $shopId = $faker->numberBetween(3, 22);
+            // if ($shopId >= 3) {
+            //     // shop_id:3が欠番のため3以上の場合は4〜21の乱数を生成
+            //     $shopId = $faker->numberBetween(4, 21);
+            // }
 
             $reservation = new Reservation();
-            $reservation->user_id = $faker->numberBetween(1, 52);
-            $reservation->shop_id = $shopId;
-            $reservation->date = $faker->dateTimeBetween('2024-02-25', '2025-02-25')->format('Y-m-d');
+            $reservation->user_id = $faker->numberBetween(1, 51);
+            $reservation->shop_id = $faker->numberBetween(3, 22);
+            $reservation->date = $faker->dateTimeBetween('2024-03-01', '2025-03-01')->format('Y-m-d');
             $hour = $faker->numberBetween(17, 21);
             $minute = $faker->randomElement([0, 30]);
             $reservation->time = sprintf('%02d:%02d:00', $hour, $minute);

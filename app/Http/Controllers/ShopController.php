@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ShopCreateRequest;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;

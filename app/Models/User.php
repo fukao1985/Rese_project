@@ -21,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -56,6 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
     // reviewsテーブルとのリレーション
     public function reviews() {
         return $this->hasMany(Review::class);
+    }
+
+    // representativesテーブルとのリレーション
+    public function representative() {
+        return $this->hasOne(Representative::class);
     }
 
 }
