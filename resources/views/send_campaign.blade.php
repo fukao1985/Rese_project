@@ -59,7 +59,7 @@
                             <p class="text-l text-white pl-6">Send campaign</p>
                         </div>
 
-                <form method="POST" action="" novalidate>
+                <form method="POST" action="{{ route('send.campaign') }}" novalidate>
                 @csrf
 
                     <div class="flex flex-col justify-center w-full">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CampaignNotification;
 use App\Http\Requests\ShopCreateRequest;
 use App\Http\Requests\ShopUpdateRequest;
 use App\Models\User;
@@ -11,6 +13,7 @@ use App\Models\Genre;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Representative;
+use App\Models\Favorite;
 
 class ShopRepresentativeController extends Controller
 {
@@ -118,17 +121,20 @@ class ShopRepresentativeController extends Controller
         return view('send_campaign');
     }
 
-    // ★店舗オーナーの認証機能を作成してから★
     // 店舗からのお知らせメール送信
-    // public function sendCampaignNotification(Request $request) {
-    //     // 操作している店舗オーナーが属する店舗のshop_idを取得
-    //     $shopId =
-    //     // favoritesテーブルより送信店舗のshop_idに紐づくuser_id->userのEmailを取得
-    //     $sendEmail = Favorite::where('shop_id', $shopId)->where()
+    public function sendCampaignNotification(Request $request) {
+        $userId = auth()->user()->id;
+        $representative = Representative::where('user_id', $userId)->first();
+        $shopId = $representative->shop_id;
+        $favorites = Favorite::where('shop_id', $shopId)->with('user')->get();
+        $favoriteEmails = $favorites->pluck('user.email');
 
+        foreach($favoriteEmails as $favoriteEmail) {
+            Mail::to($favoriteEmail)->send(new CampaignNotification());
+        }
 
-    //     $script = "<script>alert('お知らせメールを送信しました');</script>";
+        $script = "<script>alert('お知らせメールを送信しました');</script>";
 
-    //     return redirect()->back()->with('script', $script);
-    // }
+        return redirect()->back()->with('script', $script);
+    }
 }

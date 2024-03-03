@@ -65,7 +65,7 @@
                                     <td class="w-4/6">{{ $reservation->number }}</td>
                                 </tr>
                                 <tr class="mb-8">
-                                    <th class="w-2/6">Adress</th>
+                                    <th class="w-2/6">Email</th>
                                     <td class="w-4/6">{{ $reservation->user->email }}</td>
                                 </tr>
                             </table>

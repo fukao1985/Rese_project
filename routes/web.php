@@ -91,7 +91,7 @@ Route::post('/shop/create', [ShopRepresentativeController::class, 'shopCreate'])
 // お知らせメール送信フォームページ表示
 Route::get('/send/form', [ShopRepresentativeController::class, 'sendForm'])->name('send.form');
 // // 店舗からのお知らせメール送信 ★店舗オーナーの認証が済み次第作成★
-// Route::post('/send/campaign_notification', [ShopRepresentativeController::class, 'sendCampaignNotification'])->name('send.campaign');
+Route::post('/send/campaign_notification', [ShopRepresentativeController::class, 'sendCampaignNotification'])->name('send.campaign');
 // 店舗情報更新ページ表示
 Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInformation'])->name('shop.info');
 // 店舗情報更新処理(認証作成後使用)
@@ -101,11 +101,10 @@ Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReser
 // 予約個別ページ表示
 Route::get('/individual/reservation/{reservation_id}', [ShopRepresentativeController::class, 'individualReservation'])->name('individual.reservation');
 
+
 // システム管理者のみアクセス可能な処理
 // システム管理者ページ表示
 Route::get('/management', [SystemManagerController::class, 'managementTop'])->name('management.top');
-// // 店舗代表者にしたいユーザーのアカウントを検索
-// Route::get('/user/search', [SystemManagerController::class, 'userSearch'])->name('user.search');
 // 店舗代表者を作成
 Route::post('/representative/create', [SystemManagerController::class, 'representativeCreate'])->name('representative.create');
 
