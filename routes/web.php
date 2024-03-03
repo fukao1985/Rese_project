@@ -98,6 +98,8 @@ Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInfor
 Route::put('/shop/update', [ShopRepresentativeController::class, 'shopUpdate'])->name('shop.update');
 // 店舗予約一覧ページを表示
 Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReservationIndex'])->name('reservation.index');
+// 予約個別ページ表示
+Route::get('/individual/reservation/{reservation_id}', [ShopRepresentativeController::class, 'individualReservation'])->name('individual.reservation');
 
 // システム管理者のみアクセス可能な処理
 // システム管理者ページ表示

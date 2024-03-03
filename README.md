@@ -33,9 +33,10 @@
 -   飲食店予約情報追加
 -   飲食店予約情報更新
 -   飲食店予約情報削除
--   5段階評価&レビュー作成(利用後の店舗のみ詳細ページにてレビュー作成可能)
+-   5段階評価&レビュー作成<br>(利用後の店舗のみ詳細ページにてレビュー作成可能)
 -   エリア/ジャンル/店名で検索する
--   飲食店新規情報作成
+-   飲食店情報作成
+-   飲食店情報更新
 -   飲食店店舗代表者登録
 
 **認証メール送信のタイミング**<br>
@@ -63,7 +64,7 @@ Laravel sail に含まれる MailPit 機能を使用してご確認いただけ�
     ・入力内容確認欄(予約フォーム内)への即時反映<br>
     ・alert message　のみ
 -   Pagination
--   バリデーション(認証/予約/レビュー/店舗情報作成)
+-   バリデーション<br>(認証/予約/レビュー/店舗情報作成・更新/店舗代表者作成)
 -
 -   AWS(EC2, RDS)
 
@@ -217,8 +218,8 @@ $ sail artisan breezejp
 |  area_id   |    bigint    | null: false |
 |  genre_id  |    bigint    | null: false |
 |    name    | varchar(191) | null: false |
-|  comment   |     text     |     ———     |
-|    url     |     text     |     ———     |
+|  comment   |     text     | null: false |
+|    url     |     text     | null: false |
 | created_at |  timestamp   |     ———     |
 | updated_at |  timestamp   |     ———     |
 
@@ -245,8 +246,8 @@ $ sail artisan breezejp
 |  user_id   |  bigint   | null: false |
 |  shop_id   |  bigint   | null: false |
 |    date    |   date    | null: false |
-|    time    |   time    |     ———     |
-|   number   |  integer  |     ———     |
+|    time    |   time    | null: false |
+|   number   |  integer  | null: false |
 | created_at | timestamp |     ———     |
 | updated_at | timestamp |     ———     |
 
@@ -275,8 +276,8 @@ $ sail artisan breezejp
 
 |   Column   |   Type    |   Options   |
 | :--------: | :-------: | :---------: |
-|  user_id   |  bigint   | null: false |
-|  shop_id   |  bigint   |     ———     |
+|  user_id   |  bigint   |     ———     |
+|  shop_id   |  bigint   | null: false |
 | created_at | timestamp |     ———     |
 | updated_at | timestamp |     ———     |
 

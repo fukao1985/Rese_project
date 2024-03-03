@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Shop;
+use App\Models\Reservation;
 use App\Models\Representative;
 
 class ShopRepresentativeController extends Controller
@@ -40,25 +41,6 @@ class ShopRepresentativeController extends Controller
 
         return redirect()->back()->with('script', $script);
     }
-
-    // 店舗からのお知らせメール送信ページ表示
-    public function sendForm() {
-        return view('send_campaign');
-    }
-
-    // ★店舗オーナーの認証機能を作成してから★
-    // 店舗からのお知らせメール送信
-    // public function sendCampaignNotification(Request $request) {
-    //     // 操作している店舗オーナーが属する店舗のshop_idを取得
-    //     $shopId =
-    //     // favoritesテーブルより送信店舗のshop_idに紐づくuser_id->userのEmailを取得
-    //     $sendEmail = Favorite::where('shop_id', $shopId)->where()
-
-
-    //     $script = "<script>alert('お知らせメールを送信しました');</script>";
-
-    //     return redirect()->back()->with('script', $script);
-    // }
 
     // 店舗情報更新ページ表示
     public function shopInformation() {
@@ -115,6 +97,38 @@ class ShopRepresentativeController extends Controller
 
     // 店舗予約一覧ページを表示
     public function shopReservationIndex() {
-        return view('shop_reservation');
+        $userId = auth()->user()->id;
+        $representative = Representative::where('user_id', $userId)->first();
+        $shopId = $representative->shop_id;
+        $reservations = Reservation::where('id', $shopId)->get();
+
+        return view('shop_reservation', compact('reservations'));
     }
+
+    // 予約個別ページ表示
+    public function individualReservation($reservation_id) {
+        $reservation = Reservation::where('id',  $reservation_id)->first();
+
+        return view('individual_reservation', compact('reservation'));
+    }
+
+
+    // 店舗からのお知らせメール送信ページ表示
+    public function sendForm() {
+        return view('send_campaign');
+    }
+
+    // ★店舗オーナーの認証機能を作成してから★
+    // 店舗からのお知らせメール送信
+    // public function sendCampaignNotification(Request $request) {
+    //     // 操作している店舗オーナーが属する店舗のshop_idを取得
+    //     $shopId =
+    //     // favoritesテーブルより送信店舗のshop_idに紐づくuser_id->userのEmailを取得
+    //     $sendEmail = Favorite::where('shop_id', $shopId)->where()
+
+
+    //     $script = "<script>alert('お知らせメールを送信しました');</script>";
+
+    //     return redirect()->back()->with('script', $script);
+    // }
 }

@@ -53,44 +53,34 @@
 
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
-                <div class="w-11/12 flex justify-center">
-                    <div class="bg-white h-auto w-full md:w-11/12 rounded shadow-md shadow-gray-400 flex flex-col pb-20">
-                        <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
-                            <p class="text-l text-white pl-6">予約情報一覧</p>
-                        </div>
-
-                <form method="POST" action="">
-                @csrf
-
-                    <div class="flex flex-col justify-center w-full">
-                        <!-- Title -->
-                        <div class="flex justify-between items-center mr-8 ml-8">
-                            <label for="title" :value="__('title')" class="text-gray-500 pr-1">予約情報一覧</label>
-                            <input id="title" type="title" name="title" value="{{ old('title') }}" class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
-                        </div>
-                        <div class="flex justify-center">
-                            <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-7/12"></div>
-                        </div>
-                        @error('title')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- message -->
-                        <div class="flex justify-between items-center ml-8 mr-8 mt-5">
-                            <label for="message" :value="__('message')" class="text-gray-500 pr-1">Main Message</label>
-                            <textarea id="message" name="message" cols="80" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('message') }}</textarea>
-                        </div>
-                        @error('message')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
+            <div class="w-11/12 flex justify-center">
+                <div class="bg-white h-auto w-full md:w-11/12 mb-10 rounded shadow-md shadow-gray-400 flex flex-col pb-20">
+                    <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
+                        <p class="text-l text-white pl-6">予約情報一覧</p>
                     </div>
-                </form>
-                <script src="{{ asset('js/menu_script.js') }}" defer></script>
-            </main>
+                    <div class="w-full flex justify-center">
+                        <!-- Table -->
+                        <table class="w-full">
+                            <tr id="table-header" class="w-full border-b-2 text-base">
+                                <th class="w-1/4">日付</th>
+                                <th class="w-1/4">時間</th>
+                                <th class="w-1/4">名前</th>
+                                <th class="w-1/4">人数</th>
+                            </tr>
+                            @foreach($reservations as $reservation)
+                            <tr id="table-body" class="text-center text-base">
+                                <td class="w-1/4">{{ $reservation->date }}</td>
+                                <td class="w-1/4">{{ \Carbon\Carbon::parse($reservation->time)->format('H:i') }}</td>
+                                <td class="w-1/4 text-blue-700"><a href="{{ route('individual.reservation', ['reservation_id' => $reservation->id]) }}">{{ $reservation->user->name }}</a></td>
+                                <td class="w-1/4">{{ $reservation->number }}</td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <script src="{{ asset('js/menu_script.js') }}" defer></script>
+        </main>
     </div>
 </x-app-layout>
 
