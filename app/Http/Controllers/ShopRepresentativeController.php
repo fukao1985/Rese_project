@@ -14,6 +14,7 @@ use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Representative;
 use App\Models\Favorite;
+// use App\Models\Campaign;
 
 class ShopRepresentativeController extends Controller
 {
@@ -132,6 +133,11 @@ class ShopRepresentativeController extends Controller
         foreach($favoriteEmails as $favoriteEmail) {
             Mail::to($favoriteEmail)->send(new CampaignNotification());
         }
+
+        // $sendCampaign = Campaign::create([
+        //     'title' => $request->title,
+        //     'message' => $request->message,
+        // ]);
 
         $script = "<script>alert('お知らせメールを送信しました');</script>";
 

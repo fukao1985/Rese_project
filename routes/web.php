@@ -10,6 +10,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ShopRepresentativeController;
 use App\Http\Controllers\SystemManagerController;
+use App\Http\Controllers\QRCodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,6 +102,8 @@ Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReser
 // 予約個別ページ表示
 Route::get('/individual/reservation/{reservation_id}', [ShopRepresentativeController::class, 'individualReservation'])->name('individual.reservation');
 
+// QRコードを生成してviewに渡す
+Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcode'])->name('qr_code.generate');
 
 // システム管理者のみアクセス可能な処理
 // システム管理者ページ表示

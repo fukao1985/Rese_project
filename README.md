@@ -37,6 +37,9 @@
 -   エリア/ジャンル/店名で検索する
 -   飲食店情報作成
 -   飲食店情報更新
+-   担当店舗の予約一覧取得
+-   担当店舗の予約の個別取得<br>(予約一覧に表示されるユーザー名をクリックすると予約の個別詳細ページへ遷移)
+-   QRコードでの予約詳細確認<br>(userのマイページにてQRコードを表示 ※URLは店舗代表者が確認できる予約の個別詳細ページ)
 -   飲食店店舗代表者登録
 
 **認証メール送信のタイミング**<br>
@@ -52,20 +55,20 @@ Laravel sail に含まれる MailPit 機能を使用してご確認いただけ�
 
 ## 使用技術
 
--   Laravel 10.42.0
+-   Laravel v10.42.0
 -   Laravel Sail(Docker, Nginx, MYSQL, Mailpit)
 -   Laravel Breeze
 -   Laravelストレージ使用(店舗イメージ画像保存)　
--   PHP 8.3.2-1
+-   PHP v8.3.2-1
 -   Tailwind CSS
--   Javascript 10.3.0<br>
+-   Javascript v10.3.0<br>
     ・ハンバーガーメニュー<br>
     ・トップページでのEnter検索<br>
     ・入力内容確認欄(予約フォーム内)への即時反映<br>
     ・alert message　のみ
 -   Pagination
--   バリデーション<br>(認証/予約/レビュー/店舗情報作成・更新/店舗代表者作成)
--
+-   バリデーション<br>(認証/予約/レビュー/店舗情報作成・更新/店舗代表者作成/メール送信)
+-   simplesoftwareio/simple-qrcode v4.2
 -   AWS(EC2, RDS)
 
 ---
@@ -194,6 +197,15 @@ lang/en が作成されました。<br>
 $ sail composer require askdkc/breezejp --dev
 $ sail artisan breezejp
 ```
+
+### 【QRコード生成のため simplesoftwareio/simple-qrcode をインストール】<br>
+
+-   Laravel sail を起動し、プロジェクトのルートで simplesoftwareio/simple-qrcode パッケージをインストールします。<br>
+
+```jsx
+$ sail composer require simplesoftwareio/simple-qrcode
+```
+
 
 ---
 
