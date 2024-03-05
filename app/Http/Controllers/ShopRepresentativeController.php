@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\CampaignNotification;
 use App\Http\Requests\ShopCreateRequest;
 use App\Http\Requests\ShopUpdateRequest;
 use App\Models\User;
@@ -14,7 +12,6 @@ use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Representative;
 use App\Models\Favorite;
-// use App\Models\Campaign;
 
 class ShopRepresentativeController extends Controller
 {
@@ -114,33 +111,5 @@ class ShopRepresentativeController extends Controller
         $reservation = Reservation::where('id',  $reservation_id)->first();
 
         return view('individual_reservation', compact('reservation'));
-    }
-
-
-    // 店舗からのお知らせメール送信ページ表示
-    public function sendForm() {
-        return view('send_campaign');
-    }
-
-    // 店舗からのお知らせメール送信
-    public function sendCampaignNotification(Request $request) {
-        $userId = auth()->user()->id;
-        $representative = Representative::where('user_id', $userId)->first();
-        $shopId = $representative->shop_id;
-        $favorites = Favorite::where('shop_id', $shopId)->with('user')->get();
-        $favoriteEmails = $favorites->pluck('user.email');
-
-        foreach($favoriteEmails as $favoriteEmail) {
-            Mail::to($favoriteEmail)->send(new CampaignNotification());
-        }
-
-        // $sendCampaign = Campaign::create([
-        //     'title' => $request->title,
-        //     'message' => $request->message,
-        // ]);
-
-        $script = "<script>alert('お知らせメールを送信しました');</script>";
-
-        return redirect()->back()->with('script', $script);
     }
 }

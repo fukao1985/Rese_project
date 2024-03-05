@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\Shop;
+use App\Models\SystemNotification;
 
-
-class Favorite extends Model
+class SystemManager extends Model
 {
     use HasFactory;
 
@@ -19,7 +18,6 @@ class Favorite extends Model
      */
     protected $fillable = [
         'user_id',
-        'shop_id',
     ];
 
     // usersテーブルとのリレーション
@@ -27,9 +25,8 @@ class Favorite extends Model
         return $this->belongsTo(User::class);
     }
 
-    // shopsテーブルとのリレーション
-    public function shop() {
-        return $this->belongsTo(Shop::class);
+    // system_notificationsテーブルとのリレーション
+    public function systemNotifications() {
+        return $this->hasMany(SystemNotification::class);
     }
-
 }

@@ -89,10 +89,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/shop/management', [ShopRepresentativeController::class, 'shopManagement'])->name('shop_management');
 // 店舗情報追加
 Route::post('/shop/create', [ShopRepresentativeController::class, 'shopCreate'])->name('shop.create');
-// お知らせメール送信フォームページ表示
-Route::get('/send/form', [ShopRepresentativeController::class, 'sendForm'])->name('send.form');
-// // 店舗からのお知らせメール送信 ★店舗オーナーの認証が済み次第作成★
-Route::post('/send/campaign_notification', [ShopRepresentativeController::class, 'sendCampaignNotification'])->name('send.campaign');
 // 店舗情報更新ページ表示
 Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInformation'])->name('shop.info');
 // 店舗情報更新処理(認証作成後使用)
@@ -110,6 +106,10 @@ Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcod
 Route::get('/management', [SystemManagerController::class, 'managementTop'])->name('management.top');
 // 店舗代表者を作成
 Route::post('/representative/create', [SystemManagerController::class, 'representativeCreate'])->name('representative.create');
+// お知らせメール送信フォームページ表示
+Route::get('/send/form', [SystemManagerController::class, 'sendForm'])->name('send.form');
+// // 店舗からのお知らせメール送信 ★店舗オーナーの認証が済み次第作成★
+Route::post('/send/system_notification', [SystemManagerController::class, 'sendSystemNotification'])->name('send.notification');
 
 
 
