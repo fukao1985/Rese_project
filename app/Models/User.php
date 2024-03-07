@@ -11,6 +11,7 @@ use App\Models\Reservation;
 use App\Models\Favorite;
 use App\Models\Review;
 use App\Models\Representative;
+use App\Models\SystemManager;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -66,5 +67,10 @@ class User extends Authenticatable implements MustVerifyEmail
     // representativesテーブルとのリレーション
     public function representative() {
         return $this->hasOne(Representative::class);
+    }
+
+    // system_managersテーブルとのリレーション
+    public function systemManager() {
+        return $this->hasOne(SystemManager::class);
     }
 }

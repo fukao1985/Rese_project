@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ShopRepresentativeController;
 use App\Http\Controllers\SystemManagerController;
 use App\Http\Controllers\QRCodeController;
+use App\Http\Controllers\ReservationRemindersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,9 +99,6 @@ Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReser
 // 予約個別ページ表示
 Route::get('/individual/reservation/{reservation_id}', [ShopRepresentativeController::class, 'individualReservation'])->name('individual.reservation');
 
-// QRコードを生成してviewに渡す
-Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcode'])->name('qr_code.generate');
-
 // システム管理者のみアクセス可能な処理
 // システム管理者ページ表示
 Route::get('/management', [SystemManagerController::class, 'managementTop'])->name('management.top');
@@ -108,10 +106,14 @@ Route::get('/management', [SystemManagerController::class, 'managementTop'])->na
 Route::post('/representative/create', [SystemManagerController::class, 'representativeCreate'])->name('representative.create');
 // お知らせメール送信フォームページ表示
 Route::get('/send/form', [SystemManagerController::class, 'sendForm'])->name('send.form');
-// // 店舗からのお知らせメール送信 ★店舗オーナーの認証が済み次第作成★
+// システム管理者からのお知らせメール送信
 Route::post('/send/system_notification', [SystemManagerController::class, 'sendSystemNotification'])->name('send.notification');
 
+// QRコードを生成してviewに渡す
+Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcode'])->name('qr_code.generate');
 
+// 予約当日の朝に予約情報のリマインダーを送る
+Route::post('/reservation/reminders', [ReservationRemindersController::class, 'sendReservationReminders'])->name('send.reminders');
 
 
 // 店舗一覧ページ(ゲストユーザートップページ)表示
@@ -120,7 +122,6 @@ Route::get('/', [ShopController::class, 'guestTop'])->name('guest.top');
 Route::post('/', [ShopController::class, 'guestShopList'])->name('guest.shop_list');
 // 店舗詳細ページの表示(ゲストユーザー用)
 Route::get('/guest/detail/{shop_id}', [ShopController::class, 'guestShopDetail'])->name('guest.detail');
-
 
 // // 予約処理
 // Route::middleware(['auth'])->post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');

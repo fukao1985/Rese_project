@@ -39,11 +39,9 @@
                 </div>
                 <div id="header-right" class="w-full md:w-2/3 flex justify-center">
                         <div class="w-full flex flex-row justify-center text-blue-600 font-bold">
-                            <ul class="w-9/12 md:w-full flex justify-between">
-                                <li><a href="{{ route('shop_management') }}">Shop create</a></li>
-                                <li><a href="{{ route('shop.info') }}">Shop update</a></li>
-                                <li><a href="{{ route('reservation.index') }}">reservation</a></li>
-                                <li><a href="{{ route('send.form') }}">send campaign</a></li>
+                            <ul class="w-9/12 md:w-full flex justify-center md:justify-end">
+                                <li><a href="{{ route('management.top') }}">Representative Create</a></li>
+                                <li class="ml-10"><a href="{{ route('send.form') }}">Send Notification</a></li>
                             </ul>
                         </div>
                 </div>
@@ -53,49 +51,48 @@
 
 {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
-                <div class="w-11/12 flex justify-center">
-                    <div class="bg-white h-auto w-2/3 rounded shadow-md shadow-gray-400 flex flex-col">
-                        <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
-                            <p class="text-l text-white pl-6">Send campaign</p>
-                        </div>
-
-                <form method="POST" action="{{ route('send.campaign') }}" novalidate>
-                @csrf
-
-                    <div class="flex flex-col justify-center w-full">
-                        <!-- Title -->
-                        <div class="flex justify-between items-center mr-8 ml-8">
-                            <label for="title" :value="__('title')" class="text-gray-500 pr-1">Title</label>
-                            <input id="title" type="title" name="title" value="{{ old('title') }}" class="focus:outline-none text-gray-500 w-8/12 p-1 border-none" />
-                        </div>
-                        <div class="flex justify-center">
-                            <div class="border-b border-gray-500 mb-1 mr-8 ml-auto w-9/12"></div>
-                        </div>
-                        @error('title')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- message -->
-                        <div class="flex justify-between items-center ml-8 mr-8 mt-5">
-                            <label for="message" :value="__('message')" class="text-gray-500 pr-1">Message</label>
-                            <textarea id="message" name="message" cols="80" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('message') }}</textarea>
-                        </div>
-                        @error('message')
-                            <div class="text-red-600 text-sm h-4 flex justify-center">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                        <!-- Button -->
-                        <div class="w-2/3 m-auto text-right mr-8 ml-auto">
-                            <button type="submit" class="bg-blue-600 w-8/12 text-sm md:fontbase text-white mt-6 mb-4 py-1.5 rounded">メールを送信する</button>
-                        </div>
+            <div class="w-11/12 flex justify-center">
+                <div class="bg-white h-auto w-2/3 rounded shadow-md shadow-gray-400 flex flex-col">
+                    <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
+                        <p class="text-l text-white pl-6">Send campaign</p>
                     </div>
-                </form>
-                <script src="{{ asset('js/menu_script.js') }}" defer></script>
-            </main>
+                    <form method="POST" action="{{ route('send.notification') }}" novalidate>
+                    @csrf
+                        <div class="flex flex-col justify-center w-full">
+                            <!-- Title -->
+                            <div class="w-10/12 flex justify-between items-center mx-auto">
+                                <label for="title" :value="__('title')" class="w-2/12 text-gray-500 mr-3">Title</label>
+                                <input id="title" type="text" name="title" value="{{ old('title') }}" class="w-11/12 focus:outline-none text-gray-500 border-none" />
+                            </div>
+                            <div class="w-10/12 flex justify-center mx-auto">
+                                <div class="border-b border-gray-500 mb-1 w-full"></div>
+                            </div>
+                            @error('title')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                            <!-- message -->
+                            <div class="w-10/12 flex justify-between items-center mx-auto mt-5">
+                                <label for="body" :value="__('body')" class="text-gray-500 pr-1">Message</label>
+                                <textarea id="body" name="body" cols="80" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('body') }}</textarea>
+                            </div>
+                            @error('body')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                            <!-- Button -->
+                            <div class="w-2/3 m-auto text-right mr-8 ml-auto">
+                                <button type="submit" name="send_notification" class="bg-blue-600 w-8/12 text-sm md:fontbase text-white mt-6 mb-4 py-1.5 rounded">メールを送信する</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <script src="{{ asset('js/menu_script.js') }}" defer></script>
+        </main>
     </div>
 </x-app-layout>
 

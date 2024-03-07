@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SystemNotification extends FormRequest
+class SendNotificationFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class SystemNotification extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:191'],
-            'message' => ['required', 'string'],
+            'body' => ['required', 'string'],
         ];
     }
 
@@ -33,8 +33,8 @@ class SystemNotification extends FormRequest
             'title.required' => '件名を必ず入力してください',
             'title.string' => '有効な文字形式で入力してください',
             'title.max' => '191文字以内で入力してください',
-            'message.required' => '必ずメッセージを入力してください',
-            'message.string' => '有効な文字形式で入力してください',
+            'body.required' => '必ずメッセージを入力してください',
+            'body.string' => '有効な文字形式で入力してください',
         ];
     }
 }

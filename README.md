@@ -41,6 +41,8 @@
 -   担当店舗の予約の個別取得<br>(予約一覧に表示されるユーザー名をクリックすると予約の個別詳細ページへ遷移)
 -   QRコードでの予約詳細確認<br>(userのマイページにてQRコードを表示 ※URLは店舗代表者が確認できる予約の個別詳細ページ)
 -   飲食店店舗代表者登録
+-   システム管理者から全ユーザーへのメール送信
+-   予約当日に予約情報のリマインダー送信
 
 **認証メール送信のタイミング**<br>
 会員登録後に表示される thanks ページにて『ログインする』ボタンをクリックする必要があるため、下記タイミングにて認証メールが送信されます。<br>
@@ -292,6 +294,26 @@ $ sail composer require simplesoftwareio/simple-qrcode
 |  shop_id   |  bigint   | null: false |
 | created_at | timestamp |     ———     |
 | updated_at | timestamp |     ———     |
+
+### system_managers テーブル
+
+|   Column   |   Type    |   Options   |
+| :--------: | :-------: | :---------: |
+|  user_id   |  bigint   | null: false |
+| created_at | timestamp |     ———     |
+| updated_at | timestamp |     ———     |
+
+### system_notifications テーブル
+
+|         Column        |     Type     |   Options   |
+|       :--------:      |   :-------:  | :---------: |
+|   system_manager_id   |  bigint      |     ———     |
+|        date           |  datetime    | null: false |
+|        title          | varchar(191) | null: false |
+|       message         |  text        | null: false |
+|   recipient_email     |  text        | null: false |
+|      created_at       | timestamp    |     ———     |
+|      updated_at       | timestamp    |     ———     |
 
 ---
 

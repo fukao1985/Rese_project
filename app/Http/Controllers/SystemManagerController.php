@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\RepresentativeRequest;
-use App\Http\Requests\SystemNotificationRequest;
+use App\Http\Requests\SendNotificationFormRequest;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\CampaignNotification;
+use App\Mail\SystemNotificationMail;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Representative;
 use App\Models\SystemNotification;
+use App\Models\SystemManager;
 use Carbon\Carbon;
 
 class SystemManagerController extends Controller
@@ -46,38 +47,48 @@ class SystemManagerController extends Controller
         return redirect()->back()->with('script', $script);
     }
 
-    // からのお知らせメール送信ページ表示
+    // システム管理者からのお知らせメール送信ページ表示
     public function sendForm() {
-        return view('send_campaign');
+        return view('send_notification');
     }
 
     // システム管理者から全ユーザーへのお知らせメール送信
-    public function sendSystemNotification(SystemNotificationRequest $request) {
-        // $userId = auth()->user()->id;
-        // $userDate = User::where('user_id', $userId)->get();
+    public function sendSystemNotification(SendNotificationFormRequest $request) {
+        \Log::info('Title: ' . $request->title);
+        \Log::info('Message: ' . $request->body);
+
         $userEmails = User::pluck('email');
-        // $shopId = $representative->shop_id;
-        // $favorites = Favorite::where('shop_id', $shopId)->with('user')->get();
-        // $favoriteEmails = $favorites->pluck('user.email');
+        $userId = auth()->user()->id;
+        $systemManager = SystemManager::where('user_id', $userId)->first();
 
-        // foreach($favoriteEmails as $favoriteEmail) {
-        //     Mail::to($favoriteEmail)->send(new CampaignNotification());
-        // }
-        // メールを送信
         foreach($userEmails as $userEmail) {
-            Mail::to($userEmail)->send(new SystemNotification());
-        }
+            // ユーザーにメールを送信
+            try {
+                Mail::to($userEmail)->send(new SystemNotificationMail($request->title, $request->body));
+                \Log::info('Sent email to ' . $userEmail . ' successfully');
+            } catch (\Exception $e) {
+                \Log::error('Failed to send email to ' . $userEmail . ': ' . $e->getMessage());
+            }
 
-        // 内容をデータベースに保存
-        $systemNotification = SystemNotification::create([
-            'date' => Carbon::now();
-            'title' => $request->title,
-            'message' => $request->message,
-            'recipient_email' => $userEmail,
-        ]);
+            // メールの内容をデータベースに保存
+            try {
+                SystemNotification::create([
+                    'system_manager_id' => $systemManager->id,
+                    'date' => Carbon::now(),
+                    'title' => $request->title,
+                    'message' => $request->body,
+                    'recipient_email' => $userEmail,
+                ]);
+                \Log::info('Saved notification to database for ' . $userEmail . ' successfully');
+            } catch (\Exception $e) {
+                \Log::error('Failed to save notification to database for ' . $userEmail . ': ' . $e->getMessage());
+            }
+        }
 
         $script = "<script>alert('お知らせメールを送信しました');</script>";
 
         return redirect()->back()->with('script', $script);
     }
+
+    // 予約当日の朝に予約情報のリマインダーを送る
 }
