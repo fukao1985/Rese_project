@@ -24,14 +24,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//ゲストユーザー
-Route::middleware(['web'])->get('/',function () {
-    if (Auth::check()) {
-        return redirect()->route('user.top');
-    } else {
-        return redirect()->route('guest.top');
-    }
-});
+
+require __DIR__.'/auth.php';
 
 // ログインユーザーが'/'にアクセスした場合
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function() {
@@ -43,17 +37,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/shop/index', function () 
     return view('private_page.shop_list');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/user/{page}', function ($page) {
+        return view('user.'.$page);
+    })->where('page', '.*')->name('user.*');
 });
 
-require __DIR__.'/auth.php';
-
-
-// ログインユーザー用
-Route::middleware('auth')->group(function () {
+// ログインユーザーのルート
+Route::middleware(['auth'])->group(function () {
     // thanksページの表示
     Route::get('/thanks', [RegisteredUserController::class, 'index'])->name('thanks');
 
@@ -83,31 +74,40 @@ Route::middleware('auth')->group(function () {
 
     // 利用店のレビュー作成
     Route::post('/review/create', [ReviewController::class, 'createReview'])->name('review.create');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// 店舗オーナーのみ可能な処理
-// 店舗情報追加ページ(店舗管理者ページトップ)の表示
-Route::get('/shop/management', [ShopRepresentativeController::class, 'shopManagement'])->name('shop_management');
-// 店舗情報追加
-Route::post('/shop/create', [ShopRepresentativeController::class, 'shopCreate'])->name('shop.create');
-// 店舗情報更新ページ表示
-Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInformation'])->name('shop.info');
-// 店舗情報更新処理(認証作成後使用)
-Route::put('/shop/update', [ShopRepresentativeController::class, 'shopUpdate'])->name('shop.update');
-// 店舗予約一覧ページを表示
-Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReservationIndex'])->name('reservation.index');
-// 予約個別ページ表示
-Route::get('/individual/reservation/{reservation_id}', [ShopRepresentativeController::class, 'individualReservation'])->name('individual.reservation');
+// 店舗代表者のルート
+Route::middleware(['auth', 'representative'])->group(function () {
+    // 店舗情報追加ページ(店舗管理者ページトップ)の表示
+    Route::get('/shop/management', [ShopRepresentativeController::class, 'shopManagement'])->name('shop_management');
+    // 店舗情報追加
+    Route::post('/shop/create', [ShopRepresentativeController::class, 'shopCreate'])->name('shop.create');
+    // 店舗情報更新ページ表示
+    Route::get('/shop/information', [ShopRepresentativeController::class, 'shopInformation'])->name('shop.info');
+    // 店舗情報更新処理(認証作成後使用)
+    Route::put('/shop/update', [ShopRepresentativeController::class, 'shopUpdate'])->name('shop.update');
+    // 店舗予約一覧ページを表示
+    Route::get('/shop/reservation', [ShopRepresentativeController::class, 'shopReservationIndex'])->name('reservation.index');
+    // 予約個別ページ表示
+    Route::get('/individual/reservation/{reservation_id}', [ShopRepresentativeController::class, 'individualReservation'])->name('individual.reservation');
+});
 
-// システム管理者のみアクセス可能な処理
-// システム管理者ページ表示
-Route::get('/management', [SystemManagerController::class, 'managementTop'])->name('management.top');
-// 店舗代表者を作成
-Route::post('/representative/create', [SystemManagerController::class, 'representativeCreate'])->name('representative.create');
-// お知らせメール送信フォームページ表示
-Route::get('/send/form', [SystemManagerController::class, 'sendForm'])->name('send.form');
-// システム管理者からのお知らせメール送信
-Route::post('/send/system_notification', [SystemManagerController::class, 'sendSystemNotification'])->name('send.notification');
+// システム管理者のルート
+Route::middleware(['auth', 'system_manager'])->group(function () {
+    // システム管理者ページ表示
+    Route::get('/management', [SystemManagerController::class, 'managementTop'])->name('management.top');
+    // 店舗代表者を作成
+    Route::post('/representative/create', [SystemManagerController::class, 'representativeCreate'])->name('representative.create');
+    // お知らせメール送信フォームページ表示
+    Route::get('/send/form', [SystemManagerController::class, 'sendForm'])->name('send.form');
+    // システム管理者からのお知らせメール送信
+    Route::post('/send/system_notification', [SystemManagerController::class, 'sendSystemNotification'])->name('send.notification');
+});
+
 
 // QRコードを生成してviewに渡す
 Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcode'])->name('qr_code.generate');
@@ -115,6 +115,14 @@ Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcod
 // 予約当日の朝に予約情報のリマインダーを送る
 Route::post('/reservation/reminders', [ReservationRemindersController::class, 'sendReservationReminders'])->name('send.reminders');
 
+//ゲストユーザー
+Route::middleware(['web'])->get('/',function () {
+    if (Auth::check()) {
+        return redirect()->route('user.top');
+    } else {
+        return redirect()->route('guest.top');
+    }
+});
 
 // 店舗一覧ページ(ゲストユーザートップページ)表示
 Route::get('/', [ShopController::class, 'guestTop'])->name('guest.top');
@@ -122,19 +130,3 @@ Route::get('/', [ShopController::class, 'guestTop'])->name('guest.top');
 Route::post('/', [ShopController::class, 'guestShopList'])->name('guest.shop_list');
 // 店舗詳細ページの表示(ゲストユーザー用)
 Route::get('/guest/detail/{shop_id}', [ShopController::class, 'guestShopDetail'])->name('guest.detail');
-
-// // 予約処理
-// Route::middleware(['auth'])->post('/reservation/create', [ReservationController::class, 'createReservation'])->name('reservation.create');
-// // 予約完了画面の表示
-// Route::middleware(['auth'])->get('/done', [ReservationController::class, 'done'])->name('done');
-// // 予約削除処理
-// Route::middleware(['auth'])->delete('reservation/delete/{reservation_id}', [ReservationController::class, 'deleteReservation'])->name('reservation.delete');
-// my_pageの表示
-// Route::middleware(['auth'])->get('/my_page', [LoginUserController::class, 'showMyPage'])->name('my_page');
-
-// 店舗一覧ページ(ログインユーザートップページ)表示
-// Route::middleware(['auth'])->get('/shop/index', [ShopController::class, 'userTop'])->name('user.top');
-// 店舗検索処理(ログインユーザートップページ)
-// Route::middleware(['auth'])->post('/shop/index', [ShopController::class, 'getShopList'])->name('get.shop_list');
-// 店舗詳細ページの表示(ログインユーザー用)
-// Route::middleware(['auth'])->get('/detail/{shop_id}', [ShopController::class, 'shopDetail'])->name('shop.detail');

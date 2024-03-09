@@ -37,13 +37,12 @@
                     </div>
                     <h1 class="text-3xl text-blue-600 font-black m-2">Rese</h1>
                 </div>
-                <div id="header-right" class="w-full md:w-2/3 flex justify-center">
+                <div id="header-right" class="w-full md:w-2/5 flex justify-center">
                         <div class="w-full flex flex-row justify-center text-blue-600 font-bold">
                             <ul class="w-9/12 md:w-full flex justify-between">
                                 <li><a href="{{ route('shop_management') }}">Shop create</a></li>
                                 <li><a href="{{ route('shop.info') }}">Shop update</a></li>
                                 <li><a href="{{ route('reservation.index') }}">reservation</a></li>
-                                <li><a href="{{ route('send.form') }}">send campaign</a></li>
                             </ul>
                         </div>
                 </div>

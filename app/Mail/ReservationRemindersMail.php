@@ -15,14 +15,16 @@ class ReservationRemindersMail extends Mailable
 
     public $reservation;
     public $today;
+    public $shopName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($reservation, $today)
+    public function __construct($reservation, $today, $shopName)
     {
         $this->reservation = $reservation;
         $this->today = $today;
+        $this->today = $shopName;
     }
 
     /**
@@ -32,7 +34,11 @@ class ReservationRemindersMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('本日' . $this->today . 'に' . $this->reservation->name . 'での予約があります。')->view('emails.reservation_reminder');
+        // return $this->subject('本日' . $this->today . 'に' . $this->reservation->name . 'での予約があります。')->view('emails.reservation_reminder')->with([
+        //     'shopName' => $this->reservation->shop->name,
+        // ]);
+        return $this->subject('本日のご予約について')
+                ->view('emails.reservation_reminder');
     }
     // /**
     //  * Get the message envelope.

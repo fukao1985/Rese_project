@@ -14,6 +14,8 @@ class ReservationRemindersController extends Controller
     public function sendReservationReminders() {
         $today = Carbon::today();
         // 予約当日の予約情報を取得
+        \Log::info('sendReservationReminders() method is called.');
+
         $reservations = Reservation::whereDate('date', $today)->get();
         // 予約がない場合は処理をしない
         if ($reservations->isEmpty()) {
@@ -24,6 +26,7 @@ class ReservationRemindersController extends Controller
         foreach ($reservations as $reservation) {
             try {
                 // 当日予約があるユーザーにメールを送信
+                $shopName = $reservation->shop->name;
                 Mail::to($reservation->user->email)->send(new ReservationRemindersMail($reservation, $today->format('Y-m-d')));
                 \Log::info('Sent reminder email to ' . $reservation->user->email . ' successfully');
             } catch (\Exception $e) {

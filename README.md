@@ -311,7 +311,7 @@ $ sail composer require simplesoftwareio/simple-qrcode
 |        date           |  datetime    | null: false |
 |        title          | varchar(191) | null: false |
 |       message         |  text        | null: false |
-|   recipient_email     |  text        | null: false |
+|   recipient_email     | varchar(191) | null: false |
 |      created_at       | timestamp    |     ———     |
 |      updated_at       | timestamp    |     ———     |
 
