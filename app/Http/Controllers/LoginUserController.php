@@ -12,7 +12,7 @@ class LoginUserController extends Controller
     // マイページの表示
     public function showMyPage() {
         $userId = auth()->user()->id;
-        $reservations = Reservation::where('user_id', $userId)->get();
+        $reservations = Reservation::where('user_id', $userId)->orderBy('date', 'desc')->get();
         $favorites = Favorite::where('user_id', $userId)->get();
         $userFavorites = auth()->user()->favorites()->pluck('shop_id')->toArray();
 

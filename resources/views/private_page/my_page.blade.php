@@ -58,7 +58,23 @@
                                     </i>
                                     <h3 class="text-white">予約{{ $loop->iteration }}</h3>
                                 </div>
-                                <form action="{{ route('reservation.delete', $reservation->id) }}" method="post">
+                                <div class="flex items-center">
+                                    {{-- stripe決済 --}}
+                                    <form action="{{route('stripe.charge')}}" method="POST">
+                                    @csrf
+                                        <script
+                                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="{{ env('STRIPE_KEY') }}"
+                                            data-amount="5000"
+                                            data-name="お支払い画面"
+                                            data-label="お支払いをする"
+                                            data-description="現在はデモ画面です"
+                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                            data-locale="auto"
+                                            data-currency ="JPY">
+                                        </script>
+                                    </form>
+                                    <form action="{{ route('reservation.delete', $reservation->id) }}" method="post" class="ml-3">
                                     @csrf
                                     @method('delete')
                                         <button type="submit" class="text-white">
@@ -68,7 +84,8 @@
                                                 </svg>
                                             </i>
                                         </button>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                             <table class="text-white text-left h-auto w-full">
                                 <tr class="mb-8">

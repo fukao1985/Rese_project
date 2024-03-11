@@ -12,6 +12,7 @@ use App\Http\Controllers\ShopRepresentativeController;
 use App\Http\Controllers\SystemManagerController;
 use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\ReservationRemindersController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,6 +76,9 @@ Route::middleware(['auth'])->group(function () {
     // 利用店のレビュー作成
     Route::post('/review/create', [ReviewController::class, 'createReview'])->name('review.create');
 
+    // Stripe決済
+    Route::post('/charge', [StripeController::class, 'charge'])->name('stripe.charge');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -109,11 +113,12 @@ Route::middleware(['auth', 'system_manager'])->group(function () {
 });
 
 
+
 // QRコードを生成してviewに渡す
 Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcode'])->name('qr_code.generate');
 
 // 予約当日の朝に予約情報のリマインダーを送る
-Route::post('/reservation/reminders', [ReservationRemindersController::class, 'sendReservationReminders'])->name('send.reminders');
+// Route::post('/reservation/reminders', [ReservationRemindersController::class, 'sendReservationReminders'])->name('send.reminders');
 
 //ゲストユーザー
 Route::middleware(['web'])->get('/',function () {

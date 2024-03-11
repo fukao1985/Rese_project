@@ -23,6 +23,9 @@ class SystemManagerMiddleware
             return $next($request);
         }
 
-        return redirect()->route('user.top');
+        $script = "<script>alert('アクセス権限がありません。');</script>";
+
+        return redirect()->route('user.top')->with('script', $script);
+        // return redirect()->route('user.top');
     }
 }

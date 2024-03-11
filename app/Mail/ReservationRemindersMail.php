@@ -24,7 +24,7 @@ class ReservationRemindersMail extends Mailable
     {
         $this->reservation = $reservation;
         $this->today = $today;
-        $this->today = $shopName;
+        $this->shopName = $shopName;
     }
 
     /**

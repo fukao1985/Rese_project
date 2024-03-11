@@ -3,7 +3,13 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\ReservationRemindersController;
+use App\Models\Reservation;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReservationRemindersMail;
+// use Illuminate\Support\Facades\Artisan;
+// use App\Http\Controllers\ReservationRemindersController;
+
 
 
 class SendReservationReminders extends Command
@@ -29,8 +35,28 @@ class SendReservationReminders extends Command
      */
     public function handle()
     {
-        $controller = new ReservationRemindersController();
-        $controller->sendReservationReminders();
+        // 予約当日の朝に予約情報のリマインダーを送る
+        $today = Carbon::today();
+        $reservations = Reservation::whereDate('date', $today)->get();
+
+        // 予約がない場合は処理をしない
+        if ($reservations->isEmpty()) {
+            $this->info('No reservations for today.');
+            return;
+        }
+
+        foreach ($reservations as $reservation) {
+            try {
+                // 当日予約があるユーザーにメールを送信
+                $shopName = $reservation->shop->name;
+                Mail::to($reservation->user->email)->send(new ReservationRemindersMail($reservation, $today->format('Y-m-d'), $shopName));
+                $this->info('Sent reminder email to ' . $reservation->user->email . ' successfully');
+            } catch (\Exception $e) {
+                $this->error('Failed to send reminder email to ' . $reservation->user->email . ': ' . $e->getMessage());
+            }
+        }
+        // $controller = new ReservationRemindersController();
+        // $controller->sendReservationReminders();
+        // Artisan::call('route:post', ['send.reminders']);
     }
-    
 }
