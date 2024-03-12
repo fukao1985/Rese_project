@@ -40,8 +40,6 @@
                             <p class="text-gray-800 text-sm pl-1 mb-2">#{{ $selectShop->genre->genre }}</p>
                     </div>
                     <p class="text-gray-800 text-sm mt-5 mb-2">{{ $selectShop->comment }}</p>
-                    {{-- ここにデータベースから取得した評価&ユーザーコメントを入れる --}}
-                    <div id="rating"></div>
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>

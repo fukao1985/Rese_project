@@ -16,9 +16,6 @@ class SystemManagerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (Auth::check() && Auth::user()->role === 'system_manager') {
-        //     return $next($request);
-        // }
         if (Auth::user()->role === 'system_manager') {
             return $next($request);
         }
@@ -26,6 +23,5 @@ class SystemManagerMiddleware
         $script = "<script>alert('アクセス権限がありません。');</script>";
 
         return redirect()->route('user.top')->with('script', $script);
-        // return redirect()->route('user.top');
     }
 }

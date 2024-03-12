@@ -74,7 +74,7 @@ Laravel sail に含まれる MailPit 機能を使用してご確認いただけ�
 -   バリデーション<br>(認証/予約/レビュー/店舗情報作成・更新/店舗代表者作成/メール送信)
 -   simplesoftwareio/simple-qrcode v4.2
 -   Stripe SDK(stripe/stripe-php) v13.13
--   AWS(EC2, RDS)
+-   AWS(EC2, RDS, S3)
 
 ---
 
@@ -230,6 +230,7 @@ $ chmod +x app/Console/Commands/SendReservationReminders.php
 ```
 
 -   docker-compose.ymlファイルのサービス名と同じレベルの場所に下記を追加<br>
+```jsx
     cron:
         image: alpine
         volumes:
@@ -239,6 +240,7 @@ $ chmod +x app/Console/Commands/SendReservationReminders.php
         command: "crond -f"
         depends_on:
             - mysql
+```
 
 -   下記のコマンドでdockerコンテナ内に入ります。<br>
 
@@ -271,6 +273,18 @@ $ sail artisan schedule:work
 ```jsx
 2024-03-12 18:00:00 Running ['artisan' send:reservation-reminders]  491ms DONE
   ⇂ '/usr/bin/php8.3' 'artisan' send:reservation-reminders > '/dev/null' 2>&1 
+```
+### 【開発中にdockerを止めた場合は必ず下記をコマンドしてください】<br>
+
+-   dockerを起動させます。<br>
+
+```jsx
+$ sail up -d
+```
+-   Tailwindcssを反映させるため下記を実行しておいてください。<br>
+
+```jsx
+$ sail npm run dev
 ```
 
 ---

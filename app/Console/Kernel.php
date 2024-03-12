@@ -15,11 +15,6 @@ class Kernel extends ConsoleKernel
     {
         // 予約当日の朝に予約情報のリマインダーを送る
         $schedule->command('send:reservation-reminders')->dailyAt('15:00');
-        // $schedule->call(function () {
-        //     $controller = new App\Http\Controllers\ReservationRemindersController();
-        //     $controller->sendReservationReminders();
-        // })->dailyAt('09:00');
-        // $schedule->command('inspire')->hourly();
     }
 
     /**
@@ -28,12 +23,7 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
-        // $this->load(__DIR__.'/../Http/Controllers');
-        // $this->load(app_path('Http/Controllers'));
 
-        // $this->commands([
-        //     SendReservationReminders::class,
-        // ]);
         require base_path('routes/console.php');
     }
 }

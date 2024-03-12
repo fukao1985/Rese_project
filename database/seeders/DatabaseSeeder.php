@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // usersテーブルのダミーデータ作成
-        // \App\Models\User::factory(50)->create();
+        \App\Models\User::factory(50)->create();
 
         // システム管理者のダミーデータを作成
         $this->call(SystemManagerSeeder::class);

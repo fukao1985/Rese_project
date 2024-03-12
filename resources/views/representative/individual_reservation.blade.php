@@ -42,36 +42,33 @@
         <main id="main_container" class="flex justify-center mx-5">
             <div class="flex flex-col w-11/12 justify-center">
                 <h1 class="font-bold text-xl text-center mb-10">予約詳細</h1>
-                {{-- <div class="w-full flex flex-col md:flex-row md:justify-between"> --}}
-
-                    {{-- 予約状況 --}}
-                    <div id="reservation" class="w-full md:w-2/5 flex justify-center mx-auto">
-                        <div class="bg-blue-600 w-full rounded p-6 mb-3 shadow-md">
-                            <table class="text-white text-left h-auto w-full">
-                                <tr class="mb-8">
-                                    <th class="w-2/6">Name</th>
-                                    <td class="w-4/6">{{ $reservation->user->name }}</td>
-                                </tr>
-                                <tr class="mb-8">
-                                    <th class="w-2/6">Date</th>
-                                    <td class="w-4/6">{{ $reservation->date }}</td>
-                                </tr>
-                                <tr class="mb-8">
-                                    <th class="w-2/6">Time</th>
-                                    <td class="w-4/6">{{ \Carbon\Carbon::parse($reservation->time)->format('H:i') }}</td>
-                                </tr>
-                                <tr class="mb-8">
-                                    <th class="w-2/6">Number</th>
-                                    <td class="w-4/6">{{ $reservation->number }}</td>
-                                </tr>
-                                <tr class="mb-8">
-                                    <th class="w-2/6">Email</th>
-                                    <td class="w-4/6">{{ $reservation->user->email }}</td>
-                                </tr>
-                            </table>
-                        </div>
+                {{-- 予約状況 --}}
+                <div id="reservation" class="w-full md:w-2/5 flex justify-center mx-auto">
+                    <div class="bg-blue-600 w-full rounded p-6 mb-3 shadow-md">
+                        <table class="text-white text-left h-auto w-full">
+                            <tr class="mb-8">
+                                <th class="w-2/6">Name</th>
+                                <td class="w-4/6">{{ $reservation->user->name }}</td>
+                            </tr>
+                            <tr class="mb-8">
+                                <th class="w-2/6">Date</th>
+                                <td class="w-4/6">{{ $reservation->date }}</td>
+                            </tr>
+                            <tr class="mb-8">
+                                <th class="w-2/6">Time</th>
+                                <td class="w-4/6">{{ \Carbon\Carbon::parse($reservation->time)->format('H:i') }}</td>
+                            </tr>
+                            <tr class="mb-8">
+                                <th class="w-2/6">Number</th>
+                                <td class="w-4/6">{{ $reservation->number }}</td>
+                            </tr>
+                            <tr class="mb-8">
+                                <th class="w-2/6">Email</th>
+                                <td class="w-4/6">{{ $reservation->user->email }}</td>
+                            </tr>
+                        </table>
                     </div>
-                {{-- </div> --}}
+                </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
         </main>

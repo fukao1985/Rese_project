@@ -17,12 +17,6 @@ class ReservationSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 50; $i++) {
-            // $shopId = $faker->numberBetween(3, 22);
-            // if ($shopId >= 3) {
-            //     // shop_id:3が欠番のため3以上の場合は4〜21の乱数を生成
-            //     $shopId = $faker->numberBetween(4, 21);
-            // }
-
             $reservation = new Reservation();
             $reservation->user_id = $faker->numberBetween(1, 51);
             $reservation->shop_id = $faker->numberBetween(3, 22);

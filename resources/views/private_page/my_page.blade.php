@@ -171,33 +171,33 @@
                         <h2 class="font-semibold mt-10 md:mt-0 md:ml-5 mb-5">お気に入り状況</h2>
                         @if($favorites)
                         <div class="flex text-center md:justify-center">
-                        <div class="w-full grid grid-cols-1 md:grid-cols-2">
-                        @foreach($favorites as $favorite)
-                            <div id="store_box" class="bg-white shadow-md rounded mx-5 mb-3">
-                                <img src="{{ asset($favorite->shop->url) }}" alt="{{ $favorite->shop->name }}" class="rounded-t">
-                                <h2 class="text-lg font-semibold mt-4 px-4">{{ $favorite->shop->name }}</h2>
-                                <div class="flex text-sm md:font-base">
-                                    <p class="text-gray-600 mb-2 pl-4">#{{ $favorite->shop->area->area }}</p>
-                                    <p class="text-gray-600 mb-2 pl-2">#{{ $favorite->shop->genre->genre }}</p>
+                            <div class="w-full grid grid-cols-1 md:grid-cols-2">
+                            @foreach($favorites as $favorite)
+                                <div id="store_box" class="bg-white shadow-md rounded mx-5 mb-3">
+                                    <img src="{{ asset($favorite->shop->url) }}" alt="{{ $favorite->shop->name }}" class="rounded-t">
+                                    <h2 class="text-lg font-semibold mt-4 px-4">{{ $favorite->shop->name }}</h2>
+                                    <div class="flex text-sm md:font-base">
+                                        <p class="text-gray-600 mb-2 pl-4">#{{ $favorite->shop->area->area }}</p>
+                                        <p class="text-gray-600 mb-2 pl-2">#{{ $favorite->shop->genre->genre }}</p>
+                                    </div>
+                                    <div class="flex justify-between items-center p-4">
+                                        <form action="{{ route('shop.detail', $favorite->shop->id) }}" method="GET">
+                                        @csrf
+                                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm md:font-base">詳しく見る</button>
+                                        </form>
+                                        <form action="{{ route('favorite.remove', $favorite->id) }}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                                <button type="submit" class="text-red-500" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                                    <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="flex justify-between items-center p-4">
-                                    <form action="{{ route('shop.detail', $favorite->shop->id) }}" method="GET">
-                                    @csrf
-                                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm md:font-base">詳しく見る</button>
-                                    </form>
-                                    <form action="{{ route('favorite.remove', $favorite->id) }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                            <button type="submit" class="text-red-500" >
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                                                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
+                            @endforeach
                             </div>
-                        @endforeach
-                        </div>
                         </div>
                         @endif
                     </div>

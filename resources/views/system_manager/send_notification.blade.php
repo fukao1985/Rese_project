@@ -38,12 +38,12 @@
                     <h1 class="text-3xl text-blue-600 font-black m-2">Rese</h1>
                 </div>
                 <div id="header-right" class="w-full md:w-2/3 flex justify-center">
-                        <div class="w-full flex flex-row justify-center text-blue-600 font-bold">
-                            <ul class="w-9/12 md:w-full flex justify-center md:justify-end">
-                                <li><a href="{{ route('management.top') }}">Representative Create</a></li>
-                                <li class="ml-10"><a href="{{ route('send.form') }}">Send Notification</a></li>
-                            </ul>
-                        </div>
+                    <div class="w-full flex flex-row justify-center text-blue-600 font-bold">
+                        <ul class="w-9/12 md:w-full flex justify-center md:justify-end">
+                            <li><a href="{{ route('management.top') }}">Representative Create</a></li>
+                            <li class="ml-10"><a href="{{ route('send.form') }}">Send Notification</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>

@@ -78,10 +78,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Stripe決済
     Route::post('/charge', [StripeController::class, 'charge'])->name('stripe.charge');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // 店舗代表者のルート
@@ -112,13 +108,8 @@ Route::middleware(['auth', 'system_manager'])->group(function () {
     Route::post('/send/system_notification', [SystemManagerController::class, 'sendSystemNotification'])->name('send.notification');
 });
 
-
-
 // QRコードを生成してviewに渡す
 Route::get('/qr_code/{reservation_id}', [QRCodeController::class, 'generateQRcode'])->name('qr_code.generate');
-
-// 予約当日の朝に予約情報のリマインダーを送る
-// Route::post('/reservation/reminders', [ReservationRemindersController::class, 'sendReservationReminders'])->name('send.reminders');
 
 //ゲストユーザー
 Route::middleware(['web'])->get('/',function () {

@@ -7,9 +7,6 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationRemindersMail;
-// use Illuminate\Support\Facades\Artisan;
-// use App\Http\Controllers\ReservationRemindersController;
-
 
 
 class SendReservationReminders extends Command
@@ -19,7 +16,6 @@ class SendReservationReminders extends Command
      *
      * @var string
      */
-    // protected $signature = 'app:send-reservation-reminders';
     protected $signature = 'send:reservation-reminders';
 
     /**
@@ -27,7 +23,6 @@ class SendReservationReminders extends Command
      *
      * @var string
      */
-    // protected $description = 'Command description';
     protected $description = 'Send reservation reminders';
 
     /**
@@ -55,8 +50,5 @@ class SendReservationReminders extends Command
                 $this->error('Failed to send reminder email to ' . $reservation->user->email . ': ' . $e->getMessage());
             }
         }
-        // $controller = new ReservationRemindersController();
-        // $controller->sendReservationReminders();
-        // Artisan::call('route:post', ['send.reminders']);
     }
 }

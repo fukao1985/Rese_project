@@ -16,9 +16,6 @@ class RepresentativeMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (Auth::check() && Auth::user()->role === 'representative') {
-        //     return $next($request);
-        // }
         if (Auth::user()->role === 'representative') {
             return $next($request);
         }
@@ -26,6 +23,5 @@ class RepresentativeMiddleware
         $script = "<script>alert('アクセス権限がありません。');</script>";
 
         return redirect()->route('user.top')->with('script', $script);
-        // return redirect()->route('user.top');
     }
 }
