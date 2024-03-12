@@ -21,7 +21,7 @@ class SystemManagerController extends Controller
         $users = User::all();
         $shops = Shop::all();
 
-        return view('system_management', compact('users', 'shops'));
+        return view('system_manager.system_management', compact('users', 'shops'));
     }
 
     // 店舗代表者を作成
@@ -49,7 +49,7 @@ class SystemManagerController extends Controller
 
     // システム管理者からのお知らせメール送信ページ表示
     public function sendForm() {
-        return view('send_notification');
+        return view('system_manager.send_notification');
     }
 
     // システム管理者から全ユーザーへのお知らせメール送信
@@ -89,6 +89,4 @@ class SystemManagerController extends Controller
 
         return redirect()->back()->with('script', $script);
     }
-
-    // 予約当日の朝に予約情報のリマインダーを送る
 }

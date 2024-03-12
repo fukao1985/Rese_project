@@ -44,7 +44,7 @@
 -   決済機能stripeでの決済<br>(userのマイページに表示される【支払いをする】ボタンから決済可能)<br>※テストの際は下記カード情報をご使用ください。<br>【番号:4242 4242 4242 4242】【日付：任意の将来の日付】【セキュリティコード:任意の3桁の数字】
 -   飲食店店舗代表者登録
 -   システム管理者から全ユーザーへのメール送信
--   予約当日に予約情報のリマインダー送信　
+-   予約当日に予約情報のリマインダー送信
 
 **認証メール送信のタイミング**<br>
 会員登録後に表示される thanks ページにて『ログインする』ボタンをクリックする必要があるため、下記タイミングにて認証メールが送信されます。<br>
@@ -219,6 +219,58 @@ $ sail composer require simplesoftwareio/simple-qrcode
 
 ```jsx
 $ sail composer require stripe/stripe-php
+```
+
+### 【タイムスケジュラーの利用】<br>
+
+-   必要なファイルを作成、下記のコマンドでタスクを実行する権限を与えます。<br>
+
+```jsx
+$ chmod +x app/Console/Commands/SendReservationReminders.php
+```
+
+-   docker-compose.ymlファイルのサービス名と同じレベルの場所に下記を追加<br>
+    cron:
+        image: alpine
+        volumes:
+            - ".:/var/www/html"
+            - "./schedule.sh:/etc/crontabs/www-data/schedule.sh"
+        restart: unless-stopped
+        command: "crond -f"
+        depends_on:
+            - mysql
+
+-   下記のコマンドでdockerコンテナ内に入ります。<br>
+
+```jsx
+$ docker-compose exec laravel.test bash
+```
+
+-   dockerコンテナ内で下記をコマンドします。<br>
+
+```jsx
+$ php artisan schedule:run
+```
+
+-   exitでdockerコンテナ内から出てdockerを再起動します。<br>
+
+```jsx
+$ docker-compose down
+$ docker-compose up -d
+```
+
+-   タスクを実行したいときは下記コマンドを実行しておきます。<br>
+
+```jsx
+$ sail artisan schedule:work
+```
+
+-   タスク実行時間にMailPitにメールが届けば成功です！<br>
+-   タスク実行の時間にはターミナルにも下記のように表示されます。<br>
+
+```jsx
+2024-03-12 18:00:00 Running ['artisan' send:reservation-reminders]  491ms DONE
+  ⇂ '/usr/bin/php8.3' 'artisan' send:reservation-reminders > '/dev/null' 2>&1 
 ```
 
 ---

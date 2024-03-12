@@ -21,7 +21,7 @@ class ShopRepresentativeController extends Controller
         $areas = Area::all();
         $genres = Genre::all();
 
-        return view('shop_management', compact('areas', 'genres'));
+        return view('representative.shop_management', compact('areas', 'genres'));
     }
 
     // 店舗情報作成
@@ -53,7 +53,7 @@ class ShopRepresentativeController extends Controller
         $areas = Area::all();
         $genres = Genre::all();
 
-        return view('shop_update',compact('shopInfo', 'areas', 'genres'));
+        return view('representative.shop_update',compact('shopInfo', 'areas', 'genres'));
     }
 
     // 店舗情報更新処理(認証作成後使用)
@@ -103,13 +103,13 @@ class ShopRepresentativeController extends Controller
         $shopId = $representative->shop_id;
         $reservations = Reservation::where('id', $shopId)->get();
 
-        return view('shop_reservation', compact('reservations'));
+        return view('representative.shop_reservation', compact('reservations'));
     }
 
     // 予約個別ページ表示
     public function individualReservation($reservation_id) {
         $reservation = Reservation::where('id',  $reservation_id)->first();
 
-        return view('individual_reservation', compact('reservation'));
+        return view('representative.individual_reservation', compact('reservation'));
     }
 }

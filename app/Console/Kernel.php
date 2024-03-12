@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // 予約当日の朝に予約情報のリマインダーを送る
-        $schedule->command('send:reservation-reminders')->dailyAt('09:00');
+        $schedule->command('send:reservation-reminders')->dailyAt('15:00');
         // $schedule->call(function () {
         //     $controller = new App\Http\Controllers\ReservationRemindersController();
         //     $controller->sendReservationReminders();
