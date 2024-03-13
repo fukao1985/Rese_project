@@ -13,12 +13,6 @@
 
 ---
 
-## アプリケーション URL
-
-<br>
-
----
-
 ## 機能一覧
 
 -   会員登録機能(メール認証あり)
@@ -74,7 +68,6 @@ Laravel sail に含まれる MailPit 機能を使用してご確認いただけ�
 -   バリデーション<br>(認証/予約/レビュー/店舗情報作成・更新/店舗代表者作成/メール送信)
 -   simplesoftwareio/simple-qrcode v4.2
 -   Stripe SDK(stripe/stripe-php) v13.13
--   AWS(EC2, RDS, S3)
 
 ---
 

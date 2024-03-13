@@ -18,8 +18,8 @@ class ReservationSeeder extends Seeder
 
         for ($i = 0; $i < 50; $i++) {
             $reservation = new Reservation();
-            $reservation->user_id = $faker->numberBetween(1, 51);
-            $reservation->shop_id = $faker->numberBetween(3, 22);
+            $reservation->user_id = $faker->numberBetween(1, 53);
+            $reservation->shop_id = $faker->numberBetween(1, 20);
             $reservation->date = $faker->dateTimeBetween('2024-03-01', '2025-03-01')->format('Y-m-d');
             $hour = $faker->numberBetween(17, 21);
             $minute = $faker->randomElement([0, 30]);

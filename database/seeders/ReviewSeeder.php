@@ -16,10 +16,10 @@ class ReviewSeeder extends Seeder
     {
         $faker = Faker::create('ja_JP');
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $review = new Review();
-            $review->user_id = $faker->numberBetween(1, 51);
-            $review->shop_id = $faker->numberBetween(3, 22);
+            $review->user_id = $faker->numberBetween(1, 53);
+            $review->shop_id = $faker->numberBetween(1, 20);
             $review->user_name = $faker->name();
             $review->ranting = $faker->numberBetween(1, 5);
             $review->comment = $faker->realText();
