@@ -4,6 +4,11 @@
 
 ![alt](Reseトップ画像.png)
 会員登録をすることで、登録されているお店の店舗情報を閲覧できるだけではなく、各店舗の口コミチェック、お店のお気に入り登録、予約を行うことができるようになります。<br>
+【ゲストユーザートップページ】localhost<br>
+【ログインユーザートップページ】localhost/shop/index<br>
+(ログインしたままでもlocalhostにアクセスできますがメニュー内のログインをクリックすると/shop/indexに遷移します)<br>
+【店舗代表者専用トップページ】localhost/shop/management<br>
+【システム管理者専用トップページ】localhost/management<br>
 
 ---
 
