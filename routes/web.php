@@ -13,6 +13,7 @@ use App\Http\Controllers\SystemManagerController;
 use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\ReservationRemindersController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\CsvController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -106,6 +107,10 @@ Route::middleware(['auth', 'system_manager'])->group(function () {
     Route::get('/send/form', [SystemManagerController::class, 'sendForm'])->name('send.form');
     // システム管理者からのお知らせメール送信
     Route::post('/send/system_notification', [SystemManagerController::class, 'sendSystemNotification'])->name('send.notification');
+    // 店舗情報作成(CSVファイルアップロード)ページ表示
+    Route::get('/csv', [CsvController::class, 'csvFile'])->name('csv.file');
+    // 店舗情報作成(CSVファイルアップロード)
+    Route::post('/csv/upload', [CsvController::class, 'csvUpload'])->name('csv.upload');
 });
 
 // QRコードを生成してviewに渡す

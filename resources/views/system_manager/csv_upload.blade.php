@@ -1,6 +1,5 @@
 <x-app-layout>
 
-<!-- Session Status -->
 @if(session()->has('script'))
     {!! session('script') !!}
 @endif
@@ -50,48 +49,30 @@
         </header>
 </x-slot>
 
-{{-- mainに入る部分 --}}
+        {{-- mainに入る部分 --}}
         <main id="main_container" class="flex justify-center">
             <div class="w-11/12 flex justify-center">
-                <div class="bg-white h-auto w-2/3 rounded shadow-md shadow-gray-400 flex flex-col">
-                    <div class="w-full h-1/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
-                        <p class="text-l text-white pl-6">Send campaign</p>
+                <div class="bg-white h-auto w-10/12 md:w-3/5 rounded shadow-md shadow-gray-400 flex flex-col justify-center">
+                    <div class="w-full h-2/5 bg-blue-600 text-white mb-4 pt-2 p-2 rounded-t-lg flex items-center">
+                        <p class="text-l text-white pl-2">Shop Create</p>
                     </div>
-                    <form method="POST" action="{{ route('send.notification') }}" novalidate>
-                    @csrf
-                        <div class="flex flex-col justify-center w-full">
-                            <!-- Title -->
-                            <div class="w-10/12 flex justify-between items-center mx-auto">
-                                <label for="title" :value="__('title')" class="w-2/12 text-gray-500 mr-3">Title</label>
-                                <input id="title" type="text" name="title" value="{{ old('title') }}" class="w-11/12 focus:outline-none text-gray-500 border-none" />
-                            </div>
-                            <div class="w-10/12 flex justify-center mx-auto">
-                                <div class="border-b border-gray-500 mb-1 w-full"></div>
-                            </div>
-                            @error('title')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                            <!-- message -->
-                            <div class="w-10/12 flex justify-between items-center mx-auto mt-5">
-                                <label for="body" :value="__('body')" class="text-gray-500 pr-1">Message</label>
-                                <textarea id="body" name="body" cols="80" rows="10" class="focus:outline-none text-gray-500 border-gray-500 text-start w-10/12 h-32 p-1 rounded resize-none">{{ old('body') }}</textarea>
-                            </div>
-                            @error('body')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
+                    <div class="flex justify-center flex-col w-full">
+                        <form method="POST" action="{{ route('csv.upload') }}" class="w-full flex flex-col justify-center" novalidate enctype="multipart/form-data">
+                        @csrf
                             <!-- Button -->
-                            <div class="w-2/3 m-auto text-right mr-8 ml-auto">
-                                <button type="submit" name="send_notification" class="bg-blue-600 w-8/12 text-sm md:fontbase text-white mt-6 mb-4 py-1.5 rounded">メールを送信する</button>
+                            <div class="w-10/12 flex justify-center flex-col mx-auto">
+                                <p class="mt-2 mb-10 mx-auto">CSVファイルをアップロードしてください。</p>
+                                <input type="file" name="csv_file" class="mx-auto  mt-6 mb-2 pl-10">
+                                <button type="submit" class="bg-blue-600 w-1/3 text-white mt-2 mb-10 mx-auto py-1.5 rounded">アップロード</button>
                             </div>
-                        </div>
-                    </form>
+                            <!-- error表示 -->
+                            <div>
+                                <x-input-error class="mb-4" :messages="$errors->all()"/>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+            </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
         </main>
     </div>
