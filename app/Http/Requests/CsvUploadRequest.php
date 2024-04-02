@@ -22,13 +22,16 @@ class CsvUploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'csv_file' => ['required', 'file', 'mimes:csv,text'],
+            'csv_file' => ['required', 'file', 'mimetypes:text/plain', 'mimes:csv,txt'],
         ];
     }
 
-    public function messages() {
-        'csv_file.required' => 'CSVファイルを必ず選択してください。',
-        'csv_file.file' => '有効なCSVファイルを選択してください。',
-        'csv_file.mimes' => 'CSVファイルのみアップロードできます。',
+    public function messages(): array
+    {
+        return [
+            'csv_file.required' => 'CSVファイルを必ず選択してください。',
+            'csv_file.file' => '有効なCSVファイルを選択してください。',
+            'csv_file.mimes' => 'CSVファイルのみアップロードできます。',
+        ];
     }
 }

@@ -64,10 +64,10 @@
                                 <p class="mt-2 mb-10 mx-auto">CSVファイルをアップロードしてください。</p>
                                 <input type="file" name="csv_file" class="mx-auto  mt-6 mb-2 pl-10">
                                 <button type="submit" class="bg-blue-600 w-1/3 text-white mt-2 mb-10 mx-auto py-1.5 rounded">アップロード</button>
-                            </div>
-                            <!-- error表示 -->
-                            <div>
-                                <x-input-error class="mb-4" :messages="$errors->all()"/>
+                                <!-- error表示 -->
+                                <div class="w-4/5 bg-red-200 h-auto mx-auto mb-4">
+                                    <x-input-error class="text-center py-2 font-bold" :messages="$errors->all()"/>
+                                </div>
                             </div>
                         </form>
                     </div>

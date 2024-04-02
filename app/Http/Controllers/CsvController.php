@@ -18,15 +18,20 @@ class CsvController extends Controller
     // 店舗情報作成(CSVファイルアップロード)
     public function csvUpload(CsvUploadRequest $request) {
 
+        // CSVファイルをアップロード
         $csvFile = $request->file('csv_file');
         $data = file_get_contents($csvFile->getRealPath());
-
-        $rows = explode("\n", $data);
+        $rows = preg_split("/\r\n|\n|\r/", $data);
+        $rows = array_map('trim', $rows);
 
         // CSVファイルの内容をデータベースに保存
-        foreach ($rows as $row) {
+        foreach ($rows as $index => $row) {
             // 空行があった場合はスキップする
             if (empty(trim($row))) {
+                continue;
+            }
+
+            if ($index === 0) {
                 continue;
             }
 
@@ -66,14 +71,14 @@ class CsvController extends Controller
             $area = Area::where('area', $areaName)->first();
             $genre = Genre::where('genre', $genreName)->first();
 
-            if (!$area || $genre) {
+            if (!$area || !$genre) {
                 $errors[] = '地域またはジャンルが見つかりませんでした。';
                 return redirect()->back()->withErrors($errors)->withInput();
             }
 
             $shop = Shop::create([
-                'area_id' => $areaId,
-                'genre_id' => $genreId,
+                'area_id' => $area->id,
+                'genre_id' => $genre->id,
                 'name' => $shopName,
                 'comment' => $shopDescription,
                 'url' => $shopImageUrl,
