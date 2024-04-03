@@ -10,7 +10,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ShopRepresentativeController;
 use App\Http\Controllers\SystemManagerController;
-use App\Http\Controllers\QRCodeController;
+use App\Http\Controllers\QRcodeController;
 use App\Http\Controllers\ReservationRemindersController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\CsvController;
@@ -54,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/shop/index', [ShopController::class, 'userTop'])->name('user.top');
     // 店舗検索処理(ログインユーザートップページ)
     Route::post('/shop/index', [ShopController::class, 'getShopList'])->name('get.shop_list');
+    // 店舗表示順セレクト処理
+    Route::post('display/order', [ShopController::class, 'displayOrder'])->name('display.order');
     // 店舗詳細ページの表示(ログインユーザー用)
     Route::get('/detail/{shop_id}', [ShopController::class, 'shopDetail'])->name('shop.detail');
 

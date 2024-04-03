@@ -24,6 +24,16 @@
         menu.classList.toggle('translate-x-full', !menuOpen);
     }
 
+    // 店舗表示順セレクトフォームのEnterキー処理
+    document.getElementById("order").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            e.stopPropagation(); // 追加
+            console.log("Enter key pressed"); // コンソールにログを出力
+            document.getElementById("display_order").submit();
+        }
+    });
+
     // 検索フォームのEnterキー処理
     document.getElementById("name").addEventListener("keypress", function(e) {
         if (e.key === "Enter") {

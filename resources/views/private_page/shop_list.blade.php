@@ -41,7 +41,20 @@
                     </div>
                     <h1 class="text-3xl text-blue-600 font-black m-2">Rese</h1>
                 </div>
-                <form id="search_form" action="{{ route('guest.shop_list') }}" method="POST" class="md:w-1/2 bg-white shadow-md rounded md:flex items-center">
+                <!-- 表示順セレクトフォーム -->
+                <form id="display_order" action="{{ route('display.order') }}" method="POST" class="md:w-1/5 md:ml-36 bg-white shadow-md rounded md:flex items-center text-center">
+                @csrf
+                    <div class="mx-auto">
+                        <select name="order" id="order" class="text-gray-700 border-none" >
+                            <option value="default">並び替え : 評価高/低</option>
+                            <option value="random">ランダム</option>
+                            <option value="high_rating">評価が高い</option>
+                            <option value="low_rating">評価が低い</option>
+                        </select>
+                    </div>
+                </form>
+                <!-- 検索フォーム -->
+                <form id="search_form" action="{{ route('get.shop_list') }}" method="POST" class="md:w-1/2 bg-white shadow-md rounded md:flex items-center">
                 @csrf
                     <!-- Arear セレクトボックス-->
                     <div class="mr-4 ml-4">
