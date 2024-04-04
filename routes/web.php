@@ -76,6 +76,8 @@ Route::middleware(['auth'])->group(function () {
     // 予約変更処理
     Route::put('/reservation/update/{reservation_id}', [ReservationController::class, 'updateReservation'])->name('reservation.update');
 
+    // レビュー作成ページ表示
+    Route::get('/review', [ReviewController::class, 'reviewPage'])->name('review.page');
     // 利用店のレビュー作成
     Route::post('/review/create', [ReviewController::class, 'createReview'])->name('review.create');
 

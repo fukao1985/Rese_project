@@ -50,40 +50,14 @@
                     </div>
                     <p class="text-gray-800 text-sm mt-5 mb-3">{{ $selectShop->comment }}</p>
 
-                    {{-- ユーザーのレビューがあれば表示 --}}
-                    @if($hasReservation && $hasReview)
-                    <div class="mb-5 mt-10">
-                        <div class="border border-gray-300 w-full"></div>
-                        <div id="login_user_review" class="w-full h-auto p-2 rounded mb-2 flex justify-end">
-                            <a href="" class="underline text-sm">口コミを編集する</a>
-                            <a href="" class="underline ml-4 text-sm">口コミを削除する</a>
-                        </div>
-                        <p class="text-gray-600 text-sm font-bold">{{ $userReview->user_name }}</p>
-                        <div id="ranting" class="flex items-center">
-                            @for($i = 1; $i <= 5; $i++)
-                                @if($i <= $userReview->ranting)
-                                    <p class="text-yellow-500">★</p>
-                                @else
-                                    <p class="text-gray-400">★</p>
-                                @endif
-                            @endfor
-                            <p class="text-blue-700 text-sm font-bold ml-1">{{ $userReview->ranting }}</p>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-2">{{ $userReview->comment }}</p>
-                        <div class="border border-gray-300 w-full my-1"></div>
+                    {{-- レビュー作成ページへの遷移 --}}
+                    <div class="my-2">
+                        <a href="" class="underline">口コミを編集する</a>
                     </div>
-                    @elseif($hasReservation and !$hasReview)
-                    <div id="login_user_review" class="my-2 w-full h-auto p-2 rounded mb-5 flex justify-start">
-                        <a href="#review_create_form" class="underline text-sm">口コミを投稿する</a>
-                    </div>
-                    @endif
 
                     {{-- 利用者のレビューがあれば表示 --}}
                     @if($selectShop->reviews && $selectShop->reviews->count() > 0)
                     <div id="review" class="bg-gray-200 w-full h-auto p-2 rounded mb-5">
-                        <div id="login_user_review" class="my-1 mx-auto mb-5 bg-blue-400 text-white w-11/12 h-auto p-1 rounded">
-                            <p class="text-center">全ての口コミ情報</p>
-                        </div>
                         @foreach($reviews as $review)
                         <p class="text-gray-600 text-sm font-bold">{{ $review->user_name }}</p>
                         <div id="ranting" class="flex items-center">
@@ -184,7 +158,7 @@
                     </form>
                     {{-- ログインユーザーがこのお店を利用したことがある場合はレビュー入力フォーム --}}
                     @if($hasReservation)
-                    <form id="review_create_form" action="{{ route('review.create') }}" method="POST" class="w-full">
+                    <form action="{{ route('review.create') }}" method="POST" class="w-full">
                     @csrf
                         <div class="bg-blue-400 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
                             <div class="flex flex-col mb-5">
@@ -208,22 +182,12 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                                <textarea name="comment" id="comment" cols="30" rows="5" class="rounded" placeholder="コメントを入力してください">
-                                    @if(old('comment'))
-                                        {{ old('comment') }}
-                                    @endif
-                                </textarea>
+                                    <textarea name="comment" id="comment" cols="30" rows="5" class="rounded" placeholder="コメントを入力してください">
+                                        @if(old('comment'))
+                                            {{ old('comment') }}
+                                        @endif
+                                    </textarea>
                                 @error('comment')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                                <!-- Image File -->
-                                <div id="drop_area" class="flex justify-between items-center mr-8 ml-8 mt-5">
-                                    <label for="review_file" :value="__('file')" class="text-gray-500 pr-1">Image file</label>
-                                    <input id="review_file" type="file" name="review_file" class="focus:outline-none text-gray-500 w-7/12 p-1" />
-                                </div>
-                                @error('file')
                                 <div class="text-red-600 text-sm h-4 flex justify-center">
                                     {{ $message }}
                                 </div>

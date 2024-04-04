@@ -9,6 +9,11 @@ use App\Models\User;
 
 class ReviewController extends Controller
 {
+    // レビュー作成ページ表示
+    public function reviewPage() {
+        return view('private_page.review_create');
+    }
+
     // 利用店のレビューを作成
     public function createReview(ReviewRequest $request) {
         $userId = auth()->user()->id;

@@ -128,10 +128,24 @@ class ShopController extends Controller
         $userId = auth()->user()->id;
         $hasReservation = Reservation::where('shop_id', $shop_id)
         ->where('user_id', $userId)
-        ->whereDate('date', '<', now())
+        ->where('date', '<', now())
         ->exists();
 
-        return view('private_page.shop_detail', compact('selectShop', 'reviews', 'hasReservation'));
+        // ログインユーザーが一度selectShopに対してレビューをしているかどうかを確認
+        $userReview = Review::where('shop_id', $shop_id)
+        ->where('user_id', $userId)
+        ->first();
+
+        $data = [
+            'selectShop' => $selectShop,
+            'reviews' => $reviews,
+            'hasReservation' => $hasReservation,
+            'hasReview' => $userReview ? true : false,
+            'userReview' => $userReview,
+        ];
+
+        // return view('private_page.shop_detail', compact('selectShop', 'reviews', 'hasReservation', 'hasReview'));
+        return view('private_page.shop_detail', $data);
     }
 
     // ゲストユーザートップ(店舗一覧ページ)の表示

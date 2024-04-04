@@ -40,7 +40,7 @@
                     <div class="w-full flex flex-row justify-center text-blue-600 font-bold">
                         <ul class="w-9/12 md:w-full flex justify-center md:justify-end">
                             <li><a href="{{ route('management.top') }}">Representative Create</a></li>
-                            <li class="ml-10"><a href="{{ route('csv.file') }}">Shop create</a></li>
+                            <li class="ml-10"><a href="{{ route('csv.file') }}">Shop Create</a></li>
                             <li class="ml-10"><a href="{{ route('send.form') }}">Send Notification</a></li>
                         </ul>
                     </div>
