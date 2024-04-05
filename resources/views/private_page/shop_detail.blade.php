@@ -184,31 +184,42 @@
                     </form>
                     {{-- ログインユーザーがこのお店を利用したことがある場合はレビュー入力フォーム --}}
                     @if($hasReservation)
-                    <form id="review_create_form" action="{{ route('review.create') }}" method="POST" class="w-full">
+                    <form id="review_create_form" action="{{ route('review.create') }}" method="POST" class="w-full" enctype="multipart/form-data" novalidate>
                     @csrf
                         <div class="bg-blue-400 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
                             <div class="flex flex-col mb-5">
-                                <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
-                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded w-7/12 mb-3 pl-2" placeholder="ユーザーネームを入力してください">
-                                @error('user_name')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
+                                <div class="mb-5">
+                                    <p class="text-white text-xl font-bold">体験を評価してください</p>
                                 </div>
-                                @enderror
-                                <select id="ranting" type="ranting" name="ranting" class="rounded w-11/12 mb-3">
-                                    <option value="">評価を選択してください</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+
+                                <!-- ShopId -->
+                                <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
+
+                                <!-- Rating -->
+                                <div class="felx items-center mb-3">
+                                    <input type="hidden" id="ranting" name="ranting" value="">
+                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="1">★</span>
+                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="2">★</span>
+                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="3">★</span>
+                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="4">★</span>
+                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="5">★</span>
+                                </div>
                                 @error('ranting')
                                 <div class="text-red-600 text-sm h-4 flex justify-center">
                                     {{ $message }}
                                 </div>
                                 @enderror
-                                <textarea name="comment" id="comment" cols="30" rows="5" class="rounded" placeholder="コメントを入力してください">
+
+                                <!-- UserName -->
+                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded w-7/12 mb-3 pl-2" placeholder="ユーザーネームを入力">
+                                @error('user_name')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
+                                <!-- Comment -->
+                                <textarea name="comment" id="comment" class="hidden w-full h-auto bg-blue-100" placeholder="コメントを入力してください">
                                     @if(old('comment'))
                                         {{ old('comment') }}
                                     @endif
@@ -218,10 +229,15 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
+
                                 <!-- Image File -->
-                                <div id="drop_area" class="flex justify-between items-center mr-8 ml-8 mt-5">
-                                    <label for="review_file" :value="__('file')" class="text-gray-500 pr-1">Image file</label>
-                                    <input id="review_file" type="file" name="review_file" class="focus:outline-none text-gray-500 w-7/12 p-1" />
+                                <div id="drop_area" class="w-full bg-white mt-5 h-auto hover:bg-blue-300 cursor-pointer rounded-lg p-6">
+                                    <div class="flex flex-col my-10 text-gray-800">
+                                        <label for="review_image" class="mx-auto ">クリックして写真を追加</label>
+                                        <p class="text-sm mx-auto">またはドラッグアンドドロップ</p>
+                                    </div>
+                                    <input type="file" id="review_image" name="review_image" accept="image/*" class="hidden">
+                                    <img id="uploaded_image" src="#" alt="Uploaded Image" class="hidden">
                                 </div>
                                 @error('file')
                                 <div class="text-red-600 text-sm h-4 flex justify-center">
@@ -230,13 +246,14 @@
                                 @enderror
                             </div>
                         </div>
-                        <button type="submit" class="w-full bg-blue-500 font-semibold text-white mb-10 p-4 rounded-b">レビューを書く</button>
+                        <button type="submit" class="w-full bg-blue-500 font-semibold text-white mb-10 p-4 rounded-b">口コミを投稿する</button>
                     </form>
                     @endif
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
             <script src="{{ asset('js/confirm_script.js') }}" defer></script>
+            <script src="{{ asset('js/review_script.js') }}" defer></script>
         </main>
     </div>
 </x-app-layout>
