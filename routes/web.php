@@ -80,6 +80,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/review', [ReviewController::class, 'reviewPage'])->name('review.page');
     // 利用店のレビュー作成
     Route::post('/review/create', [ReviewController::class, 'createReview'])->name('review.create');
+    // レビュー編集ページ表示
+    Route::get('/review/edit', [ReviewController::class, 'editPage'])->name('edit.page');
+    // レビュー更新処理
+    Route::put('/review/update', [ReviewController::class, 'updateReview'])->name('update.review');
+    // レビュー削除処理
+    Route::delete('/review/delete', [ReviewController::class, 'deleteReview'])->name('delete.review');
 
     // Stripe決済
     Route::post('/charge', [StripeController::class, 'charge'])->name('stripe.charge');

@@ -24,7 +24,8 @@ class ReviewRequest extends FormRequest
         return [
             'user_name' => ['required', 'string', 'max:191'],
             'ranting' => ['required', 'integer', 'min:1', 'max:5'],
-            'comment' => ['required', 'string'],
+            'comment' => ['required', 'string', 'max:400'],
+            'review_image' =>['nullable', 'image', 'mimes:jpeg,png', 'max:2048']
         ];
     }
 
@@ -40,6 +41,9 @@ class ReviewRequest extends FormRequest
             'ranting.max' => '5以下の整数を選択してください',
             'comment.required' => 'コメントを必ず入力してください',
             'comment.string' => '有効な文字形式で入力してください',
+            'comment.max' => '400文字以内で入力してください',
+            'review_image.mimes' => '有効な画像形式 (JPEG, PNG) を選択してください',
+            'review_image.max' => 'ファイルサイズは最大2MBまでです',
         ];
     }
 }

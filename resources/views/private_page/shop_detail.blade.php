@@ -51,7 +51,7 @@
                     <p class="text-gray-800 text-sm mt-5 mb-3">{{ $selectShop->comment }}</p>
 
                     {{-- ユーザーのレビューがあれば表示 --}}
-                    @if($hasReservation && $hasReview)
+                    @if($hasReview)
                     <div class="mb-5 mt-10">
                         <div class="border border-gray-300 w-full"></div>
                         <div id="login_user_review" class="w-full h-auto p-2 rounded mb-2 flex justify-end">
@@ -85,6 +85,11 @@
                             <p class="text-center">全ての口コミ情報</p>
                         </div>
                         @foreach($reviews as $review)
+                        @if (Auth::user()->role === 'system_manager')
+                        <div class="w-full text-end">
+                            <a href="" class="underline mr-3 text-sm">口コミを削除する</a>
+                        </div>
+                        @endif
                         <p class="text-gray-600 text-sm font-bold">{{ $review->user_name }}</p>
                         <div id="ranting" class="flex items-center">
                             @for($i = 1; $i <= 5; $i++)
@@ -186,23 +191,32 @@
                     @if($hasReservation)
                     <form id="review_create_form" action="{{ route('review.create') }}" method="POST" class="w-full" enctype="multipart/form-data" novalidate>
                     @csrf
-                        <div class="bg-blue-400 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
+                        <div class="bg-blue-300 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
                             <div class="flex flex-col mb-5">
-                                <div class="mb-5">
-                                    <p class="text-white text-xl font-bold">体験を評価してください</p>
-                                </div>
 
                                 <!-- ShopId -->
                                 <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
 
+                                <!-- UserName -->
+                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded-md w-7/12 mb-14 pl-2" placeholder="ユーザーネームを入力">
+                                @error('user_name')
+                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
+
                                 <!-- Rating -->
-                                <div class="felx items-center mb-3">
+                                <div class="mb-2">
+                                    <p class="text-white text-xl font-bold">体験を評価してください</p>
+                                </div>
+                                <div class="felx items-center mb-10">
                                     <input type="hidden" id="ranting" name="ranting" value="">
-                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="1">★</span>
-                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="2">★</span>
-                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="3">★</span>
-                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="4">★</span>
-                                    <span class="rating-star cursor-pointer text-2xl text-gray-300" data-value="5">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="1">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="2">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="3">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="4">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="5">★</span>
                                 </div>
                                 @error('ranting')
                                 <div class="text-red-600 text-sm h-4 flex justify-center">
@@ -210,20 +224,12 @@
                                 </div>
                                 @enderror
 
-                                <!-- UserName -->
-                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded w-7/12 mb-3 pl-2" placeholder="ユーザーネームを入力">
-                                @error('user_name')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-
                                 <!-- Comment -->
-                                <textarea name="comment" id="comment" class="hidden w-full h-auto bg-blue-100" placeholder="コメントを入力してください">
-                                    @if(old('comment'))
-                                        {{ old('comment') }}
-                                    @endif
-                                </textarea>
+                                <div class="mb-2">
+                                    <p class="text-white text-xl font-bold">口コミを投稿</p>
+                                </div>
+                                <textarea name="comment" id="comment" rows="8" class="w-full h-auto bg-white text-start p-2 border-none resize-none rounded-md outline-none" placeholder="カジュアルな夜のお出かけにおすすめのスポット"></textarea>
+                                <div id="charCount" class="text-right text-gray-800 text-sm mb-10">0/400 (最高文字数)</div>
                                 @error('comment')
                                 <div class="text-red-600 text-sm h-4 flex justify-center">
                                     {{ $message }}
@@ -231,7 +237,10 @@
                                 @enderror
 
                                 <!-- Image File -->
-                                <div id="drop_area" class="w-full bg-white mt-5 h-auto hover:bg-blue-300 cursor-pointer rounded-lg p-6">
+                                <div class="mb-2">
+                                    <p class="text-white text-xl font-bold">画像の追加</p>
+                                </div>
+                                <div id="drop_area" class="w-full bg-white h-auto hover:bg-blue-500 cursor-pointer rounded-lg p-6">
                                     <div class="flex flex-col my-10 text-gray-800">
                                         <label for="review_image" class="mx-auto ">クリックして写真を追加</label>
                                         <p class="text-sm mx-auto">またはドラッグアンドドロップ</p>

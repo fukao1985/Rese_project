@@ -8,16 +8,32 @@ document.addEventListener('DOMContentLoaded', function () {
             const value = this.getAttribute('data-value');
             document.getElementById('ranting').value = value;
 
-            stars.forEach(s => s.classList.remove('text-yellow-400'));
-            stars.forEach(s => s.classList.add('text-gray-300'));
-
-            for (let i = 0; i <= index; i++) {
-                stars[i].classList.remove('text-gray-300');
-                stars[i].classList.add('text-yellow-400');
-            }
+            stars.forEach((s, i) => {
+                if (i <= index) {
+                    s.classList.remove('text-gray-300');
+                    s.classList.add('text-yellow-500');
+                } else {
+                    s.classList.remove('text-yellow-500');
+                    s.classList.add('text-gray-300');
+                }
+            });
         });
     });
 });
+
+// 文字カウント
+const textarea = document.getElementById('comment');
+const charCount = document.getElementById('charCount');
+
+updateCharCount();
+
+textarea.addEventListener('input', updateCharCount);
+
+function updateCharCount() {
+    const count = textarea.value.length;
+    const countText = count + '/400 (最高文字数)';
+    charCount.textContent = countText;
+}
 
 // 画像を送信フォームに追加する処理
 document.addEventListener('DOMContentLoaded', function () {
