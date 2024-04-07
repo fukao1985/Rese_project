@@ -47,27 +47,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ファイルが選択された際の処理
     fileInput.addEventListener('change', function () {
-        const file = fileInput.files[0];
-        if (file && file.type.startsWith('image/')) {
-            // 拡張子を確認
-            const extension = file.name.split('.').pop().toLowerCase();
-            if (extension === 'jpeg' || extension === 'jpg' || extension === 'png') {
-                console.log('画像が選択されました:', file);
-                alert('画像のアップロードが成功しました。');
+    const file = fileInput.files[0];
+    if (!file) return; // ファイルが選択されていない場合は処理を終了する
+    if (!file.type.startsWith('image/')) {
+        alert('アップロードできる画像ファイルはJPEGまたはPNG形式のみです。');
+        return;
+    }
 
-                // 選択された画像を表示する
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.getElementById('uploaded_image');
-                    img.src = e.target.result;
-                    img.classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            } else {
-                alert('アップロードできる画像ファイルはJPEGまたはPNG形式のみです。');
-            }
-        }
-    });
+    // 拡張子を確認
+    const extension = file.name.split('.').pop().toLowerCase();
+    if (extension !== 'jpeg' && extension !== 'jpg' && extension !== 'png') {
+        alert('アップロードできる画像ファイルはJPEGまたはPNG形式のみです。');
+        return;
+    }
+
+    console.log('画像が選択されました:', file);
+    alert('画像のアップロードが成功しました。');
+
+    // 選択された画像を表示する
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const img = document.getElementById('uploaded_image');
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+    }
+    reader.readAsDataURL(file);
+});
 
     // 選択したファイルをドロップエリアから削除
     dropArea.addEventListener('click', function () {
@@ -79,8 +84,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ドラッグアンドドロップ処理
     dropArea.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        dropArea.classList.add('bg-blue-300');
+    e.preventDefault();
+    if (Array.from(e.dataTransfer.types).includes('Files')) {
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            alert('アップロードできる画像ファイルはJPEGまたはPNG形式のみです。');
+        }
+    }
+    dropArea.classList.add('bg-blue-300');
     });
 
     dropArea.addEventListener('dragleave', function () {

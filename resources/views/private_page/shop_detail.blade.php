@@ -52,30 +52,51 @@
 
                     {{-- ユーザーのレビューがあれば表示 --}}
                     @if($hasReview)
-                    <div class="mb-5 mt-10">
-                        <div class="border border-gray-300 w-full"></div>
-                        <div id="login_user_review" class="w-full h-auto p-2 rounded mb-2 flex justify-end">
-                            <a href="" class="underline text-sm">口コミを編集する</a>
-                            <a href="" class="underline ml-4 text-sm">口コミを削除する</a>
+                        @if(auth()->user()->role != 'system_manager' && auth()->user()->role != 'representative')
+                        <div class="mb-5 mt-10">
+                            <div class="border border-gray-300 w-full"></div>
+                            <div id="login_user_review" class="w-full h-auto p-2 rounded mb-2 flex justify-end items-center">
+                                <a href="{{ route('edit.page', $userReview->id) }}" class="underline text-sm">口コミを編集する</a>
+                                <form action="{{ route('delete.review', $userReview->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                    <button type="submit" class="underline ml-4 text-sm">口コミを削除する</button>
+                                </form>
+                            </div>
+                            <p class="text-gray-600 text-sm font-bold">{{ $userReview->user_name }}</p>
+                            <div id="ranting" class="flex items-center">
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= $userReview->ranting)
+                                        <p class="text-yellow-500">★</p>
+                                    @else
+                                        <p class="text-gray-400">★</p>
+                                    @endif
+                                @endfor
+                                <p class="text-blue-700 text-sm font-bold ml-1">{{ $userReview->ranting }}</p>
+                                @php
+                                    $ratingsComments = [
+                                        1 => "大変不満でした",
+                                        2 => "不満でした",
+                                        3 => "普通でした",
+                                        4 => "満足でした",
+                                        5 => "大変満足でした",
+                                    ];
+                                @endphp
+                                <p class="text-sm ml-2 font-bold">{{ $ratingsComments[$userReview->ranting] }}</p>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-2">{{ $userReview->comment }}</p>
+                            @if($userReview->image)
+                                <img src="{{ asset($userReview->image) }}" alt="Review Image" class="pb-10">
+                            @endif
+                            <div class="border border-gray-300 w-full my-1"></div>
                         </div>
-                        <p class="text-gray-600 text-sm font-bold">{{ $userReview->user_name }}</p>
-                        <div id="ranting" class="flex items-center">
-                            @for($i = 1; $i <= 5; $i++)
-                                @if($i <= $userReview->ranting)
-                                    <p class="text-yellow-500">★</p>
-                                @else
-                                    <p class="text-gray-400">★</p>
-                                @endif
-                            @endfor
-                            <p class="text-blue-700 text-sm font-bold ml-1">{{ $userReview->ranting }}</p>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-2">{{ $userReview->comment }}</p>
-                        <div class="border border-gray-300 w-full my-1"></div>
-                    </div>
+                        @endif
                     @elseif($hasReservation and !$hasReview)
-                    <div id="login_user_review" class="my-2 w-full h-auto p-2 rounded mb-5 flex justify-start">
-                        <a href="#review_create_form" class="underline text-sm">口コミを投稿する</a>
-                    </div>
+                        @if(auth()->user()->role != 'system_manager' && auth()->user()->role != 'representative')
+                        <div id="login_user_review" class="my-2 w-full h-auto p-2 rounded mb-5 flex justify-start">
+                            <a href="{{ route('review.page', ['shop_id' => $selectShop->id]) }}" class="underline text-sm">口コミを投稿する</a>
+                        </div>
+                        @endif
                     @endif
 
                     {{-- 利用者のレビューがあれば表示 --}}
@@ -86,9 +107,11 @@
                         </div>
                         @foreach($reviews as $review)
                         @if (Auth::user()->role === 'system_manager')
-                        <div class="w-full text-end">
-                            <a href="" class="underline mr-3 text-sm">口コミを削除する</a>
-                        </div>
+                        <form action="{{ route('delete.review', $review->id) }}" method="POST" class="w-full text-end">
+                        @csrf
+                        @method('delete')
+                            <button type="submit" class="underline mr-3 text-sm">口コミを削除する</button>
+                        </form>
                         @endif
                         <p class="text-gray-600 text-sm font-bold">{{ $review->user_name }}</p>
                         <div id="ranting" class="flex items-center">
@@ -100,8 +123,21 @@
                                 @endif
                             @endfor
                             <p class="text-blue-700 text-sm font-bold ml-1">{{ $review->ranting }}</p>
+                            @php
+                                $ratingsComments = [
+                                    1 => "大変不満でした",
+                                    2 => "不満でした",
+                                    3 => "普通でした",
+                                    4 => "満足でした",
+                                    5 => "大変満足でした",
+                                ];
+                            @endphp
+                            <p class="text-sm ml-2 font-bold">{{ $ratingsComments[$review->ranting] }}</p>
                         </div>
                         <p class="text-gray-600 text-sm mb-2">{{ $review->comment }}</p>
+                        @if($review->image)
+                            <img src="{{ asset($review->image) }}" alt="Review Image" class="pb-10">
+                        @endif
                         <div class="border border-gray-300 w-full my-1"></div>
                         @endforeach
                         {{-- ページネーション --}}
@@ -187,77 +223,6 @@
                         </div>
                         <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
                     </form>
-                    {{-- ログインユーザーがこのお店を利用したことがある場合はレビュー入力フォーム --}}
-                    @if($hasReservation)
-                    <form id="review_create_form" action="{{ route('review.create') }}" method="POST" class="w-full" enctype="multipart/form-data" novalidate>
-                    @csrf
-                        <div class="bg-blue-300 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
-                            <div class="flex flex-col mb-5">
-
-                                <!-- ShopId -->
-                                <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
-
-                                <!-- UserName -->
-                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded-md w-7/12 mb-14 pl-2" placeholder="ユーザーネームを入力">
-                                @error('user_name')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-
-
-                                <!-- Rating -->
-                                <div class="mb-2">
-                                    <p class="text-white text-xl font-bold">体験を評価してください</p>
-                                </div>
-                                <div class="felx items-center mb-10">
-                                    <input type="hidden" id="ranting" name="ranting" value="">
-                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="1">★</span>
-                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="2">★</span>
-                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="3">★</span>
-                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="4">★</span>
-                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="5">★</span>
-                                </div>
-                                @error('ranting')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-
-                                <!-- Comment -->
-                                <div class="mb-2">
-                                    <p class="text-white text-xl font-bold">口コミを投稿</p>
-                                </div>
-                                <textarea name="comment" id="comment" rows="8" class="w-full h-auto bg-white text-start p-2 border-none resize-none rounded-md outline-none" placeholder="カジュアルな夜のお出かけにおすすめのスポット"></textarea>
-                                <div id="charCount" class="text-right text-gray-800 text-sm mb-10">0/400 (最高文字数)</div>
-                                @error('comment')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-
-                                <!-- Image File -->
-                                <div class="mb-2">
-                                    <p class="text-white text-xl font-bold">画像の追加</p>
-                                </div>
-                                <div id="drop_area" class="w-full bg-white h-auto hover:bg-blue-500 cursor-pointer rounded-lg p-6">
-                                    <div class="flex flex-col my-10 text-gray-800">
-                                        <label for="review_image" class="mx-auto ">クリックして写真を追加</label>
-                                        <p class="text-sm mx-auto">またはドラッグアンドドロップ</p>
-                                    </div>
-                                    <input type="file" id="review_image" name="review_image" accept="image/*" class="hidden">
-                                    <img id="uploaded_image" src="#" alt="Uploaded Image" class="hidden">
-                                </div>
-                                @error('file')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-500 font-semibold text-white mb-10 p-4 rounded-b">口コミを投稿する</button>
-                    </form>
-                    @endif
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>

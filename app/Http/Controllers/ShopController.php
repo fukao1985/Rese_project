@@ -102,8 +102,6 @@ class ShopController extends Controller
 
         $shops = $query->get();
 
-        // $shops = Shop::all();
-        // $shopId = $request->input('shop_id');
         $favorites = Favorite::where('user_id', auth()->id())
             ->whereIn('shop_id', $shops->pluck('id'))
             ->get()
@@ -144,7 +142,6 @@ class ShopController extends Controller
             'userReview' => $userReview,
         ];
 
-        // return view('private_page.shop_detail', compact('selectShop', 'reviews', 'hasReservation', 'hasReview'));
         return view('private_page.shop_detail', $data);
     }
 

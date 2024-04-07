@@ -42,165 +42,117 @@
             <div class="w-11/12 flex flex-col justify-center md:flex-row md:justify-between">
                 {{-- 店舗詳細 --}}
                 <div class="w-full md:w-5/12">
-                    <h2 class="font-bold text-xl mb-2">{{ $selectShop->name }}</h2>
-                    <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="pb-10">
-                    <div class="flex">
-                            <p class="text-gray-800 text-sm mb-2">#{{ $selectShop->area->area }}</p>
-                            <p class="text-gray-800 text-sm pl-1 mb-2">#{{ $selectShop->genre->genre }}</p>
+                    <div class="w-full text-center mt-10 mb-20">
+                        <h2 class="text-3xl">今回のご利用は<br>いかがでしたか？</h2>
                     </div>
-                    <p class="text-gray-800 text-sm mt-5 mb-3">{{ $selectShop->comment }}</p>
-
-                    {{-- レビュー作成ページへの遷移 --}}
-                    <div class="my-2">
-                        <a href="" class="underline">口コミを編集する</a>
-                    </div>
-
-                    {{-- 利用者のレビューがあれば表示 --}}
-                    @if($selectShop->reviews && $selectShop->reviews->count() > 0)
-                    <div id="review" class="bg-gray-200 w-full h-auto p-2 rounded mb-5">
-                        @foreach($reviews as $review)
-                        <p class="text-gray-600 text-sm font-bold">{{ $review->user_name }}</p>
-                        <div id="ranting" class="flex items-center">
-                            @for($i = 1; $i <= 5; $i++)
-                                @if($i <= $review->ranting)
-                                    <p class="text-yellow-500">★</p>
-                                @else
-                                    <p class="text-gray-400">★</p>
-                                @endif
-                            @endfor
-                            <p class="text-blue-700 text-sm font-bold ml-1">{{ $review->ranting }}</p>
+                    <div id="store_box" class="w-full md:w-10/12 md:mx-auto bg-white shadow-md mb-5 rounded">
+                        <img src="{{ asset($selectShop->url) }}" alt="{{ $selectShop->name }}" class="rounded-t">
+                        <h2 class="text-lg font-semibold mt-4 px-4">{{ $selectShop->name }}</h2>
+                        <div class="flex text-sm md:font-base">
+                            <p class="text-gray-600 mb-2 pl-4">#{{ $selectShop->area->area }}</p>
+                            <p class="text-gray-600 mb-2 pl-2">#{{ $selectShop->genre->genre }}</p>
                         </div>
-                        <p class="text-gray-600 text-sm mb-2">{{ $review->comment }}</p>
-                        <div class="border border-gray-300 w-full my-1"></div>
-                        @endforeach
-                        {{-- ページネーション --}}
-                        <div id="pagination" class="flex w-full overflow-x-auto text-sm">
-                        {{ $selectShop->reviews()->paginate(5)->links() }}
+                        <div class="flex justify-between items-center p-4">
+                            <form action="{{ route('shop.detail', $selectShop->id) }}" method="GET">
+                            @csrf
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm md:font-base">詳しく見る</button>
+                            </form>
+
+                            {{-- お気に入り登録/削除ボタン --}}
+                            @if ($isFavorite)
+                                <div class="text-red-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                        <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                    </svg>
+                                </div>
+                            @else
+                                <div class="text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                        <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                    </svg>
+                                </div>
+                            @endif
                         </div>
                     </div>
-                    @endif
                 </div>
 
-                {{-- 予約フォーム --}}
+                {{-- 口コミ投稿フォーム --}}
                 <div class="w-full md:w-6/12">
-                    <form id="reservartion-form" action="{{ route('reservation.create') }}" method="POST" class="w-full" novalidate>
+                    <form id="review_create_form" action="{{ route('review.create') }}" method="POST" class="w-full" enctype="multipart/form-data" novalidate>
                     @csrf
-                        <div class="bg-blue-600 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
-                            <p class="text-white text-xl font-bold my-5">予約</p>
+                        <div class="bg-blue-300 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
                             <div class="flex flex-col mb-5">
+
+                                <!-- ShopId -->
                                 <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
-                                <input id="date" type="date" name="date" class="rounded w-7/12 mb-3">
-                                @error('date')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
+
+                                <!-- UserName -->
+                                <div class="mb-14">
+                                    <input id="user_name" type="user_name" name="user_name" value="{{ old('user_name') }}" class="h-10 rounded-md w-10/12 pl-2" placeholder="口コミ欄に表示するユーザーネームを入力">
+                                    @error('user_name')
+                                    <div class="text-red-600 text-sm h-4 flex justify-center">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                                <select id="time" type="time" name="time" class="rounded w-11/12 mb-3">
-                                    <option value="">時間を選択してください</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="17:30">17:30</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="18:30">18:30</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="18:30">19:30</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="20:30">20:30</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="20:30">21:30</option>
-                                    <option value="21:00">22:00</option>
-                                </select>
-                                @error('time')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
+
+
+                                <!-- Rating -->
+                                <div class="mb-2">
+                                    <p class="text-white text-xl font-bold">体験を評価してください</p>
                                 </div>
-                                @enderror
-                                <select id="number" type="number" name="number" class="rounded w-11/12 mb-3">
-                                    <option value="">人数を選択してください</option>
-                                    <option value="1">1人</option>
-                                    <option value="2">2人</option>
-                                    <option value="3">3人</option>
-                                    <option value="4">4人</option>
-                                    <option value="5">5人</option>
-                                    <option value="6">6人</option>
-                                    <option value="7">7人</option>
-                                    <option value="8">8人</option>
-                                    <option value="9">9人</option>
-                                    <option value="10">10人</option>
-                                </select>
-                                @error('number')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
+                                <div class="felx items-center mb-10">
+                                    <input type="hidden" id="ranting" name="ranting" value="">
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="1">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="2">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="3">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="4">★</span>
+                                    <span class="rating-star cursor-pointer text-4xl text-gray-300 z-10" data-value="5">★</span>
+                                    @error('ranting')
+                                    <div class="text-red-600 text-sm h-4 flex justify-center mb-3">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-                            <div id="confirm" class="flex flex-col w-full bg-blue-400 rounded p-8 mb-28">
-                                <table class="text-white text-left w-full">
-                                    <tr class="mb-2">
-                                        <th class="w-2/6">Shop</th>
-                                        <td class="w-4/6">{{ $selectShop->name }}</td>
-                                    </tr>
-                                    <tr class="mb-2">
-                                        <th class="w-2/6">Date</th>
-                                        <td id="displayDate" class="w-4/6"></td>
-                                    </tr>
-                                    <tr class="mb-2">
-                                        <th class="w-2/6">Time</th>
-                                        <td id="displayTime" class="w-4/6"></td>
-                                    </tr>
-                                    <tr class="mb-2">
-                                        <th class="w-2/6">Number</th>
-                                        <td id="displayNumber" class="w-4/6"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-700 font-semibold text-white mb-10 p-4 rounded-b">予約する</button>
-                    </form>
-                    {{-- ログインユーザーがこのお店を利用したことがある場合はレビュー入力フォーム --}}
-                    @if($hasReservation)
-                    <form action="{{ route('review.create') }}" method="POST" class="w-full">
-                    @csrf
-                        <div class="bg-blue-400 h-auto w-full rounded-t shadow-md shadow-gray-400 p-8 flex flex-col items-left">
-                            <div class="flex flex-col mb-5">
-                                <input type="hidden" name="shop_id" value="{{ $selectShop->id }}">
-                                <input id="user_name" type="user_name" name="user_name" valie="{{ old('user_name') }}" class="h-10 rounded w-7/12 mb-3 pl-2" placeholder="ユーザーネームを入力してください">
-                                @error('user_name')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
+
+                                <!-- Comment -->
+                                <div class="mb-2">
+                                    <p class="text-white text-xl font-bold">口コミを投稿</p>
                                 </div>
-                                @enderror
-                                <select id="ranting" type="ranting" name="ranting" class="rounded w-11/12 mb-3">
-                                    <option value="">評価を選択してください</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                                @error('ranting')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                                    <textarea name="comment" id="comment" cols="30" rows="5" class="rounded" placeholder="コメントを入力してください">
-                                        @if(old('comment'))
-                                            {{ old('comment') }}
-                                        @endif
-                                    </textarea>
+                                <textarea name="comment" id="comment" rows="8" class="w-full h-auto bg-white text-start p-2 border-none resize-none rounded-md outline-none" placeholder="(例) カジュアルな夜のお出かけにおすすめのスポット" value="{{ old('comment') }}"></textarea>
                                 @error('comment')
-                                <div class="text-red-600 text-sm h-4 flex justify-center">
+                                <div class="text-red-600 text-sm h-4 flex justify-center mb-3">
                                     {{ $message }}
                                 </div>
                                 @enderror
+                                <div id="charCount" class="text-right text-gray-800 text-sm mb-10">0/400 (最高文字数)</div>
+
+                                <!-- Image File -->
+                                <div class="mb-2">
+                                    <p class="text-white text-xl font-bold">画像の追加</p>
+                                </div>
+                                <div id="drop_area" class="w-full bg-white h-auto hover:bg-blue-500 cursor-pointer rounded-lg p-6">
+                                    <div class="flex flex-col my-10 text-gray-800">
+                                        <label for="review_image" class="mx-auto ">クリックして写真を追加</label>
+                                        <p class="text-sm mx-auto">またはドラッグアンドドロップ</p>
+                                    </div>
+                                    <input type="file" id="review_image" name="review_image" accept="image/*" class="hidden">
+                                    <img id="uploaded_image" src="#" alt="Uploaded Image" class="hidden">
+                                    @error('review_image')
+                                    <div class="text-red-600 text-sm h-4 flex justify-center">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-                        <button type="submit" class="w-full bg-blue-500 font-semibold text-white mb-10 p-4 rounded-b">レビューを書く</button>
+                        <button type="submit" class="w-full bg-blue-500 font-semibold text-white mb-10 p-4 rounded-b">口コミを投稿する</button>
                     </form>
-                    @endif
                 </div>
             </div>
             <script src="{{ asset('js/menu_script.js') }}" defer></script>
             <script src="{{ asset('js/confirm_script.js') }}" defer></script>
+            <script src="{{ asset('js/review_script.js') }}" defer></script>
         </main>
     </div>
 </x-app-layout>

@@ -45,7 +45,6 @@ class ShopRepresentativeController extends Controller
 
     // 店舗情報更新ページ表示
     public function shopInformation() {
-        // ★下記は店舗認証を作成後に店舗情報のみを取得に変更する
         $userId = auth()->user()->id;
         $representative = Representative::where('user_id', $userId)->first();
         $shopId = $representative->shop_id;
