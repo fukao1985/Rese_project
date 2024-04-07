@@ -22,6 +22,7 @@ class Review extends Model
         'user_name',
         'ranting',
         'comment',
+        'image',
     ];
 
     // usersテーブルとのリレーション

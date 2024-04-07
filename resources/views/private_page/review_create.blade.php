@@ -96,7 +96,6 @@
                                     @enderror
                                 </div>
 
-
                                 <!-- Rating -->
                                 <div class="mb-2">
                                     <p class="text-white text-xl font-bold">体験を評価してください</p>

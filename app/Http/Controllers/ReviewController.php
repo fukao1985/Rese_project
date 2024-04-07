@@ -33,7 +33,7 @@ class ReviewController extends Controller
         }
 
         // 画像のURLを設定
-        $imageUrl = $imageName ? 'storage/' . $imageName : null;
+        $imageUrl = $imageName ? asset('storage/' . $imageName) : null;
 
         // レビューを作成
         $review = Review::create([
@@ -66,11 +66,13 @@ class ReviewController extends Controller
         $review = Review::findOrFail($id);
         $userId = auth()->user()->id;
         $shopId = $request->shop_id;
+
         // 画像の有無を確認
         if ($request->hasFile('review_image')) {
             $imageName = time(). '.' .$request->review_image->extension();
+            $request->review_image->storeAs('public', $imageName);
 
-            $request->review_image->move(public_path('images'), $imageName);
+            $imageUrl = $imageName ? asset('storage/' . $imageName) : null;
 
             // 画像がある場合
             $review->update([
@@ -79,7 +81,7 @@ class ReviewController extends Controller
                 'user_name' => $request->user_name,
                 'ranting' => $request->ranting,
                 'comment' =>$request->comment,
-                'image' => $request->imageName,
+                'image' => $imageName,
             ]);
         } else {
             // 画像がない場合

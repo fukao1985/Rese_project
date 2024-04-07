@@ -86,7 +86,7 @@
                             </div>
                             <p class="text-gray-600 text-sm mb-2">{{ $userReview->comment }}</p>
                             @if($userReview->image)
-                                <img src="{{ asset($userReview->image) }}" alt="Review Image" class="pb-10">
+                                <img src="{{ Storage::url($userReview->image) }}" alt="Review Image" class="pb-10">
                             @endif
                             <div class="border border-gray-300 w-full my-1"></div>
                         </div>
@@ -136,7 +136,7 @@
                         </div>
                         <p class="text-gray-600 text-sm mb-2">{{ $review->comment }}</p>
                         @if($review->image)
-                            <img src="{{ asset($review->image) }}" alt="Review Image" class="pb-10">
+                            <img src="{{ Storage::url($userReview->image) }}" alt="Review Image" class="pb-10">
                         @endif
                         <div class="border border-gray-300 w-full my-1"></div>
                         @endforeach
