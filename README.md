@@ -430,6 +430,7 @@ $ sail npm run dev
 | user_name  | varchar(191) | null: false |
 |  ranting   |   integer    | null: false |
 |  comment   |     text     | null: false |
+|   image    | varchar(255) |     ———     |
 | created_at |  timestamp   |     ———     |
 | updated_at |  timestamp   |     ———     |
 
