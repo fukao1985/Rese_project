@@ -47,6 +47,10 @@ class CsvController extends Controller
                 $errors[] = '店舗名は50文字以内で入力してください。';
             }
 
+            if (empty($shopName)) {
+                $errors[] = '店舗名を必ず入力してください。';
+            }
+
             if (!in_array($areaName, ['東京都', '大阪府', '福岡県'])) {
                 $errors[] = '地域は「東京都」「大阪府」「福岡県」のいずれかを入力してください。';
             }
@@ -56,7 +60,11 @@ class CsvController extends Controller
             }
 
             if (strlen($shopDescription) > 400) {
-                $errors[] = '店舗名は400文字以内で入力してください。';
+                $errors[] = '店舗情報は400文字以内で入力してください。';
+            }
+
+            if (empty($shopDescription)) {
+                $errors[] = '店舗情報は必ず入力してください。';
             }
 
             $extension = pathinfo($shopImageUrl, PATHINFO_EXTENSION);
