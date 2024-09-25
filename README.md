@@ -14,7 +14,7 @@
 
 ## 作成した目的
 
-飲食店の方から、「外部の飲食店予約サービスは手数料を取られるので自社で予約サービスを持ちたい。」というご依頼を頂き、Rese を作成致しました。
+模擬案件(上級)として作成しました。
 
 ---
 
@@ -271,7 +271,7 @@ $ sail artisan breezejp
 $ sail composer require simplesoftwareio/simple-qrcode
 ```
 
-### 【決済機能 strip 導入のため Stripe SDK(stripe/stripe-php) をインストール】<br>
+### 【決済機能 stripe 導入のため Stripe SDK(stripe/stripe-php) をインストール】<br>
 
 -   Stripe の公式ウェブサイト（https://stripe.com）にアクセスし、テスト用APIキーを取得します。<br>
 -   取得したテスト用 API キーを.env ファイルに追記し、環境変数の設定を行います。<br>
